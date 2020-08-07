@@ -23,7 +23,6 @@ const MyTheme = {
 };
 
 const App = () => {
-  // return <Splash />;
   return (
     <NavigationContainer theme={MyTheme}>
       <RootStack.Navigator headerMode="none">
