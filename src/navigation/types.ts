@@ -28,7 +28,10 @@ export type MainStackParamList = {
 
 export type MainStackNavigationProp = StackNavigationProp<MainStackParamList>;
 
-export type MainStackRouteProp = RouteProp<MainStackParamList, ROUTES.Dashboard>;
+export type MainStackRouteProp = RouteProp<
+  MainStackParamList,
+  ROUTES.Dashboard
+>;
 
 export type MainStackProps = {
   navigation: MainStackNavigationProp;
