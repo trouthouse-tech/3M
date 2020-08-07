@@ -1,14 +1,12 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Image} from 'react-native';
 import {Colors, Fonts, Utils} from '../../styles';
 import {LargeHallowSquareOnPress} from '../../components/buttons/LargeHallowSquareOnPress';
 import {LargeSquareOnPress} from '../../components/buttons/LargeSquareOnPress';
-import RadioButton from '../../components/buttons/RadioButton';
 import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
 
 export const Splash = () => {
-  const [userType, setUserType] = useState(0);
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
