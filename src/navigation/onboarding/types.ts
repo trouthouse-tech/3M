@@ -5,6 +5,7 @@ import {RouteProp} from '@react-navigation/native';
 export type OnboardingStackParamList = {
   Splash: undefined;
   CredentialCollector: undefined;
+  InvestorInfoCollector: undefined;
   Main: undefined;
 };
 
