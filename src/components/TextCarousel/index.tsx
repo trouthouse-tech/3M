@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 // @ts-ignore
 import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {Utils} from '../../styles';
+import {Fonts, Utils} from '../../styles';
 import {TextCarouselEntry} from '../../types';
 
 type CarouselProps = {
@@ -45,7 +45,7 @@ type ItemProps = {
 };
 
 function CarouselItem(props: ItemProps) {
-  return <Text>{props.item.text}</Text>;
+  return <Text style={styles.text}>{props.item.text}</Text>;
 }
 
 const styles = StyleSheet.create({
@@ -61,5 +61,8 @@ const styles = StyleSheet.create({
 
   inactiveDot: {},
 
-  item: {},
+  text: {
+    ...Fonts.large,
+    alignSelf: 'center',
+  },
 });
