@@ -3,4 +3,5 @@ export enum ROUTES {
   Main = 'Main',
   Splash = 'Splash',
   Dashboard = 'Dashboard',
+  CredentialCollector = 'CredentialCollector',
 }

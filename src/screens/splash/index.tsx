@@ -1,12 +1,14 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {Colors, Fonts, Utils} from '../../styles';
-import {LargeHallowSquareOnPress} from '../../components/buttons/LargeHallowSquareOnPress';
-import {LargeSquareOnPress} from '../../components/buttons/LargeSquareOnPress';
+import {LargeHallowSquareOnPress} from '../../components/buttons/';
+import {LargeSquareOnPress} from '../../components/buttons/';
 import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
+import {OnboardingStackProps} from '../../navigation/types';
+import {ROUTES} from '../../util/routes';
 
-export const Splash = () => {
+export const Splash = (props: OnboardingStackProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -26,7 +28,7 @@ export const Splash = () => {
           borderColor={Colors.main_green}
         />
         <LargeSquareOnPress
-          onPress={() => console.log('login')}
+          onPress={() => props.navigation.push(ROUTES.CredentialCollector)}
           text="Sign In"
           textColor={Colors.white}
         />

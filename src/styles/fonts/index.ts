@@ -23,3 +23,9 @@ const large = {
 };
 
 export {MAIN_REGULAR, MAIN_ITALIC, MAIN_BOLD, small, normal, large};
+
+// Headings
+
+export const h1 = {
+  ...large,
+};
