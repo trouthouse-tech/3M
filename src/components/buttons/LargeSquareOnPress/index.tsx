@@ -4,4 +4,4 @@ import {ButtonProps} from '../types';
 
 export default function LargeSquareOnPress(props: ButtonProps) {
   return <LargeButton borderColor={props.buttonColor} {...props} />;
-};
+}

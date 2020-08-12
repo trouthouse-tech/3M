@@ -5,4 +5,4 @@ import {ButtonProps} from '../types';
 
 export default function LargeHallowSquareOnPress(props: ButtonProps) {
   return <LargeButton {...props} buttonColor={Colors.white} />;
-};
+}

@@ -5,8 +5,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {ROUTES} from './src/util/routes';
 import {OnboardingStack} from './src/navigation/onboarding';
 
-import {Splash} from './src/screens/splash';
-
 type RootStackParamList = {
   Onboarding: undefined;
   Main: undefined;
