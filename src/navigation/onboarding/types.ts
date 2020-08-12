@@ -1,5 +1,5 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ROUTES} from '../util/routes';
+import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
 
 export type OnboardingStackParamList = {

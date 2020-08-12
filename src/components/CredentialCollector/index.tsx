@@ -4,8 +4,9 @@ import ProgressBar from '../ProgressBar';
 import {Colors, Fonts} from '../../styles';
 import {StandardTextInput} from '../input/StandardTextInput';
 import {LargeSquareOnPress} from '../buttons';
-import {OnboardingStackProps} from '../../navigation/types';
+import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import Header from '../Header';
+import {ROUTES} from '../../util/routes';
 
 export default function CredentialCollector(props: OnboardingStackProps) {
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ export default function CredentialCollector(props: OnboardingStackProps) {
     if (!validateFields()) {
       return;
     }
+    props.navigation.push(ROUTES.InvestorInfoCollector);
   };
 
   const validateFields = (): boolean => {
@@ -45,7 +47,7 @@ export default function CredentialCollector(props: OnboardingStackProps) {
   return (
     <View>
       <Header goBack={() => props.navigation.goBack()} />
-      <ProgressBar steps={4} currentStep={0} />
+      <ProgressBar steps={2} currentStep={0} />
       <Text style={styles.title}>Login Information</Text>
       <View style={styles.form}>
         <StandardTextInput

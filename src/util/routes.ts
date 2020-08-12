@@ -4,4 +4,5 @@ export enum ROUTES {
   Splash = 'Splash',
   Dashboard = 'Dashboard',
   CredentialCollector = 'CredentialCollector',
+  InvestorInfoCollector = 'InvestorInfoCollector',
 }

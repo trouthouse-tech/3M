@@ -5,7 +5,7 @@ import {LargeHallowSquareOnPress} from '../../components/buttons/';
 import {LargeSquareOnPress} from '../../components/buttons/';
 import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
-import {OnboardingStackProps} from '../../navigation/types';
+import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {ROUTES} from '../../util/routes';
 
 export const Splash = (props: OnboardingStackProps) => {
@@ -22,13 +22,13 @@ export const Splash = (props: OnboardingStackProps) => {
       </View>
       <View style={styles.form}>
         <LargeHallowSquareOnPress
-          onPress={() => console.log('sign up')}
+          onPress={() => props.navigation.push(ROUTES.CredentialCollector)}
           text="Sign Up"
           textColor={Colors.main_green}
           borderColor={Colors.main_green}
         />
         <LargeSquareOnPress
-          onPress={() => props.navigation.push(ROUTES.CredentialCollector)}
+          onPress={() => console.log('sign in')}
           text="Sign In"
           textColor={Colors.white}
         />

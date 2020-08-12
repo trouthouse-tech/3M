@@ -2,9 +2,10 @@ import * as React from 'react';
 import {ROUTES} from '../../util/routes';
 import {Splash} from '../../screens/splash';
 // import {Registration} from "../../screens/registration";
-import {OnboardingStackParamList, OnboardingStackProps} from '../types';
+import {OnboardingStackParamList, OnboardingStackProps} from './types';
 import {createStackNavigator} from '@react-navigation/stack';
 import CredentialCollector from '../../components/CredentialCollector';
+import InvestorInfoSelector from '../../components/InvestorInfoCollector';
 
 const OnboardingStackNavigator = createStackNavigator<
   OnboardingStackParamList
@@ -20,6 +21,10 @@ export const OnboardingStack: React.FC<OnboardingStackProps> = () => {
       <OnboardingStackNavigator.Screen
         name={ROUTES.CredentialCollector}
         component={CredentialCollector}
+      />
+      <OnboardingStackNavigator.Screen
+        name={ROUTES.InvestorInfoCollector}
+        component={InvestorInfoSelector}
       />
     </OnboardingStackNavigator.Navigator>
   );
