@@ -3,19 +3,21 @@ import React from 'react';
 import {Utils} from '../../styles';
 
 type Props = {
-  goBack(): void;
+  goBack?(): void;
 };
 
 export default function Header({goBack}: Props) {
   return (
     <View style={styles.header}>
-      <TouchableHighlight style={styles.backButton} onPress={() => goBack()}>
-        <Image
-          style={styles.headerIcon}
-          source={require('../../../assets/images/navigation/back4.png')}
-        />
-      </TouchableHighlight>
-      <View style={styles.logoContainer}>
+      {goBack && (
+        <TouchableHighlight style={styles.backButton} onPress={() => goBack()}>
+          <Image
+            style={styles.headerIcon}
+            source={require('../../../assets/images/navigation/back4.png')}
+          />
+        </TouchableHighlight>
+      )}
+      <View style={[styles.logoContainer, !goBack ? styles.singleIcon : null]}>
         <Image
           style={[styles.headerIcon, styles.logo]}
           source={require('../../../assets/images/logo/default-logo.png')}
@@ -26,10 +28,18 @@ export default function Header({goBack}: Props) {
 }
 
 const headerImageSize = Utils.DEVICE_HEIGHT / 25;
+const height =
+  Utils.DEVICE_HEIGHT === 896
+    ? Utils.DEVICE_HEIGHT / 20
+    : Utils.DEVICE_HEIGHT / 16;
+
+const marginBottom =
+  Utils.DEVICE_HEIGHT === 896 ? Utils.DEVICE_HEIGHT / 100 : 0;
+
 const styles = StyleSheet.create({
   header: {
-    height: Utils.DEVICE_HEIGHT / 15,
-    marginTop: Utils.DEVICE_HEIGHT / 27,
+    height: height,
+    marginBottom: marginBottom,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -46,7 +56,10 @@ const styles = StyleSheet.create({
 
   logoContainer: {
     flex: 5,
-    justifyContent: 'center',
+  },
+
+  singleIcon: {
+    alignItems: 'center',
   },
 
   logo: {
