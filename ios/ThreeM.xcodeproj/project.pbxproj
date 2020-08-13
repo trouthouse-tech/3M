@@ -18,6 +18,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* ThreeMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ThreeMTests.m */; };
 		473E587ECE06F93D80FC341C /* libPods-ThreeM-ThreeMTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E94AE95D368AD0770C48AE7 /* libPods-ThreeM-ThreeMTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		CD37EF1B24E5CC8800B500B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD37EF1A24E5CC8800B500B5 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		4DDEBDDDC7D46B3D9E40AC5E /* Pods-ThreeM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThreeM.release.xcconfig"; path = "Target Support Files/Pods-ThreeM/Pods-ThreeM.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ThreeM/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB775F31F82E769E6DDF4D8D /* libPods-ThreeM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ThreeM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD37EF1A24E5CC8800B500B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F6AE6556F38FE85DB36467E8 /* Pods-ThreeM-ThreeMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThreeM-ThreeMTests.debug.xcconfig"; path = "Target Support Files/Pods-ThreeM-ThreeMTests/Pods-ThreeM-ThreeMTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		13B07FAE1A68108700A75B9A /* ThreeM */ = {
 			isa = PBXGroup;
 			children = (
+				CD37EF1A24E5CC8800B500B5 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -178,7 +181,6 @@
 				F6AE6556F38FE85DB36467E8 /* Pods-ThreeM-ThreeMTests.debug.xcconfig */,
 				47B661A2AF11FAB8F5455F3B /* Pods-ThreeM-ThreeMTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -325,6 +327,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				CD37EF1B24E5CC8800B500B5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

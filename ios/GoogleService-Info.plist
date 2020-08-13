@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>113409097216-t5cao26k46lgvf92alkkuamb4sf8d89l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.113409097216-t5cao26k46lgvf92alkkuamb4sf8d89l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCYU1BQ-2oa8AiRE693k_5gCt18Uhdq0zg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>113409097216</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.trouthousetech.threemclub</string>
+	<key>PROJECT_ID</key>
+	<string>three-m-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>three-m-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:113409097216:ios:42120367d10c738b79a2e5</string>
+	<key>DATABASE_URL</key>
+	<string>https://three-m-dev.firebaseio.com</string>
+</dict>
+</plist>
