@@ -7,6 +7,7 @@ import {LargeSquareOnPress} from '../buttons';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import Header from '../Header';
 import {ROUTES} from '../../util/routes';
+import {createInvestor} from '../../services/investor';
 
 export default function CredentialCollector(props: OnboardingStackProps) {
   const [email, setEmail] = useState('');
@@ -17,7 +18,22 @@ export default function CredentialCollector(props: OnboardingStackProps) {
     if (!validateFields()) {
       return;
     }
-    props.navigation.push(ROUTES.InvestorInfoCollector);
+    await createInvestor(email, password).then((insertionAttempt) => {
+      // user was successfully created
+      if (insertionAttempt.user) {
+        props.navigation.push(ROUTES.InvestorInfoCollector);
+      } else {
+        const {error} = insertionAttempt;
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            Alert.alert('Email already in use');
+            break;
+          case 'auth/operation-not-allowed':
+            console.log('Error during sign up.');
+            break;
+        }
+      }
+    });
   };
 
   const validateFields = (): boolean => {

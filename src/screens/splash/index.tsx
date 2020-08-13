@@ -28,7 +28,7 @@ export const Splash = (props: OnboardingStackProps) => {
           borderColor={Colors.main_green}
         />
         <LargeSquareOnPress
-          onPress={() => console.log('sign in')}
+          onPress={() => props.navigation.push(ROUTES.Login)}
           text="Sign In"
           textColor={Colors.white}
         />
