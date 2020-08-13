@@ -35,28 +35,21 @@ export default function InvestorInfoSelector(props: OnboardingStackProps) {
               onChangeText={(text: string) => setFirstName(text)}
               value={firstName}
               autoFocus={true}
-              secureTextEntry={false}
             />
             <StandardTextInput
               placeholder="Middle Name / Initial"
               onChangeText={(text: string) => setMiddleName(text)}
               value={middleName}
-              autoFocus={false}
-              secureTextEntry={false}
             />
             <StandardTextInput
               placeholder="Last Name"
               onChangeText={(text: string) => setLastName(text)}
               value={lastName}
-              autoFocus={false}
-              secureTextEntry={false}
             />
             <StandardTextInput
               placeholder="Username"
               onChangeText={(text: string) => setUsername(text)}
               value={username}
-              autoFocus={false}
-              secureTextEntry={false}
             />
             <LargeSquareOnPress
               onPress={() => props.navigation.navigate(ROUTES.Main)}
