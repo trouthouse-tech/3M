@@ -6,6 +6,8 @@ import {ROUTES} from './src/util/routes';
 import {OnboardingStack} from './src/navigation/onboarding';
 import MainTabNavigator from './src/navigation/main';
 import {SafeAreaView, StatusBar} from 'react-native';
+import {Provider} from 'react-redux';
+import store from './src/store';
 
 type RootStackParamList = {
   Onboarding: undefined;
@@ -25,18 +27,20 @@ const MyTheme = {
 
 const App = () => {
   return (
-    <NavigationContainer theme={MyTheme}>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{flex: 1}}>
-        <RootStack.Navigator headerMode="none">
-          <RootStack.Screen
-            name={ROUTES.Onboarding}
-            component={OnboardingStack}
-          />
-          <RootStack.Screen name={ROUTES.Main} component={MainTabNavigator} />
-        </RootStack.Navigator>
-      </SafeAreaView>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer theme={MyTheme}>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView style={{flex: 1}}>
+          <RootStack.Navigator headerMode="none">
+            <RootStack.Screen
+              name={ROUTES.Onboarding}
+              component={OnboardingStack}
+            />
+            <RootStack.Screen name={ROUTES.Main} component={MainTabNavigator} />
+          </RootStack.Navigator>
+        </SafeAreaView>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
