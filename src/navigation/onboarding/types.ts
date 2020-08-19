@@ -6,7 +6,8 @@ export type OnboardingStackParamList = {
   Splash: undefined;
   Login: undefined;
   CredentialCollector: undefined;
-  InvestorInfoCollector: undefined;
+  InvestorInfoCollector: {email: string};
+  MultipleChoiceCollector: undefined;
   Main: undefined;
 };
 
@@ -15,27 +16,11 @@ export type OnboardingStackNavigationProp = StackNavigationProp<
 >;
 
 export type OnboardingStackRouteProp = RouteProp<
-  MainStackParamList,
-  ROUTES.Dashboard
+  OnboardingStackParamList,
+  ROUTES.Main
 >;
 
 export type OnboardingStackProps = {
   navigation: OnboardingStackNavigationProp;
   route: OnboardingStackRouteProp;
-};
-
-export type MainStackParamList = {
-  Dashboard: undefined;
-};
-
-export type MainStackNavigationProp = StackNavigationProp<MainStackParamList>;
-
-export type MainStackRouteProp = RouteProp<
-  MainStackParamList,
-  ROUTES.Dashboard
->;
-
-export type MainStackProps = {
-  navigation: MainStackNavigationProp;
-  route: MainStackRouteProp;
 };
