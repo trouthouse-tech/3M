@@ -5,7 +5,7 @@ import {LargeSquareOnPress} from '../../components/buttons';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {StandardTextInput} from '../../components/input/StandardTextInput';
 import {ROUTES} from '../../util/routes';
-import {getInvestor, login} from '../../services/investor';
+import {getInvestor, login, setLoggedInUser} from '../../services/investor';
 import Header from '../../components/Header';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
@@ -26,7 +26,7 @@ export const Login = (props: OnboardingStackProps) => {
   }
 
   function handleInvestorLogin() {
-    // setLoggedInUser(0);
+    setLoggedInUser();
     getInvestor(email).then((retrievalAttempt) => {
       // @ts-ignore
       const user = retrievalAttempt.data.data() as Instructor;
