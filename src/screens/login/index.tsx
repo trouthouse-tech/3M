@@ -5,36 +5,49 @@ import {LargeSquareOnPress} from '../../components/buttons';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {StandardTextInput} from '../../components/input/StandardTextInput';
 import {ROUTES} from '../../util/routes';
-import {loginInvestor} from '../../services/investor';
+import {getInvestor, login} from '../../services/investor';
 import Header from '../../components/Header';
+import store from '../../store';
+import {loginInvestor} from '../../store/user/actions';
 
 export const Login = (props: OnboardingStackProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignIn = async () => {
-    await loginInvestor(email, password).then((insertionAttempt) => {
-      // user was successfully created
-      if (insertionAttempt.user) {
-        props.navigation.push(ROUTES.Main);
+    await login(email, password).then(async (loginAttempt) => {
+      // User was found
+      if (loginAttempt.user) {
+        handleInstructorLogin();
       } else {
-        const {error} = insertionAttempt;
-        console.log('error: ', error);
-        switch (error.code) {
-          case 'auth/user-not-found':
-          case 'auth/invalid-email':
-          case 'auth/wrong-password':
-            Alert.alert(
-              'Email address or password is incorrect. Please try again.',
-            );
-            break;
-          case 'auth/operation-not-allowed':
-            console.log('Error during sign up.');
-            break;
-        }
+        handleLoginError(loginAttempt.error);
       }
     });
   };
+
+  async function handleInstructorLogin() {
+    // setLoggedInUser(0);
+    await getInvestor(email).then((retrievalAttempt) => {
+      // @ts-ignore
+      const user = retrievalAttempt.data.data() as Instructor;
+      store.dispatch(loginInvestor(email, user));
+      enterMainApplication();
+    });
+  }
+
+  const handleLoginError = (error: any) => {
+    switch (error.code) {
+      case 'auth/invalid-email':
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+        Alert.alert('Email or password is invalid.');
+        break;
+    }
+  };
+
+  function enterMainApplication() {
+    props.navigation.navigate(ROUTES.Main);
+  }
 
   return (
     <View style={styles.container}>
