@@ -14,12 +14,26 @@ import {LargeSquareOnPress} from '../buttons';
 import Header from '../Header';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {ROUTES} from '../../util/routes';
+import store from '../../store';
+import {loginInvestor} from '../../store/user/actions';
 
 export default function InvestorInfoSelector(props: OnboardingStackProps) {
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
+
+  function handleSignUp() {
+    store.dispatch(
+      loginInvestor(props.route.params.email, {
+        firstName,
+        middleName,
+        lastName,
+        username,
+      }),
+    );
+    props.navigation.navigate(ROUTES.Main);
+  }
 
   return (
     <View>
@@ -52,7 +66,7 @@ export default function InvestorInfoSelector(props: OnboardingStackProps) {
               value={username}
             />
             <LargeSquareOnPress
-              onPress={() => props.navigation.navigate(ROUTES.Main)}
+              onPress={() => handleSignUp()}
               text="Sign Up"
               textColor={Colors.white}
             />
