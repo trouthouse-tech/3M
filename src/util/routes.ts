@@ -3,7 +3,8 @@ export enum ROUTES {
   Login = 'Login',
   Main = 'Main',
   Splash = 'Splash',
-  Dashboard = 'Dashboard',
+  Home = 'Home',
   CredentialCollector = 'CredentialCollector',
   InvestorInfoCollector = 'InvestorInfoCollector',
+  MultipleChoiceCollector = 'MultipleChoiceCollector',
 }
