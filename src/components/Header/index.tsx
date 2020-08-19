@@ -1,6 +1,9 @@
 import {Image, StyleSheet, TouchableHighlight, View} from 'react-native';
 import React from 'react';
 import {Utils} from '../../styles';
+// @ts-ignore
+import Icon from 'react-native-vector-icons/Entypo';
+Icon.loadFont();
 
 type Props = {
   goBack?(): void;
@@ -11,10 +14,7 @@ export default function Header({goBack}: Props) {
     <View style={styles.header}>
       {goBack && (
         <TouchableHighlight style={styles.backButton} onPress={() => goBack()}>
-          <Image
-            style={styles.headerIcon}
-            source={require('../../../assets/images/navigation/back4.png')}
-          />
+          <Icon name="chevron-thin-left" size={30} color="black" />
         </TouchableHighlight>
       )}
       <View style={[styles.logoContainer, !goBack ? styles.singleIcon : null]}>
