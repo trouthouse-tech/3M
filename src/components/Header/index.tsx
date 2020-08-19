@@ -7,22 +7,52 @@ Icon.loadFont();
 
 type Props = {
   goBack?(): void;
+  showLogo?: boolean;
+  bottomBorder?: boolean;
+  rightButton?(): void;
 };
 
-export default function Header({goBack}: Props) {
+export default function Header({
+  goBack,
+  bottomBorder,
+  rightButton,
+  showLogo,
+}: Props) {
+  let middleStyles = {};
+  if (goBack) {
+    if (rightButton) {
+      middleStyles = styles.middleIcon;
+    } else {
+      middleStyles = styles.rightIcon;
+    }
+  } else if (rightButton) {
+    middleStyles = styles.leftIcon;
+  } else {
+    middleStyles = styles.singleIcon;
+  }
+
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, bottomBorder ? styles.bottomBorder : null]}>
       {goBack && (
         <TouchableHighlight style={styles.backButton} onPress={() => goBack()}>
           <Icon name="chevron-thin-left" size={30} color="black" />
         </TouchableHighlight>
       )}
-      <View style={[styles.logoContainer, !goBack ? styles.singleIcon : null]}>
-        <Image
-          style={[styles.headerIcon, styles.logo]}
-          source={require('../../../assets/images/logo/default-logo.png')}
-        />
-      </View>
+      {showLogo && (
+        <View style={[styles.logoContainer, middleStyles]}>
+          <Image
+            style={[styles.headerIcon, styles.logo]}
+            source={require('../../../assets/images/logo/default-logo.png')}
+          />
+        </View>
+      )}
+      {rightButton && (
+        <TouchableHighlight
+          style={styles.rightButton}
+          onPress={() => rightButton()}>
+          <Icon name="log-out" size={20} color="black" />
+        </TouchableHighlight>
+      )}
     </View>
   );
 }
@@ -55,15 +85,41 @@ const styles = StyleSheet.create({
   },
 
   logoContainer: {
-    flex: 5,
+    flex: 4,
+    // backgroundColor: 'blue',
   },
 
   singleIcon: {
     alignItems: 'center',
   },
 
+  middleIcon: {
+    alignItems: 'center',
+  },
+
+  rightIcon: {
+    flex: 5,
+    justifyContent: 'flex-start',
+  },
+
+  leftIcon: {
+    flex: 5,
+    alignItems: 'flex-end',
+  },
+
   logo: {
     resizeMode: 'contain',
     borderRadius: 5,
+    // alignSelf: 'center',
+  },
+
+  bottomBorder: {
+    borderBottomWidth: 0.5,
+  },
+
+  rightButton: {
+    flex: 4,
+    alignItems: 'flex-end',
+    marginRight: 10,
   },
 });
