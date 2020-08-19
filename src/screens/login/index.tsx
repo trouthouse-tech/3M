@@ -14,8 +14,8 @@ export const Login = (props: OnboardingStackProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignIn = async () => {
-    await login(email, password).then(async (loginAttempt) => {
+  function handleSignIn() {
+    login(email, password).then(async (loginAttempt) => {
       // User was found
       if (loginAttempt.user) {
         handleInvestorLogin();
@@ -23,11 +23,11 @@ export const Login = (props: OnboardingStackProps) => {
         handleLoginError(loginAttempt.error);
       }
     });
-  };
+  }
 
-  async function handleInvestorLogin() {
+  function handleInvestorLogin() {
     // setLoggedInUser(0);
-    await getInvestor(email).then((retrievalAttempt) => {
+    getInvestor(email).then((retrievalAttempt) => {
       // @ts-ignore
       const user = retrievalAttempt.data.data() as Instructor;
       store.dispatch(loginInvestor(email, user));
@@ -35,7 +35,7 @@ export const Login = (props: OnboardingStackProps) => {
     });
   }
 
-  const handleLoginError = (error: any) => {
+  function handleLoginError(error: any) {
     switch (error.code) {
       case 'auth/invalid-email':
       case 'auth/user-not-found':
@@ -43,7 +43,7 @@ export const Login = (props: OnboardingStackProps) => {
         Alert.alert('Email or password is invalid.');
         break;
     }
-  };
+  }
 
   function enterMainApplication() {
     props.navigation.navigate(ROUTES.Main);
