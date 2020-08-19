@@ -3,7 +3,7 @@ import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
 
 export type TabParamList = {
-  Dashboard: undefined;
+  Home: undefined;
 };
 
 /*
@@ -11,13 +11,13 @@ export type TabParamList = {
  */
 export type MainStackNavigationProp = StackNavigationProp<
   TabParamList,
-  ROUTES.Dashboard
+  ROUTES.Home
 >;
 
 /*
  * Configure route prop for the application's main screens
  */
-export type MainStackRouteProp = RouteProp<TabParamList, ROUTES.Dashboard>;
+export type MainStackRouteProp = RouteProp<TabParamList, ROUTES.Home>;
 
 export type MainStackProps = {
   navigation: MainStackNavigationProp;

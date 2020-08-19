@@ -1,19 +1,16 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
-import {DashboardStackParamList} from './types';
-import {Dashboard} from '../../screens/dashboard';
+import {HomeStackParamList} from './types';
+import {Home} from '../../screens/home';
 
-const DashboardStackNavigator = createStackNavigator<DashboardStackParamList>();
+const HomeStackNavigator = createStackNavigator<HomeStackParamList>();
 
-export const DashboardStack = () => {
+export const HomeStack = () => {
   return (
-    <DashboardStackNavigator.Navigator screenOptions={screenOptions}>
-      <DashboardStackNavigator.Screen
-        name={ROUTES.Dashboard}
-        component={Dashboard}
-      />
-    </DashboardStackNavigator.Navigator>
+    <HomeStackNavigator.Navigator screenOptions={screenOptions}>
+      <HomeStackNavigator.Screen name={ROUTES.Home} component={Home} />
+    </HomeStackNavigator.Navigator>
   );
 };
 

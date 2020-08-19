@@ -2,11 +2,11 @@ import React from 'react';
 import {Text} from 'react-native';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
-import {DashboardStackParamList} from '../../navigation/dashboard/types';
+import {HomeStackParamList} from '../../navigation/home/types';
 
-const DashboardBase = (props: DashboardStackParamList) => {
+const HomeBase = (props: HomeStackParamList) => {
   console.log('user: ', props.user);
-  return <Text>Dashboard</Text>;
+  return <Text>Home</Text>;
 };
 
 const mapStateToProps = (state: AppState) => ({
@@ -15,7 +15,4 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = () => ({});
 
-export const Dashboard = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DashboardBase);
+export const Home = connect(mapStateToProps, mapDispatchToProps)(HomeBase);

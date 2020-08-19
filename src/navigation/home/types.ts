@@ -2,27 +2,24 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
 
-export type DashboardStackParamList = {
-  Dashboard: undefined;
+export type HomeStackParamList = {
+  Home: undefined;
 };
 
 /*
- * Configure navigation prop for the application's Dashboard tab
+ * Configure navigation prop for the application's Home tab
  */
-export type DashboardStackNavigationProp = StackNavigationProp<
-  DashboardStackParamList,
-  ROUTES.Dashboard
+export type HomeStackNavigationProp = StackNavigationProp<
+  HomeStackParamList,
+  ROUTES.Home
 >;
 
 /*
  * Configure route prop for the application's main screens
  */
-export type MainStackRouteProp = RouteProp<
-  DashboardStackParamList,
-  ROUTES.Dashboard
->;
+export type MainStackRouteProp = RouteProp<HomeStackParamList, ROUTES.Home>;
 
 export type MainStackProps = {
-  navigation: DashboardStackNavigationProp;
+  navigation: HomeStackNavigationProp;
   route: MainStackRouteProp;
 };
