@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {Colors, Fonts, Utils} from '../../styles';
 import {LargeHallowSquareOnPress} from '../../components/buttons/';
@@ -7,8 +7,102 @@ import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {ROUTES} from '../../util/routes';
+import {getInvestor, setLoggedInUser} from '../../services/investor';
+import {loginInvestor} from '../../store/user/actions';
+import store from '../../store';
+import AsyncStorage from '@react-native-community/async-storage';
+import auth from '@react-native-firebase/auth';
 
 export const Splash = (props: OnboardingStackProps) => {
+  console.log(
+    'Splash isInstructorLoggedIn: ',
+    AsyncStorage.getItem('isInvestorLoggedIn'),
+  );
+
+  useEffect(() => {
+    getLoggedInUser().then((loggedInUser) => {
+      console.log('loggedInUser: ', loggedInUser);
+      // User did not log out during last session
+      if (loggedInUser !== -1) {
+        loginUser();
+      } else {
+        console.log('nobody');
+      }
+    });
+  });
+
+  /**
+   * Check if the User did not logout during their last session
+   */
+  async function getLoggedInUser(): Promise<number> {
+    const isInstructorLoggedIn = await AsyncStorage.getItem(
+      'isInvestorLoggedIn',
+    );
+    console.log('isInvestorLoggedIn: ', isInstructorLoggedIn);
+    if (
+      isInstructorLoggedIn !== 'false' &&
+      isInstructorLoggedIn !== null &&
+      isInstructorLoggedIn !== undefined
+    ) {
+      return 0;
+    }
+    // User is not logged in
+    return -1;
+  }
+
+  /**
+   * The user did not logout during their last session
+   */
+  function loginUser() {
+    let firstAttempt = true;
+    auth().onAuthStateChanged(async (user) => {
+      if (!firstAttempt) {
+        if (user) {
+          const {email} = user._user;
+          // Instructor is logged in
+          handleLoggedInInvestor(email);
+        }
+      }
+      firstAttempt = false;
+    });
+  }
+
+  /**
+   * Handle when the User is a Instructor and did not explicitly logout of the application during their
+   * last session
+   * @param email Used to retrieve Instructor document
+   */
+  async function handleLoggedInInvestor(email: string) {
+    const instructor = await getInvestor(email);
+    // Instructor did not finish registering
+    if (instructor.error) {
+      resumeRegistration(email);
+    } else {
+      console.log('instructor data: ', instructor.data!.data());
+      store.dispatch(loginInvestor(email, instructor.data!.data()!));
+      enterMainApplication();
+    }
+  }
+
+  /**
+   * Called when the User previously registered their email but did not finish the rest of their information
+   * @param email We need to pass their email as a prop so that it can be stored on the document
+   */
+  const resumeRegistration = (email: string) => {
+    props.navigation.navigate(ROUTES.InvestorInfoCollector, {
+      isSignedIn: true,
+      email,
+    });
+  };
+
+  /**
+   * The User has completed registering their profile
+   */
+  const enterMainApplication = () => {
+    setLoggedInUser();
+    props.navigation.navigate(ROUTES.Main);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
