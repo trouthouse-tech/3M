@@ -21,17 +21,11 @@ export default function CredentialCollector(props: OnboardingStackProps) {
     await createInvestor(email, password).then((insertionAttempt) => {
       // user was successfully created
       if (insertionAttempt.user) {
-        props.navigation.push(ROUTES.InvestorInfoCollector);
+        props.navigation.push(ROUTES.InvestorInfoCollector, {
+          email,
+        });
       } else {
-        const {error} = insertionAttempt;
-        switch (error.code) {
-          case 'auth/email-already-in-use':
-            Alert.alert('Email already in use');
-            break;
-          case 'auth/operation-not-allowed':
-            console.log('Error during sign up.');
-            break;
-        }
+        handleRegistrationError(insertionAttempt.error);
       }
     });
   };
@@ -58,6 +52,18 @@ export default function CredentialCollector(props: OnboardingStackProps) {
     return (
       password === '' || confirmPassword === '' || password !== confirmPassword
     );
+  };
+
+  const handleRegistrationError = (error: any) => {
+    console.log('error: ', error);
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        Alert.alert('Email already in use');
+        break;
+      case 'auth/operation-not-allowed':
+        console.log('Error during sign up.');
+        break;
+    }
   };
 
   return (
