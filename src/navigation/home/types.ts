@@ -15,11 +15,11 @@ export type HomeStackNavigationProp = StackNavigationProp<
 >;
 
 /*
- * Configure route prop for the application's main screens
+ * Configure route prop for the application's Home screens
  */
-export type MainStackRouteProp = RouteProp<HomeStackParamList, ROUTES.Home>;
+export type HomeStackRouteProp = RouteProp<HomeStackParamList, ROUTES.Home>;
 
-export type MainStackProps = {
+export type HomeStackProps = {
   navigation: HomeStackNavigationProp;
-  route: MainStackRouteProp;
+  route: HomeStackRouteProp;
 };
