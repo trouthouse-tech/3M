@@ -7,4 +7,6 @@ export enum ROUTES {
   CredentialCollector = 'CredentialCollector',
   InvestorInfoCollector = 'InvestorInfoCollector',
   MultipleChoiceCollector = 'MultipleChoiceCollector',
+  Trade = 'Trade',
+  Settings = 'Settings',
 }
