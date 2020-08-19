@@ -2,9 +2,9 @@ import React from 'react';
 import {Text} from 'react-native';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
-import {TradeStackParamList} from '../../navigation/trade/types';
+import {TradeStackProps} from '../../navigation/trade/types';
 
-const TradeBase = (props: TradeStackParamList) => {
+const TradeBase = (props: TradeStackProps) => {
   console.log('user: ', props.user);
   return <Text>Trade</Text>;
 };

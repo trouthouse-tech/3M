@@ -1,6 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
+import {Investor} from '../../model';
 
 export type SettingsStackParamList = {
   Settings: undefined;
@@ -25,4 +26,5 @@ export type SettingsStackRouteProp = RouteProp<
 export type SettingsStackProps = {
   navigation: SettingsStackNavigationProp;
   route: SettingsStackRouteProp;
+  user?: Investor;
 };
