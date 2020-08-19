@@ -7,7 +7,6 @@ export type OnboardingStackParamList = {
   Login: undefined;
   CredentialCollector: undefined;
   InvestorInfoCollector: {email: string};
-  MultipleChoiceCollector: undefined;
   Main: undefined;
 };
 
