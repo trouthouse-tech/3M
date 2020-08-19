@@ -7,7 +7,7 @@ import {LargeSquareOnPress} from '../buttons';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import Header from '../Header';
 import {ROUTES} from '../../util/routes';
-import {createInvestor} from '../../services/investor';
+import {registerInvestor} from '../../services/investor';
 
 export default function CredentialCollector(props: OnboardingStackProps) {
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ export default function CredentialCollector(props: OnboardingStackProps) {
     if (!validateFields()) {
       return;
     }
-    await createInvestor(email, password).then((insertionAttempt) => {
+    await registerInvestor(email, password).then((insertionAttempt) => {
       // user was successfully created
       if (insertionAttempt.user) {
         props.navigation.push(ROUTES.InvestorInfoCollector, {
