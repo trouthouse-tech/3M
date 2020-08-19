@@ -16,23 +16,34 @@ import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {ROUTES} from '../../util/routes';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
+import {createInvestor} from '../../services/investor';
 
 export default function InvestorInfoSelector(props: OnboardingStackProps) {
+  const [email] = useState(props.route.params.email);
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
 
-  function handleSignUp() {
-    store.dispatch(
-      loginInvestor(props.route.params.email, {
-        firstName,
-        middleName,
-        lastName,
-        username,
-      }),
-    );
-    props.navigation.navigate(ROUTES.Main);
+  async function handleSignUp() {
+    const investor = {
+      firstName,
+      middleName,
+      lastName,
+      username,
+      email,
+    };
+    console.log('investor handleSignUp: ', investor);
+    await createInvestor(investor)
+      .then((insertionAttempt) => {
+        if (!insertionAttempt.error) {
+          console.log('handleSignUp: ', investor);
+          store.dispatch(loginInvestor(investor.email!, investor));
+          // Pass Instructor document to main stack
+          props.navigation.navigate(ROUTES.Main);
+        }
+      })
+      .catch((error) => console.log('error: ', error));
   }
 
   return (
