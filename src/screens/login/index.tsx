@@ -18,14 +18,14 @@ export const Login = (props: OnboardingStackProps) => {
     await login(email, password).then(async (loginAttempt) => {
       // User was found
       if (loginAttempt.user) {
-        handleInstructorLogin();
+        handleInvestorLogin();
       } else {
         handleLoginError(loginAttempt.error);
       }
     });
   };
 
-  async function handleInstructorLogin() {
+  async function handleInvestorLogin() {
     // setLoggedInUser(0);
     await getInvestor(email).then((retrievalAttempt) => {
       // @ts-ignore
