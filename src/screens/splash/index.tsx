@@ -73,13 +73,13 @@ export const Splash = (props: OnboardingStackProps) => {
    * @param email Used to retrieve Instructor document
    */
   async function handleLoggedInInvestor(email: string) {
-    const instructor = await getInvestor(email);
+    const investor = await getInvestor(email);
     // Instructor did not finish registering
-    if (instructor.error) {
+    if (investor.error) {
       resumeRegistration(email);
     } else {
-      console.log('instructor data: ', instructor.data!.data());
-      store.dispatch(loginInvestor(email, instructor.data!.data()!));
+      console.log('investor data: ', investor.data!.data());
+      store.dispatch(loginInvestor(email, investor.data!.data()!));
       enterMainApplication();
     }
   }
