@@ -17,7 +17,6 @@ import {ROUTES} from '../../util/routes';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {createInvestor, setLoggedInUser} from '../../services/investor';
-import AsyncStorage from '@react-native-community/async-storage';
 
 export default function InvestorInfoSelector(props: OnboardingStackProps) {
   const [email] = useState(props.route.params.email);
