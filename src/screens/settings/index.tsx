@@ -22,11 +22,7 @@ const SettingsBase = (props: SettingsStackProps) => {
 
   return (
     <View>
-      <Header
-        showLogo={true}
-        rightButton={() => handleSignOut()}
-        bottomBorder={true}
-      />
+      <Header showLogo bottomBorder rightButton={() => handleSignOut()} />
       <Text>Settings</Text>
     </View>
   );
