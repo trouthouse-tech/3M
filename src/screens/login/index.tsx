@@ -9,6 +9,7 @@ import {getInvestor, login, setLoggedInUser} from '../../services/investor';
 import Header from '../../components/Header';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
+import {Investor} from '../../model';
 
 export const Login = (props: OnboardingStackProps) => {
   const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ export const Login = (props: OnboardingStackProps) => {
     setLoggedInUser();
     getInvestor(email).then((retrievalAttempt) => {
       // @ts-ignore
-      const user = retrievalAttempt.data.data() as Instructor;
+      const user = retrievalAttempt.data.data() as Investor;
       store.dispatch(loginInvestor(email, user));
       enterMainApplication();
     });
