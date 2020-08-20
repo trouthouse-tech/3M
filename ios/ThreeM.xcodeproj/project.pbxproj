@@ -18,7 +18,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* ThreeMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ThreeMTests.m */; };
 		473E587ECE06F93D80FC341C /* libPods-ThreeM-ThreeMTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E94AE95D368AD0770C48AE7 /* libPods-ThreeM-ThreeMTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		CD37EF1B24E5CC8800B500B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD37EF1A24E5CC8800B500B5 /* GoogleService-Info.plist */; };
+		CDD2D87D24EECFDD00C1533E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDD2D87C24EECFDD00C1533E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,7 @@
 		00E356EE1AD99517003FC87E /* ThreeMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThreeMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ThreeMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreeMTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* ThreeM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThreeM.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* The 3M Club.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The 3M Club.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ThreeM/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ThreeM/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ThreeM/Images.xcassets; sourceTree = "<group>"; };
@@ -57,9 +57,9 @@
 		4DDEBDDDC7D46B3D9E40AC5E /* Pods-ThreeM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThreeM.release.xcconfig"; path = "Target Support Files/Pods-ThreeM/Pods-ThreeM.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ThreeM/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB775F31F82E769E6DDF4D8D /* libPods-ThreeM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ThreeM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD37EF1A24E5CC8800B500B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CD57C14D24EDE1980061D708 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		CD57C14E24EDE1980061D708 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		CDD2D87C24EECFDD00C1533E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F6AE6556F38FE85DB36467E8 /* Pods-ThreeM-ThreeMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThreeM-ThreeMTests.debug.xcconfig"; path = "Target Support Files/Pods-ThreeM-ThreeMTests/Pods-ThreeM-ThreeMTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,8 +119,8 @@
 		13B07FAE1A68108700A75B9A /* ThreeM */ = {
 			isa = PBXGroup;
 			children = (
+				CDD2D87C24EECFDD00C1533E /* GoogleService-Info.plist */,
 				CD57C14C24EDE16E0061D708 /* Resources */,
-				CD37EF1A24E5CC8800B500B5 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -168,7 +168,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* ThreeM.app */,
+				13B07F961A680F5B00A75B9A /* The 3M Club.app */,
 				00E356EE1AD99517003FC87E /* ThreeMTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* ThreeM-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ThreeM-tvOSTests.xctest */,
@@ -238,7 +238,7 @@
 			);
 			name = ThreeM;
 			productName = ThreeM;
-			productReference = 13B07F961A680F5B00A75B9A /* ThreeM.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* The 3M Club.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* ThreeM-tvOS */ = {
@@ -291,6 +291,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = VK5G3JXF3M;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -339,7 +340,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				CD37EF1B24E5CC8800B500B5 /* GoogleService-Info.plist in Resources */,
+				CDD2D87D24EECFDD00C1533E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,16 +689,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VK5G3JXF3M;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ThreeM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.02;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.trouthousetech.3m;
-				PRODUCT_NAME = ThreeM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trouthousetech.3mclub;
+				PRODUCT_NAME = "The 3M Club";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -711,15 +714,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VK5G3JXF3M;
 				INFOPLIST_FILE = ThreeM/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.02;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.trouthousetech.3m;
-				PRODUCT_NAME = ThreeM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trouthousetech.3mclub;
+				PRODUCT_NAME = "The 3M Club";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
