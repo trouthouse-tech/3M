@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
+  Platform, Alert,
 } from 'react-native';
 import ProgressBar from '../ProgressBar';
 import {Colors, Fonts} from '../../styles';
@@ -16,7 +16,8 @@ import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {ROUTES} from '../../util/routes';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
-import {createInvestor} from '../../services/investor';
+import {createInvestor, setLoggedInUser} from '../../services/investor';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function InvestorInfoSelector(props: OnboardingStackProps) {
   const [email] = useState(props.route.params.email);
@@ -24,6 +25,19 @@ export default function InvestorInfoSelector(props: OnboardingStackProps) {
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
+  const [firstAttempt, setFirstAttempt] = useState(true);
+
+  useEffect(() => {
+    // We need to update AsyncStorage to indicate if a Instructor has logged in.
+    // It will be set to false upon logout.
+    setLoggedInUser();
+    // @ts-ignore
+    if (props.route.params.isSignedIn && firstAttempt) {
+      Alert.alert('Please finish registering.');
+    }
+    setFirstAttempt(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstName, middleName, lastName, username]);
 
   async function handleSignUp() {
     const investor = {
