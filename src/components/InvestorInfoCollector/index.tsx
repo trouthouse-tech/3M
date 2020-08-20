@@ -5,7 +5,8 @@ import {
   Text,
   ScrollView,
   KeyboardAvoidingView,
-  Platform, Alert,
+  Platform,
+  Alert,
 } from 'react-native';
 import ProgressBar from '../ProgressBar';
 import {Colors, Fonts} from '../../styles';
