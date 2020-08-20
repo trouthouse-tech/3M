@@ -46,6 +46,8 @@ export default function InvestorInfoSelector(props: OnboardingStackProps) {
       lastName,
       username,
       email,
+      isNewUser: true,
+      hasAnsweredOnboardingQuestions: false,
     };
     console.log('investor handleSignUp: ', investor);
     await createInvestor(investor)
