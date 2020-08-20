@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>113409097216-t5cao26k46lgvf92alkkuamb4sf8d89l.apps.googleusercontent.com</string>
+	<string>113409097216-u982rrdkmcvch3e6s8mbrrf11cs4lt1a.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.113409097216-t5cao26k46lgvf92alkkuamb4sf8d89l</string>
+	<string>com.googleusercontent.apps.113409097216-u982rrdkmcvch3e6s8mbrrf11cs4lt1a</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCYU1BQ-2oa8AiRE693k_5gCt18Uhdq0zg</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.trouthousetech.threemclub</string>
+	<string>com.trouthousetech.3mclub</string>
 	<key>PROJECT_ID</key>
 	<string>three-m-dev</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:113409097216:ios:42120367d10c738b79a2e5</string>
+	<string>1:113409097216:ios:49bf75854dfc3e0b79a2e5</string>
 	<key>DATABASE_URL</key>
 	<string>https://three-m-dev.firebaseio.com</string>
 </dict>
