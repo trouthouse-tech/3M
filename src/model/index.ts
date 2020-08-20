@@ -4,4 +4,6 @@ export interface Investor {
   lastName?: string;
   username?: string;
   email?: string;
+  isNewUser?: boolean;
+  hasAnsweredOnboardingQuestions?: boolean;
 }
