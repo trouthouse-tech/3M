@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 import BaseButton from '../BaseButton';
 
 interface TextButtonProps {
-  onPress: () => {};
+  onPress(): void;
   buttonStyle: {};
   textStyle: {};
   text: string;
