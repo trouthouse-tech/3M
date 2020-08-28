@@ -4,12 +4,12 @@ import ProgressBar from '../ProgressBar';
 import {Colors, Fonts} from '../../styles';
 import {StandardTextInput} from '../input/StandardTextInput';
 import {LargeSquareOnPress} from '../buttons';
-import {OnboardingStackProps} from '../../navigation/onboarding/types';
+import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import Header from '../Header';
 import {ROUTES} from '../../util/routes';
 import {registerInvestor, setLoggedInUser} from '../../services/investor';
 
-export default function CredentialCollector(props: OnboardingStackProps) {
+export default function CredentialCollector(props: AuthenticationStackProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
