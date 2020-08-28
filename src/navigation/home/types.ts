@@ -5,6 +5,7 @@ import {Investor} from '../../model';
 
 export type HomeStackParamList = {
   Home: undefined;
+  Onboarding: undefined;
 };
 
 /*
