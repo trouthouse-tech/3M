@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Image, Alert} from 'react-native';
 import {Colors, Utils} from '../../styles';
 import {LargeSquareOnPress} from '../../components/buttons';
-import {OnboardingStackProps} from '../../navigation/onboarding/types';
+import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import {StandardTextInput} from '../../components/input/StandardTextInput';
 import {ROUTES} from '../../util/routes';
 import {getInvestor, login, setLoggedInUser} from '../../services/investor';
@@ -11,7 +11,7 @@ import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {Investor} from '../../model';
 
-export const Login = (props: OnboardingStackProps) => {
+export const Login = (props: AuthenticationStackProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,7 +32,11 @@ export const Login = (props: OnboardingStackProps) => {
       // @ts-ignore
       const user = retrievalAttempt.data.data() as Investor;
       store.dispatch(loginInvestor(email, user));
-      enterMainApplication();
+      if (!user.hasAnsweredOnboardingQuestions) {
+        props.navigation.navigate(ROUTES.Onboarding);
+      } else {
+        enterMainApplication();
+      }
     });
   }
 

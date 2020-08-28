@@ -5,7 +5,7 @@ import {LargeHallowSquareOnPress} from '../../components/buttons/';
 import {LargeSquareOnPress} from '../../components/buttons/';
 import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
-import {OnboardingStackProps} from '../../navigation/onboarding/types';
+import {OnboardingStackProps} from '../../navigation/authentication/types';
 import {ROUTES} from '../../util/routes';
 import {getInvestor, setLoggedInUser} from '../../services/investor';
 import {loginInvestor} from '../../store/user/actions';
@@ -80,7 +80,11 @@ export const Splash = (props: OnboardingStackProps) => {
     } else {
       console.log('investor data: ', investor.data!.data());
       store.dispatch(loginInvestor(email, investor.data!.data()!));
-      enterMainApplication();
+      if (!investor.data!.data()!.hasAnsweredOnboardingQuestions) {
+        props.navigation.navigate(ROUTES.Onboarding);
+      } else {
+        enterMainApplication();
+      }
     }
   }
 
