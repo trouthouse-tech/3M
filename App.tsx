@@ -3,15 +3,17 @@ import React from 'react';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ROUTES} from './src/util/routes';
-import {OnboardingStack} from './src/navigation/onboarding';
+import {AuthenticationStack} from './src/navigation/authentication';
 import MainTabNavigator from './src/navigation/main';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './src/store';
+import {OnboardingStack} from './src/navigation/onboarding';
 
 type RootStackParamList = {
-  Onboarding: undefined;
+  Authentication: undefined;
   Main: undefined;
+  Onboarding: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -33,10 +35,14 @@ const App = () => {
         <SafeAreaView style={{flex: 1}}>
           <RootStack.Navigator headerMode="none">
             <RootStack.Screen
+              name={ROUTES.Authentication}
+              component={AuthenticationStack}
+            />
+            <RootStack.Screen name={ROUTES.Main} component={MainTabNavigator} />
+            <RootStack.Screen
               name={ROUTES.Onboarding}
               component={OnboardingStack}
             />
-            <RootStack.Screen name={ROUTES.Main} component={MainTabNavigator} />
           </RootStack.Navigator>
         </SafeAreaView>
       </NavigationContainer>
