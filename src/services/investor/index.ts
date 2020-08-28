@@ -4,6 +4,7 @@ import {FIREBASE_PATHS} from '../paths';
 import {Investor} from '../../model';
 import {createDocument} from '../../api/firebase/DocumentCreator';
 import AsyncStorage from '@react-native-community/async-storage';
+import {updateDocument} from '../../api/firebase/DocumentMutator';
 
 export async function registerInvestor(email: string, password: string) {
   return await auth()
@@ -49,4 +50,8 @@ export async function createInvestor(investor: Investor) {
  */
 export function setLoggedInUser() {
   AsyncStorage.setItem('isInvestorLoggedIn', 'true');
+}
+
+export async function updateStudentDocument(email: string, data: {}) {
+  updateDocument(FIREBASE_PATHS.Investors, email, data);
 }
