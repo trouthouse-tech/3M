@@ -11,4 +11,8 @@ export type LoginAction = Action & {
   user: Investor;
 };
 
-export type UserAction = LoginAction;
+export type EditProfileAction = Action & {
+  user: Investor;
+};
+
+export type UserAction = LoginAction | EditProfileAction;
