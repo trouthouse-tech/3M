@@ -1,5 +1,5 @@
 export enum ROUTES {
-  Onboarding = 'Onboarding',
+  Authentication = 'Authentication',
   Login = 'Login',
   Main = 'Main',
   Splash = 'Splash',
@@ -9,4 +9,9 @@ export enum ROUTES {
   MultipleChoiceCollector = 'MultipleChoiceCollector',
   Trade = 'Trade',
   Settings = 'Settings',
+  Onboarding = 'Onboarding',
+  TradingExperience = 'TradingExperience',
+  MoneyManagement = 'MoneyManagement',
+  TradingHorizon = 'TradingHorizon',
+  ThreeMPurpose = 'ThreeMPurpose',
 }
