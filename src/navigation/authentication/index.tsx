@@ -1,32 +1,36 @@
 import * as React from 'react';
 import {ROUTES} from '../../util/routes';
 import {Splash} from '../../screens/splash';
-import {OnboardingStackParamList, OnboardingStackProps} from './types';
+import {AuthenticationStackParamList, AuthenticationStackProps} from './types';
 import {createStackNavigator} from '@react-navigation/stack';
 import CredentialCollector from '../../components/CredentialCollector';
 import InvestorInfoSelector from '../../components/InvestorInfoCollector';
 import {Login} from '../../screens/login';
 
-const OnboardingStackNavigator = createStackNavigator<
-  OnboardingStackParamList
+const AuthenticationStackNavigator = createStackNavigator<
+  AuthenticationStackParamList
 >();
 
-export const OnboardingStack: React.FC<OnboardingStackProps> = () => {
+export const AuthenticationStack: React.FC<AuthenticationStackProps> = () => {
   return (
-    <OnboardingStackNavigator.Navigator screenOptions={{headerShown: false}}>
-      <OnboardingStackNavigator.Screen
+    <AuthenticationStackNavigator.Navigator
+      screenOptions={{headerShown: false}}>
+      <AuthenticationStackNavigator.Screen
         name={ROUTES.Splash}
         component={Splash}
       />
-      <OnboardingStackNavigator.Screen name={ROUTES.Login} component={Login} />
-      <OnboardingStackNavigator.Screen
+      <AuthenticationStackNavigator.Screen
+        name={ROUTES.Login}
+        component={Login}
+      />
+      <AuthenticationStackNavigator.Screen
         name={ROUTES.CredentialCollector}
         component={CredentialCollector}
       />
-      <OnboardingStackNavigator.Screen
+      <AuthenticationStackNavigator.Screen
         name={ROUTES.InvestorInfoCollector}
         component={InvestorInfoSelector}
       />
-    </OnboardingStackNavigator.Navigator>
+    </AuthenticationStackNavigator.Navigator>
   );
 };
