@@ -16,7 +16,7 @@ const SettingsBase = (props: SettingsStackProps) => {
     auth().signOut();
     props.navigation.reset({
       index: 0,
-      routes: [{name: ROUTES.Onboarding}],
+      routes: [{name: ROUTES.Authentication}],
     });
   }
 
