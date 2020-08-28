@@ -13,13 +13,13 @@ import {Colors, Fonts} from '../../styles';
 import {StandardTextInput} from '../input/StandardTextInput';
 import {LargeSquareOnPress} from '../buttons';
 import Header from '../Header';
-import {OnboardingStackProps} from '../../navigation/onboarding/types';
+import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import {ROUTES} from '../../util/routes';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {createInvestor, setLoggedInUser} from '../../services/investor';
 
-export default function InvestorInfoSelector(props: OnboardingStackProps) {
+export default function InvestorInfoSelector(props: AuthenticationStackProps) {
   const [email] = useState(props.route.params.email);
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
@@ -46,8 +46,8 @@ export default function InvestorInfoSelector(props: OnboardingStackProps) {
       lastName,
       username,
       email,
-      isNewUser: true,
       hasAnsweredOnboardingQuestions: false,
+      hasAuthenticatedTradier: false,
     };
     console.log('investor handleSignUp: ', investor);
     await createInvestor(investor)
@@ -56,7 +56,7 @@ export default function InvestorInfoSelector(props: OnboardingStackProps) {
           console.log('handleSignUp: ', investor);
           store.dispatch(loginInvestor(investor.email!, investor));
           // Pass Instructor document to main stack
-          props.navigation.navigate(ROUTES.Main);
+          props.navigation.navigate(ROUTES.Onboarding);
         }
       })
       .catch((error) => console.log('error: ', error));
