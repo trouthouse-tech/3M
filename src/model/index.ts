@@ -7,3 +7,9 @@ export interface Investor {
   hasAnsweredOnboardingQuestions?: boolean;
   hasAuthenticatedTradier?: boolean;
 }
+
+export interface TradierCredentials {
+  clientId: string;
+  state: string;
+  scope: string;
+}
