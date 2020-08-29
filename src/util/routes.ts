@@ -14,4 +14,5 @@ export enum ROUTES {
   MoneyManagement = 'MoneyManagement',
   TradingHorizon = 'TradingHorizon',
   ThreeMPurpose = 'ThreeMPurpose',
+  Tradier = 'Tradier',
 }
