@@ -1,11 +1,10 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
-import {Investor} from '../../model';
 
 export type HomeStackParamList = {
   Home: undefined;
-  Onboarding: undefined;
+  Tradier: undefined;
 };
 
 /*
@@ -24,5 +23,4 @@ export type HomeStackRouteProp = RouteProp<HomeStackParamList, ROUTES.Home>;
 export type HomeStackProps = {
   navigation: HomeStackNavigationProp;
   route: HomeStackRouteProp;
-  user: Investor;
 };
