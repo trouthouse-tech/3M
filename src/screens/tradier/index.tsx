@@ -5,6 +5,7 @@ import {TradierCredentials} from '../../model';
 import {HomeStackProps} from '../../navigation/home/types';
 import store from '../../store';
 import {updateCredentials} from '../../store/tradier/actions';
+import {updateStudent} from '../../store/user/actions';
 
 type Props = HomeStackProps & {
   onAuth(credentials: TradierCredentials): void;
@@ -21,6 +22,7 @@ export default function TradierView(props: Props) {
       setIsAuthenticated(true);
       webView?.stopLoading();
       store.dispatch(updateCredentials(parseURL(url)));
+      store.dispatch(updateStudent({hasAuthenticatedTradier: true}));
       props.navigation.goBack();
     }
   }
