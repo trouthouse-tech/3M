@@ -10,12 +10,14 @@ type Props = {
   showLogo?: boolean;
   bottomBorder?: boolean;
   rightButton?(): void;
+  rightIcon?: Element;
 };
 
 export default function Header({
   goBack,
   bottomBorder,
   rightButton,
+  rightIcon,
   showLogo,
 }: Props) {
   let middleStyles = {};
@@ -50,7 +52,7 @@ export default function Header({
         <TouchableHighlight
           style={styles.rightButton}
           onPress={() => rightButton()}>
-          <Icon name="log-out" size={20} color="black" />
+          {rightIcon || <Icon name="log-out" size={20} color="black" />}
         </TouchableHighlight>
       )}
     </View>
