@@ -8,7 +8,7 @@ import {TextCarouselEntries} from '../../util/data';
 import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import {ROUTES} from '../../util/routes';
 import {getInvestor, setLoggedInUser} from '../../services/investor';
-import {loginInvestor} from '../../store/user/actions';
+import {loginInvestor, updateInvestor} from '../../store/user/actions';
 import store from '../../store';
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
@@ -73,10 +73,11 @@ export const Splash = (props: AuthenticationStackProps) => {
    * @param email Used to retrieve Instructor document
    */
   async function handleLoggedInInvestor(email: string) {
+    store.dispatch(updateInvestor({email}));
     const investor = await getInvestor(email);
     // Instructor did not finish registering
     if (investor.error) {
-      resumeRegistration(email);
+      resumeRegistration();
     } else {
       console.log('investor data: ', investor.data!.data());
       await store.dispatch(loginInvestor(email, investor.data!.data()!));
@@ -92,10 +93,9 @@ export const Splash = (props: AuthenticationStackProps) => {
    * Called when the User previously registered their email but did not finish the rest of their information
    * @param email We need to pass their email as a prop so that it can be stored on the document
    */
-  const resumeRegistration = (email: string) => {
+  const resumeRegistration = () => {
     props.navigation.navigate(ROUTES.InvestorInfoCollector, {
       isSignedIn: true,
-      email,
     });
   };
 
