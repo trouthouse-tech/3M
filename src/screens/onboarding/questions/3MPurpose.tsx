@@ -7,9 +7,9 @@ import {answerOpenEnded} from '../../../store/onboarding/actions';
 import {ROUTES} from '../../../util/routes';
 import OpenEndedCollector from '../../../components/OpenEndedCollector';
 import {OnboardingQuestionState} from '../../../store/onboarding/types';
-import {updateStudentDocument} from '../../../services/investor';
+import {updateInvestorDocument} from '../../../services/investor';
 import {UserState} from '../../../store/user/types';
-import {updateStudent} from '../../../store/user/actions';
+import {updateInvestor} from '../../../store/user/actions';
 
 const question = 'What do you expect to gain from be a member of The 3M Club?';
 
@@ -25,14 +25,14 @@ function ThreeMPurposeBase(props: Props) {
     // Update answer to question in store
     store.dispatch(answerOpenEnded(3, answer));
 
-    updateStudentDocument(props.user.email, {
+    updateInvestorDocument(props.user.email, {
       onboardingQuestions: props.onboarding,
       hasAnsweredOnboardingQuestions: true,
     });
     // Update store to indicate that the user has completed the onboarding process
     const updatedUser = props.user;
     updatedUser.hasAnsweredOnboardingQuestions = true;
-    store.dispatch(updateStudent(updatedUser));
+    store.dispatch(updateInvestor(updatedUser));
 
     enterMainApplication();
   }
