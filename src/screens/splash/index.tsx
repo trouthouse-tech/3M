@@ -5,7 +5,7 @@ import {LargeHallowSquareOnPress} from '../../components/buttons/';
 import {LargeSquareOnPress} from '../../components/buttons/';
 import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
-import {OnboardingStackProps} from '../../navigation/authentication/types';
+import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import {ROUTES} from '../../util/routes';
 import {getInvestor, setLoggedInUser} from '../../services/investor';
 import {loginInvestor} from '../../store/user/actions';
@@ -13,7 +13,7 @@ import store from '../../store';
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 
-export const Splash = (props: OnboardingStackProps) => {
+export const Splash = (props: AuthenticationStackProps) => {
   console.log(
     'Splash isInstructorLoggedIn: ',
     AsyncStorage.getItem('isInvestorLoggedIn'),
@@ -79,7 +79,7 @@ export const Splash = (props: OnboardingStackProps) => {
       resumeRegistration(email);
     } else {
       console.log('investor data: ', investor.data!.data());
-      store.dispatch(loginInvestor(email, investor.data!.data()!));
+      await store.dispatch(loginInvestor(email, investor.data!.data()!));
       if (!investor.data!.data()!.hasAnsweredOnboardingQuestions) {
         props.navigation.navigate(ROUTES.Onboarding);
       } else {
