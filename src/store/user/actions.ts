@@ -14,7 +14,7 @@ export const loginInvestor = (email: string, user: Investor): LoginAction => ({
   user,
 });
 
-export const updateStudent = (user: Investor): EditProfileAction => ({
+export const updateInvestor = (user: Investor): EditProfileAction => ({
   type: USER_ACTION_TYPES.EDIT_PROFILE,
   user,
 });

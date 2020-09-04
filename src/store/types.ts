@@ -3,7 +3,7 @@ import {OnboardingQuestionState} from './onboarding/types';
 import {TradierCredentialsState} from './tradier/types';
 
 export type AppState = {
-  user: UserState;
+  userReducer: UserState;
   onboarding: OnboardingQuestionState;
   tradier: TradierCredentialsState;
 };
