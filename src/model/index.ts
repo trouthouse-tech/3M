@@ -6,5 +6,5 @@ export interface Investor {
   email?: string;
   hasAnsweredOnboardingQuestions?: boolean;
   tradierAccessToken?: string;
-  tradierAccessTokenExpiration: number;
+  tradierAccessTokenExpiration?: number;
 }
