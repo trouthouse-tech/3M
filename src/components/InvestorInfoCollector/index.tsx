@@ -19,9 +19,13 @@ import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {createInvestor, setLoggedInUser} from '../../services/investor';
 import {Investor} from '../../model';
+import {AppState} from '../../store/types';
+import {connect} from 'react-redux';
 
-export default function InvestorInfoSelector(props: AuthenticationStackProps) {
-  const [email] = useState(props.route.params.email);
+export default function InvestorInfoCollectorBase(
+  props: AuthenticationStackProps,
+) {
+  const [email] = useState(props.user?.email);
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -105,6 +109,17 @@ export default function InvestorInfoSelector(props: AuthenticationStackProps) {
     </View>
   );
 }
+
+const mapStateToProps = (state: AppState) => ({
+  user: state.userReducer,
+});
+
+const mapDispatchToProps = () => ({});
+
+export const InvestorInfoCollector = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(InvestorInfoCollectorBase);
 
 const styles = StyleSheet.create({
   title: {

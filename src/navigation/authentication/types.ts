@@ -1,6 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
+import {UserState} from '../../store/user/types';
 
 export type AuthenticationStackParamList = {
   Splash: undefined;
@@ -23,4 +24,5 @@ export type AuthenticationStackRouteProp = RouteProp<
 export type AuthenticationStackProps = {
   navigation: AuthenticationStackNavigationProp;
   route: AuthenticationStackRouteProp;
+  user?: UserState;
 };
