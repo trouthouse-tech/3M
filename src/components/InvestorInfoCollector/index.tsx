@@ -18,6 +18,7 @@ import {ROUTES} from '../../util/routes';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {createInvestor, setLoggedInUser} from '../../services/investor';
+import {TradierCredentialsInitialState} from '../../store/tradier/reducer';
 
 export default function InvestorInfoSelector(props: AuthenticationStackProps) {
   const [email] = useState(props.route.params.email);
@@ -47,8 +48,9 @@ export default function InvestorInfoSelector(props: AuthenticationStackProps) {
       username,
       email,
       hasAnsweredOnboardingQuestions: false,
-      hasAuthenticatedTradier: false,
+      tradier: TradierCredentialsInitialState,
     };
+    delete investor.tradier.clientId;
     console.log('investor handleSignUp: ', investor);
     await createInvestor(investor)
       .then((insertionAttempt) => {
