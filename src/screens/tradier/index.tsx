@@ -1,56 +1,45 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {WebView, WebViewNavigation} from 'react-native-webview';
-import {TradierCredentials} from '../../model';
 import {HomeStackProps} from '../../navigation/home/types';
 import store from '../../store';
-import {updateCredentials} from '../../store/tradier/actions';
-import {updateStudent} from '../../store/user/actions';
+import {getAccessToken} from '../../services/tradier';
+import {updateInvestor} from '../../store/user/actions';
 
-type Props = HomeStackProps & {
-  onAuth(credentials: TradierCredentials): void;
-};
-
-export default function TradierView(props: Props) {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+export default function TradierView(props: HomeStackProps) {
   const [webView, setWebView] = useState<WebView>();
+  const [clientId] = useState('hSPco1otJoZXyfBiR3tFMPg0WPXPaTuI');
+  const [scope] = useState('read,write,trade,market');
+  const [state] = useState('hahajd-u3ud7s-jsk4-dj-s');
 
-  function handleNavigationChange(navState: WebViewNavigation) {
+  async function handleNavigationChange(navState: WebViewNavigation) {
+    // The url of the page once the user approves access to their account
     const {url} = navState;
 
-    if (url.includes('?client_id=') && !isAuthenticated) {
-      setIsAuthenticated(true);
+    if (url.includes('?code=')) {
       webView?.stopLoading();
-      store.dispatch(updateCredentials(parseURL(url)));
-      store.dispatch(updateStudent({hasAuthenticatedTradier: true}));
+      let code = url.split('code=')[1];
+      code = code.substring(0, 8);
+
+      await getAccessToken(code).then((data) => {
+        store.dispatch(
+          updateInvestor({
+            tradierAccessToken: data.access_token,
+            tradierAccessTokenExpiration: Date.now() / 1000 + 82399,
+          }),
+        );
+      });
       props.navigation.goBack();
     }
   }
-
-  function parseURL(url: string): TradierCredentials {
-    console.log('url: ', url);
-    let clientId = url.split('?client_id=')[1];
-    clientId = clientId.substring(0, 32);
-
-    let state = url.split('state=')[1];
-
-    let scope = url.split('scope=')[1];
-    const upperBounds = scope.length - state.length - 7;
-    scope = scope.substring(0, upperBounds);
-
-    return {
-      clientId: clientId,
-      state: state,
-      scope: scope,
-    };
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <WebView
         ref={(ref) => setWebView(ref!)}
-        source={{uri: 'https://brokerage.tradier.com/user/login'}}
-        onNavigationStateChange={(state) => handleNavigationChange(state)}
+        source={{
+          uri: `https://api.tradier.com/v1/oauth/authorize?client_id=${clientId}&scope=${scope}&state=${state}`,
+        }}
+        onNavigationStateChange={(navState) => handleNavigationChange(navState)}
       />
     </SafeAreaView>
   );
