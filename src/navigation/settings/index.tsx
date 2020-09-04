@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {SettingsStackParamList} from './types';
-import {Settings} from '../../screens/settings';
+import {Settings} from '../../screens/me';
 
 const SettingsStackNavigator = createStackNavigator<SettingsStackParamList>();
 
