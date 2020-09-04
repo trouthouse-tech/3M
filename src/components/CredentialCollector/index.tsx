@@ -24,7 +24,9 @@ export default function CredentialCollector(props: AuthenticationStackProps) {
       if (insertionAttempt.user) {
         setLoggedInUser();
         updateInvestor({email});
-        props.navigation.push(ROUTES.InvestorInfoCollector, {isSignedIn: false});
+        props.navigation.push(ROUTES.InvestorInfoCollector, {
+          isSignedIn: false,
+        });
       } else {
         handleRegistrationError(insertionAttempt.error);
       }
