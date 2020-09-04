@@ -52,6 +52,6 @@ export function setLoggedInUser() {
   AsyncStorage.setItem('isInvestorLoggedIn', 'true');
 }
 
-export async function updateStudentDocument(email: string, data: {}) {
+export async function updateInvestorDocument(email: string, data: {}) {
   updateDocument(FIREBASE_PATHS.Investors, email, data);
 }
