@@ -56,7 +56,7 @@ const OnboardingLandingBase = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.user,
+  user: state.userReducer,
 });
 
 const mapDispatchToProps = () => ({});

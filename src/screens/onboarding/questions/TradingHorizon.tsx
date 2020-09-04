@@ -36,7 +36,7 @@ function TradingHorizonBase(props: OnboardingStackProps) {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.user,
+  user: state.userReducer,
   onboarding: state.onboarding,
 });
 
