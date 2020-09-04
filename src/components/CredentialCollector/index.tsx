@@ -8,6 +8,7 @@ import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import Header from '../Header';
 import {ROUTES} from '../../util/routes';
 import {registerInvestor, setLoggedInUser} from '../../services/investor';
+import {updateInvestor} from '../../store/user/actions';
 
 export default function CredentialCollector(props: AuthenticationStackProps) {
   const [email, setEmail] = useState('');
@@ -22,9 +23,8 @@ export default function CredentialCollector(props: AuthenticationStackProps) {
       // user was successfully created
       if (insertionAttempt.user) {
         setLoggedInUser();
-        props.navigation.push(ROUTES.InvestorInfoCollector, {
-          email,
-        });
+        updateInvestor({email});
+        props.navigation.push(ROUTES.InvestorInfoCollector);
       } else {
         handleRegistrationError(insertionAttempt.error);
       }
