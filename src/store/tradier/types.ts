@@ -1,6 +1,6 @@
 import {TradierCredentials} from '../../model';
 
-export type TradierCredentialsState = {};
+export type TradierCredentialsState = TradierCredentials;
 
 type Action = {
   type: string;

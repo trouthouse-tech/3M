@@ -5,11 +5,6 @@ export interface Investor {
   username?: string;
   email?: string;
   hasAnsweredOnboardingQuestions?: boolean;
-  hasAuthenticatedTradier?: boolean;
-}
-
-export interface TradierCredentials {
-  clientId: string;
-  state: string;
-  scope: string;
+  tradierAccessToken?: string;
+  tradierAccessTokenExpiration: number;
 }

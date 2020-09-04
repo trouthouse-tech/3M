@@ -1,10 +1,17 @@
 import {TradierCredentialsAction, TradierCredentialsState} from './types';
 import {TRADIER_ACTION_TYPES} from './actions';
 
-export const InitialState: TradierCredentialsState = {};
+export const TradierCredentialsInitialState: TradierCredentialsState = {
+  authCode: '',
+  accessToken: '',
+  tokenExpiration: '',
+  secondsUntilTokenExpire: -1,
+  clientId: 'hSPco1otJoZXyfBiR3tFMPg0WPXPaTuI',
+  isAuthenticated: false,
+};
 
 export const tradier = (
-  state: TradierCredentialsState = InitialState,
+  state: TradierCredentialsState = TradierCredentialsInitialState,
   action: TradierCredentialsAction,
 ) => {
   switch (action.type) {
