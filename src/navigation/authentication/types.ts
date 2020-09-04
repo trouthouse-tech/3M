@@ -6,7 +6,7 @@ export type AuthenticationStackParamList = {
   Splash: undefined;
   Login: undefined;
   CredentialCollector: undefined;
-  InvestorInfoCollector: {email: string; isSignedIn?: boolean};
+  InvestorInfoCollector: {isSignedIn?: boolean};
   Main: undefined;
   Onboarding: undefined;
 };
