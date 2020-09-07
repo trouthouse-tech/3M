@@ -11,7 +11,7 @@ import {updateInvestorDocument} from '../../../services/investor';
 import {UserState} from '../../../store/user/types';
 import {updateInvestor} from '../../../store/user/actions';
 
-const question = 'What do you expect to gain from be a member of The 3M Club?';
+const question = 'What are your goals as a member of the 3M club?';
 
 type Props = OnboardingStackProps & {
   onboarding: OnboardingQuestionState;
