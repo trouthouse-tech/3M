@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, Text} from 'react-native';
 import {Colors, Fonts, Utils} from '../../styles';
 import {LargeHallowSquareOnPress} from '../../components/buttons/';
 import {LargeSquareOnPress} from '../../components/buttons/';
@@ -115,6 +115,7 @@ export const Splash = (props: AuthenticationStackProps) => {
           source={require('../../../assets/images/logo/default-logo.png')}
         />
       </View>
+      <Text style={styles.title}>Welcome to The 3M Club</Text>
       <View style={styles.carouselContainer}>
         <TextCarousel entries={TextCarouselEntries} />
       </View>
@@ -154,6 +155,10 @@ const styles = StyleSheet.create({
     // flex: 2,
     height: imageSize,
     width: imageSize,
+  },
+
+  title: {
+    ...Fonts.normal,
   },
 
   form: {
