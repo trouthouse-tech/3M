@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import {Colors, Utils} from '../../styles';
 import {LargeSquareOnPress} from '../../components/buttons';
 import {AuthenticationStackProps} from '../../navigation/authentication/types';
@@ -57,33 +64,37 @@ export const Login = (props: AuthenticationStackProps) => {
   return (
     <View style={styles.container}>
       <Header goBack={() => props.navigation.goBack()} />
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require('../../../assets/images/logo/default-logo.png')}
-        />
-      </View>
-      <View style={styles.form}>
-        <StandardTextInput
-          placeholder="Email"
-          onChangeText={(text: string) => setEmail(text)}
-          value={email}
-          autoFocus={true}
-          secureTextEntry={false}
-        />
-        <StandardTextInput
-          placeholder="Password"
-          onChangeText={(text: string) => setPassword(text)}
-          value={password}
-          autoFocus={false}
-          secureTextEntry={true}
-        />
-        <LargeSquareOnPress
-          onPress={() => handleSignIn()}
-          text="Sign In"
-          textColor={Colors.white}
-        />
-      </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoidingView}>
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require('../../../assets/images/logo/default-logo.png')}
+          />
+        </View>
+        <View style={styles.form}>
+          <StandardTextInput
+            placeholder="Email"
+            onChangeText={(text: string) => setEmail(text)}
+            value={email}
+            autoFocus={true}
+            secureTextEntry={false}
+          />
+          <StandardTextInput
+            placeholder="Password"
+            onChangeText={(text: string) => setPassword(text)}
+            value={password}
+            autoFocus={false}
+            secureTextEntry={true}
+          />
+          <LargeSquareOnPress
+            onPress={() => handleSignIn()}
+            text="Sign In"
+            textColor={Colors.white}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -93,6 +104,13 @@ const imageSize = Utils.DEVICE_WIDTH / 2;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+
+  keyboardAvoidingView: {
+    flex: 1,
+    marginBottom: 50,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
