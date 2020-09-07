@@ -22,9 +22,7 @@ import {Investor} from '../../model';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
 
-export default function InvestorInfoCollectorBase(
-  props: AuthenticationStackProps,
-) {
+function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
   const [email] = useState(props.user?.email);
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');

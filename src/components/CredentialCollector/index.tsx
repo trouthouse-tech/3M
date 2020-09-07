@@ -9,8 +9,10 @@ import Header from '../Header';
 import {ROUTES} from '../../util/routes';
 import {registerInvestor, setLoggedInUser} from '../../services/investor';
 import {updateInvestor} from '../../store/user/actions';
+import store from '../../store';
 
 export default function CredentialCollector(props: AuthenticationStackProps) {
+  console.log('propsss: ', props);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,7 +25,7 @@ export default function CredentialCollector(props: AuthenticationStackProps) {
       // user was successfully created
       if (insertionAttempt.user) {
         setLoggedInUser();
-        updateInvestor({email});
+        store.dispatch(updateInvestor({email}));
         props.navigation.push(ROUTES.InvestorInfoCollector, {
           isSignedIn: false,
         });

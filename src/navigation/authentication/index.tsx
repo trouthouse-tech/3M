@@ -4,7 +4,7 @@ import {Splash} from '../../screens/splash';
 import {AuthenticationStackParamList, AuthenticationStackProps} from './types';
 import {createStackNavigator} from '@react-navigation/stack';
 import CredentialCollector from '../../components/CredentialCollector';
-import InvestorInfoSelector from '../../components/InvestorInfoCollector';
+import {InvestorInfoCollector} from '../../components/InvestorInfoCollector';
 import {Login} from '../../screens/login';
 
 const AuthenticationStackNavigator = createStackNavigator<
@@ -29,7 +29,7 @@ export const AuthenticationStack: React.FC<AuthenticationStackProps> = () => {
       />
       <AuthenticationStackNavigator.Screen
         name={ROUTES.InvestorInfoCollector}
-        component={InvestorInfoSelector}
+        component={InvestorInfoCollector}
       />
     </AuthenticationStackNavigator.Navigator>
   );
