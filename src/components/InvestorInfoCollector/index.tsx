@@ -68,7 +68,7 @@ function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
 
   return (
     <View>
-      <Header goBack={() => props.navigation.goBack()} />
+      <Header showLogo />
       <ProgressBar steps={2} currentStep={1} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
