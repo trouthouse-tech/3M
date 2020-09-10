@@ -14,8 +14,20 @@ type Props = HomeStackProps & {
 };
 
 const HomeBase = (props: Props) => {
-  console.log('props: ', props);
   useEffect(() => {
+    if (props.user.tradierIsWaitingForApproval) {
+      Alert.alert(
+        'Your Tradier account has been created.',
+        'The approval process may take up to 1 business day. Please note that certain 3M features will be unavailable until your account is approved.',
+        [
+          {
+            text: 'Attempt Login',
+            onPress: () => props.navigation.push(ROUTES.Tradier),
+          },
+          {text: 'OK', onPress: () => console.log('Success')},
+        ],
+      );
+    }
     const expiration = props.user.tradierAccessTokenExpiration!;
     const isExpired = expiration < Date.now() / 1000 - 86399;
     if (isExpired) {
@@ -39,6 +51,7 @@ const HomeBase = (props: Props) => {
       tradierAccessToken: props.user.tradierAccessToken,
       tradierAccessTokenExpiration: props.user.tradierAccessTokenExpiration,
       hasAuthenticatedTradier: true,
+      tradierIsWaitingForApproval: false,
     });
   }
 
