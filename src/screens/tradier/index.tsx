@@ -5,6 +5,7 @@ import {HomeStackProps} from '../../navigation/home/types';
 import store from '../../store';
 import {getAccessToken} from '../../services/tradier';
 import {updateInvestor} from '../../store/user/actions';
+import Header from '../../components/Header';
 
 export default function TradierView(props: HomeStackProps) {
   const [webView, setWebView] = useState<WebView>();
@@ -26,14 +27,22 @@ export default function TradierView(props: HomeStackProps) {
           updateInvestor({
             tradierAccessToken: data.access_token,
             tradierAccessTokenExpiration: Date.now() / 1000 + 82399,
+            tradierIsWaitingForApproval: false,
           }),
         );
       });
       props.navigation.goBack();
     }
+
+    if (url.includes('complete')) {
+      webView?.stopLoading();
+      store.dispatch(updateInvestor({tradierIsWaitingForApproval: true}));
+      props.navigation.goBack();
+    }
   }
   return (
     <SafeAreaView style={styles.container}>
+      <Header showLogo goBack={() => props.navigation.goBack()} bottomBorder />
       <WebView
         ref={(ref) => setWebView(ref!)}
         source={{
