@@ -52,6 +52,7 @@ function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
       hasAnsweredOnboardingQuestions: false,
       tradierAccessTokenExpiration: -1,
       tradierAccessToken: '',
+      tradierIsWaitingForApproval: false,
     };
     console.log('investor handleSignUp: ', investor);
     await createInvestor(investor)
