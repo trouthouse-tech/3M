@@ -7,4 +7,5 @@ export interface Investor {
   hasAnsweredOnboardingQuestions?: boolean;
   tradierAccessToken?: string;
   tradierAccessTokenExpiration?: number;
+  tradierIsWaitingForApproval?: boolean;
 }
