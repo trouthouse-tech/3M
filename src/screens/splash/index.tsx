@@ -91,7 +91,6 @@ export const Splash = (props: AuthenticationStackProps) => {
 
   /**
    * Called when the User previously registered their email but did not finish the rest of their information
-   * @param email We need to pass their email as a prop so that it can be stored on the document
    */
   const resumeRegistration = () => {
     props.navigation.navigate(ROUTES.InvestorInfoCollector, {
