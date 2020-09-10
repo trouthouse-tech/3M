@@ -44,7 +44,7 @@ export default function Header({
         <View style={[styles.logoContainer, middleStyles]}>
           <Image
             style={[styles.headerIcon, styles.logo]}
-            source={require('../../../assets/images/logo/default-logo.png')}
+            source={require('../../../assets/images/logo/penny.png')}
           />
         </View>
       )}
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: marginBottom,
     flexDirection: 'row',
     alignItems: 'center',
+    // backgroundColor: 'blue',
   },
 
   backButton: {
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
   headerIcon: {
     height: headerImageSize,
     width: headerImageSize,
+    // backgroundColor: 'green',
   },
 
   logoContainer: {
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
     borderRadius: 5,
     // alignSelf: 'center',
   },
