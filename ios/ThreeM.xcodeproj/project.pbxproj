@@ -59,6 +59,10 @@
 		CB775F31F82E769E6DDF4D8D /* libPods-ThreeM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ThreeM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD57C14D24EDE1980061D708 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		CD57C14E24EDE1980061D708 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		CD66F1EA25278427009DACDE /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		CD66F237252784BD009DACDE /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		CD66F238252784BD009DACDE /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		CD66F239252784BD009DACDE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		CDD2D87C24EECFDD00C1533E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -190,6 +194,10 @@
 		CD57C14C24EDE16E0061D708 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CD66F238252784BD009DACDE /* FontAwesome5_Brands.ttf */,
+				CD66F239252784BD009DACDE /* FontAwesome5_Regular.ttf */,
+				CD66F237252784BD009DACDE /* FontAwesome5_Solid.ttf */,
+				CD66F1EA25278427009DACDE /* FontAwesome.ttf */,
 				CD57C14D24EDE1980061D708 /* Entypo.ttf */,
 				CD57C14E24EDE1980061D708 /* MaterialIcons.ttf */,
 			);
