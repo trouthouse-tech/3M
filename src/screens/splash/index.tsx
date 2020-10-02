@@ -58,6 +58,7 @@ export const Splash = (props: AuthenticationStackProps) => {
     auth().onAuthStateChanged(async (user) => {
       if (!firstAttempt) {
         if (user) {
+          // @ts-ignore
           const {email} = user._user;
           // Instructor is logged in
           handleLoggedInInvestor(email);
@@ -111,7 +112,7 @@ export const Splash = (props: AuthenticationStackProps) => {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          source={require('../../../assets/images/logo/default-logo.png')}
+          source={require('../../../assets/images/logo/newLogo.png')}
         />
       </View>
       <Text style={styles.title}>Welcome to The 3M Club</Text>
@@ -122,8 +123,8 @@ export const Splash = (props: AuthenticationStackProps) => {
         <LargeHallowSquareOnPress
           onPress={() => props.navigation.push(ROUTES.CredentialCollector)}
           text="Sign Up"
-          textColor={Colors.main_green}
-          borderColor={Colors.main_green}
+          textColor={Colors.blue_green}
+          borderColor={Colors.blue_green}
         />
         <LargeSquareOnPress
           onPress={() => props.navigation.push(ROUTES.Login)}
@@ -142,12 +143,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: Utils.DEVICE_HEIGHT / 10,
+    // backgroundColor: 'red',
   },
 
   logoContainer: {
-    flex: 4,
+    flex: 6,
     justifyContent: 'center',
+    // backgroundColor: 'green',
   },
 
   logo: {

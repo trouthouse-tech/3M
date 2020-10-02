@@ -30,7 +30,6 @@ const OnboardingLandingBase = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/*<Header showLogo />*/}
       <View style={styles.main}>
         <View style={styles.logoContainer}>
           <Image

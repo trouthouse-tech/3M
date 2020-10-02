@@ -26,25 +26,23 @@ export default function ProgressBar({steps, currentStep}: Props) {
   return <View style={styles.bar}>{stepComponents}</View>;
 }
 
-const darkGray = '#6b6b6b';
-
 const styles = StyleSheet.create({
   bar: {
     height: 10,
     flexDirection: 'row',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: darkGray,
+    borderColor: Colors.blue_green,
   },
 
   step: {
     flex: 1,
     borderRightWidth: 1,
-    borderRightColor: darkGray,
+    borderRightColor: Colors.blue_green,
   },
 
   filledStep: {
-    backgroundColor: Colors.main_green,
+    backgroundColor: Colors.blue_green,
   },
 
   lastStep: {

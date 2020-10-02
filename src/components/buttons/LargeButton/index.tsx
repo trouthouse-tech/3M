@@ -23,8 +23,8 @@ export default function LargeButton({
         styles.largeSquare,
         // eslint-disable-next-line react-native/no-inline-styles
         {
-          backgroundColor: buttonColor || Colors.main_green,
-          borderColor: borderColor || Colors.main_green,
+          backgroundColor: buttonColor || Colors.blue_green,
+          borderColor: borderColor || Colors.blue_green,
           borderWidth: 1,
         },
       ]}

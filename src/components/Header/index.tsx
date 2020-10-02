@@ -56,7 +56,7 @@ export default function Header(props: HeaderProps) {
         <View style={[styles.logoContainer, logoStyles]}>
           <Image
             style={[styles.headerIcon, styles.logo]}
-            source={require('../../../assets/images/logo/3MLogo.png')}
+            source={require('../../../assets/images/logo/newLogo.png')}
           />
         </View>
       )}

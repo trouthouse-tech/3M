@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 // @ts-ignore
 import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {Fonts, Utils} from '../../styles';
+import {Colors, Fonts, Utils} from '../../styles';
 import {TextCarouselEntry} from '../../types';
 
 type CarouselProps = {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     marginHorizontal: 8,
-    backgroundColor: 'rgba(5,193,142, 0.92)',
+    backgroundColor: Colors.blue_green,
   },
 
   inactiveDot: {},

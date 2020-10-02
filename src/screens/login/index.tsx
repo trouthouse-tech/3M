@@ -17,6 +17,8 @@ import Header from '../../components/Header';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {Investor} from '../../model';
+import {BackButton} from '../../components/Header/HeaderItems';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 export const Login = (props: AuthenticationStackProps) => {
   const [email, setEmail] = useState('');
@@ -61,16 +63,23 @@ export const Login = (props: AuthenticationStackProps) => {
     props.navigation.navigate(ROUTES.Main);
   }
 
+  const contentContainerStyle = {
+    contentContainerStyle: styles.container,
+  };
+
   return (
     <View style={styles.container}>
-      <Header goBack={() => props.navigation.goBack()} />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardAvoidingView}>
+      <Header
+        leftButton={{
+          child: BackButton,
+          onclick: () => props.navigation.goBack(),
+        }}
+      />
+      <KeyboardAwareScrollView {...contentContainerStyle}>
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('../../../assets/images/logo/default-logo.png')}
+            source={require('../../../assets/images/logo/newLogo.png')}
           />
         </View>
         <View style={styles.form}>
@@ -94,7 +103,7 @@ export const Login = (props: AuthenticationStackProps) => {
             textColor={Colors.white}
           />
         </View>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </View>
   );
 };
@@ -102,21 +111,16 @@ export const Login = (props: AuthenticationStackProps) => {
 const imageSize = Utils.DEVICE_WIDTH / 2;
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
   },
 
-  keyboardAvoidingView: {
-    flex: 1,
-    marginBottom: 50,
-    justifyContent: 'space-around',
+  container: {
     alignItems: 'center',
   },
 
   logoContainer: {
-    flex: 5,
+    flex: 2,
     justifyContent: 'center',
   },
 
@@ -126,8 +130,8 @@ const styles = StyleSheet.create({
   },
 
   form: {
-    flex: 6,
-    height: Utils.DEVICE_HEIGHT / 5,
+    flex: 3,
+    height: Utils.DEVICE_HEIGHT / 3,
     alignItems: 'center',
   },
 

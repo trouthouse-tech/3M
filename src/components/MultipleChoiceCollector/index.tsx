@@ -55,7 +55,7 @@ export default function MultipleChoiceCollector({
       <Header
         leftButton={{
           child: BackButton,
-          onclick: () => props.navigation.goBack(),
+          onclick: () => navigation.goBack(),
         }}
       />
       <ProgressBar steps={numOfSteps} currentStep={currentStep} />
