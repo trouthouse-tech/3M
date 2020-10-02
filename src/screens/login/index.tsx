@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Image, Alert} from 'react-native';
 import {Colors, Utils} from '../../styles';
-import {LargeSquareOnPress} from '../../components/buttons';
 import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import {StandardTextInput} from '../../components/input/StandardTextInput';
 import {ROUTES} from '../../util/routes';
@@ -11,7 +10,9 @@ import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {Investor} from '../../model';
 import {BackButton} from '../../components/Header/HeaderItems';
+// @ts-ignore
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {Buttons} from 'golfpro-rn-components';
 
 export const Login = (props: AuthenticationStackProps) => {
   const [email, setEmail] = useState('');
@@ -90,10 +91,11 @@ export const Login = (props: AuthenticationStackProps) => {
             autoFocus={false}
             secureTextEntry={true}
           />
-          <LargeSquareOnPress
+          <Buttons.LargeSquareOnPress
             onPress={() => handleSignIn()}
             text="Sign In"
             textColor={Colors.white}
+            buttonColor={Colors.blue_green}
           />
         </View>
       </KeyboardAwareScrollView>

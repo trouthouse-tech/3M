@@ -12,6 +12,7 @@ import {loginInvestor, updateInvestor} from '../../store/user/actions';
 import store from '../../store';
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
+import {Buttons} from 'golfpro-rn-components';
 
 export const Splash = (props: AuthenticationStackProps) => {
   console.log(
@@ -120,16 +121,17 @@ export const Splash = (props: AuthenticationStackProps) => {
         <TextCarousel entries={TextCarouselEntries} />
       </View>
       <View style={styles.form}>
-        <LargeHallowSquareOnPress
+        <Buttons.LargeHallowSquareOnPress
           onPress={() => props.navigation.push(ROUTES.CredentialCollector)}
           text="Sign Up"
           textColor={Colors.blue_green}
           borderColor={Colors.blue_green}
         />
-        <LargeSquareOnPress
+        <Buttons.LargeSquareOnPress
           onPress={() => props.navigation.push(ROUTES.Login)}
           text="Sign In"
           textColor={Colors.white}
+          buttonColor={Colors.blue_green}
         />
       </View>
     </View>
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    ...Fonts.normal,
+    fontSize: Fonts.normal,
   },
 
   form: {
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
 
   radioButtonText: {
     marginLeft: 5,
-    ...Fonts.large,
+    fontSize: Fonts.large,
   },
 
   carouselContainer: {
