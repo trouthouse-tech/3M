@@ -6,6 +6,7 @@ import {LargeSquareOnPress} from '../buttons';
 import Header from '../Header';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../styles/util';
+import {BackButton} from '../Header/HeaderItems';
 
 type Props = {
   onFinish(answer: string): void;
@@ -31,7 +32,12 @@ export default function OpenEndedCollector({
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header goBack={() => navigation.goBack()} />
+      <Header
+        leftButton={{
+          child: BackButton,
+          onclick: () => navigation.goBack(),
+        }}
+      />
       <ProgressBar steps={numOfSteps} currentStep={currentStep} />
       <Text style={styles.title}>{question}</Text>
       <View style={styles.form}>

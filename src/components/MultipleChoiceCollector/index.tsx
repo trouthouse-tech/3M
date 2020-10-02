@@ -7,6 +7,7 @@ import Header from '../Header';
 import LargeHallowButton from '../buttons/LargeHallow';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {DEVICE_WIDTH} from '../../styles/util';
+import {BackButton} from '../Header/HeaderItems';
 
 type Props = {
   onSelect(answer: number): void;
@@ -51,7 +52,12 @@ export default function MultipleChoiceCollector({
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header goBack={() => navigation.goBack()} />
+      <Header
+        leftButton={{
+          child: BackButton,
+          onclick: () => props.navigation.goBack(),
+        }}
+      />
       <ProgressBar steps={numOfSteps} currentStep={currentStep} />
       <Text style={styles.title}>{question}</Text>
       <View style={styles.form}>

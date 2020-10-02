@@ -8,6 +8,7 @@ import {UserState} from '../../store/user/types';
 import {Fonts} from '../../styles';
 import {ROUTES} from '../../util/routes';
 import {updateInvestorDocument} from '../../services/investor';
+import {ChatButton} from '../../components/Header/HeaderItems';
 
 type Props = HomeStackProps & {
   user: UserState;
@@ -75,9 +76,8 @@ const HomeBase = (props: Props) => {
     <View>
       <Header
         showLogo
-        bottomBorder
-        rightButton={() => handleChatPressed()}
-        rightIcon={rightHeaderIcon}
+        showBottomBorder
+        rightButton={{child: ChatButton, onclick: () => handleChatPressed()}}
       />
       <Text>Home</Text>
     </View>

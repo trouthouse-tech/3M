@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import {ROUTES} from '../../util/routes';
 import {UserState} from '../../store/user/types';
+import {LogoutButton} from '../../components/Header/HeaderItems';
 
 type Props = MeStackProps & {
   userReducer: UserState;
@@ -25,7 +26,11 @@ const MeBase = (props: Props) => {
 
   return (
     <View>
-      <Header showLogo bottomBorder rightButton={() => handleSignOut()} />
+      <Header
+        showLogo
+        showBottomBorder
+        rightButton={{child: LogoutButton, onclick: () => handleSignOut()}}
+      />
       <Text>Me</Text>
     </View>
   );

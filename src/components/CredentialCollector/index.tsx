@@ -10,6 +10,7 @@ import {ROUTES} from '../../util/routes';
 import {registerInvestor, setLoggedInUser} from '../../services/investor';
 import {updateInvestor} from '../../store/user/actions';
 import store from '../../store';
+import {BackButton} from '../Header/HeaderItems';
 
 export default function CredentialCollector(props: AuthenticationStackProps) {
   console.log('propsss: ', props);
@@ -73,7 +74,12 @@ export default function CredentialCollector(props: AuthenticationStackProps) {
 
   return (
     <View>
-      <Header goBack={() => props.navigation.goBack()} />
+      <Header
+        leftButton={{
+          child: BackButton,
+          onclick: () => props.navigation.goBack(),
+        }}
+      />
       <ProgressBar steps={2} currentStep={0} />
       <Text style={styles.title}>Login Information</Text>
       <View style={styles.form}>

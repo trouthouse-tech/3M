@@ -9,14 +9,14 @@ const TradeBase = (props: TradeStackProps) => {
   console.log('user: ', props.user);
   return (
     <View>
-      <Header showLogo bottomBorder />
+      <Header showLogo showBottomBorder />
       <Text>Trade</Text>
     </View>
   );
 };
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.user,
+  user: state.userReducer,
 });
 
 const mapDispatchToProps = () => ({});

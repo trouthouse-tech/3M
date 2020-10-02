@@ -6,6 +6,7 @@ import store from '../../store';
 import {getAccessToken} from '../../services/tradier';
 import {updateInvestor} from '../../store/user/actions';
 import Header from '../../components/Header';
+import {BackButton} from '../../components/Header/HeaderItems';
 
 export default function TradierView(props: HomeStackProps) {
   const [webView, setWebView] = useState<WebView>();
@@ -42,7 +43,14 @@ export default function TradierView(props: HomeStackProps) {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <Header showLogo goBack={() => props.navigation.goBack()} bottomBorder />
+      <Header
+        leftButton={{
+          child: BackButton,
+          onclick: () => props.navigation.goBack(),
+        }}
+        showLogo
+        showBottomBorder
+      />
       <WebView
         ref={(ref) => setWebView(ref!)}
         source={{

@@ -1,59 +1,72 @@
-import {Image, StyleSheet, TouchableHighlight, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {Utils} from '../../styles';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/Entypo';
 Icon.loadFont();
 
-type Props = {
-  goBack?(): void;
-  showLogo?: boolean;
-  bottomBorder?: boolean;
-  rightButton?(): void;
-  rightIcon?: Element;
+export type HeaderButton = {
+  text?: string;
+  child: JSX.Element;
+  onclick(): void;
 };
 
-export default function Header({
-  goBack,
-  bottomBorder,
-  rightButton,
-  rightIcon,
-  showLogo,
-}: Props) {
-  let middleStyles = {};
-  if (goBack) {
+export type HeaderProps = {
+  leftButton?: HeaderButton;
+  rightButton?: HeaderButton;
+  showLogo?: boolean;
+  showBottomBorder?: boolean;
+};
+
+export default function Header(props: HeaderProps) {
+  // The Logo's position will be set based on if left and right buttons are provided.
+  // It should always be center.
+  let logoStyles = {};
+  const {leftButton, rightButton, showLogo, showBottomBorder} = props;
+
+  if (leftButton) {
     if (rightButton) {
-      middleStyles = styles.middleIcon;
+      logoStyles = styles.middleIcon;
     } else {
-      middleStyles = styles.rightIcon;
+      logoStyles = styles.rightIcon;
     }
   } else if (rightButton) {
-    middleStyles = styles.leftIcon;
+    logoStyles = styles.leftIcon;
   } else {
-    middleStyles = styles.singleIcon;
+    logoStyles = styles.singleIcon;
   }
 
   return (
-    <View style={[styles.header, bottomBorder ? styles.bottomBorder : null]}>
-      {goBack && (
-        <TouchableHighlight style={styles.backButton} onPress={() => goBack()}>
-          <Icon name="chevron-thin-left" size={30} color="black" />
-        </TouchableHighlight>
+    <View
+      style={[styles.header, showBottomBorder ? styles.bottomBorder : null]}>
+      {leftButton && (
+        <TouchableOpacity
+          style={styles.leftButton}
+          onPress={() => leftButton?.onclick()}
+          activeOpacity={0}>
+          {leftButton.child}
+        </TouchableOpacity>
       )}
       {showLogo && (
-        <View style={[styles.logoContainer, middleStyles]}>
+        <View style={[styles.logoContainer, logoStyles]}>
           <Image
             style={[styles.headerIcon, styles.logo]}
-            source={require('../../../assets/images/logo/penny.png')}
+            source={require('../../../assets/images/logo/3MLogo.png')}
           />
         </View>
       )}
       {rightButton && (
-        <TouchableHighlight
+        <TouchableOpacity
           style={styles.rightButton}
-          onPress={() => rightButton()}>
-          {rightIcon || <Icon name="log-out" size={20} color="black" />}
-        </TouchableHighlight>
+          onPress={() => rightButton?.onclick()}
+          activeOpacity={0}>
+          {rightButton.child}
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -74,10 +87,9 @@ const styles = StyleSheet.create({
     marginBottom: marginBottom,
     flexDirection: 'row',
     alignItems: 'center',
-    // backgroundColor: 'blue',
   },
 
-  backButton: {
+  leftButton: {
     marginLeft: 10,
     flex: 4,
   },
@@ -85,7 +97,6 @@ const styles = StyleSheet.create({
   headerIcon: {
     height: headerImageSize,
     width: headerImageSize,
-    // backgroundColor: 'green',
   },
 
   logoContainer: {
@@ -112,7 +123,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    // resizeMode: 'contain',
+    resizeMode: 'contain',
     borderRadius: 5,
     // alignSelf: 'center',
   },
