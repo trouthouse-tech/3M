@@ -13,13 +13,13 @@ export type TabParamList = {
  */
 export type MainStackNavigationProp = StackNavigationProp<
   TabParamList,
-  ROUTES.Home
+  ROUTES.Trade
 >;
 
 /*
  * Configure route prop for the application's main screens
  */
-export type MainStackRouteProp = RouteProp<TabParamList, ROUTES.Home>;
+export type MainStackRouteProp = RouteProp<TabParamList, ROUTES.Trade>;
 
 export type MainStackProps = {
   navigation: MainStackNavigationProp;

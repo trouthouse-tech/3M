@@ -23,6 +23,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export default function MainTabNavigator() {
   return (
     <Tab.Navigator
+      initialRouteName={ROUTES.Trade}
       screenOptions={({route}) => ({
         tabBarIcon: ({color, size}) => {
           let icon;
@@ -30,7 +31,9 @@ export default function MainTabNavigator() {
           if (route.name === ROUTES.Home) {
             icon = <IonIcon name="home" size={size} color={color} />;
           } else if (route.name === ROUTES.Trade) {
-            icon = <FontAwesomeIcon name="exchange-alt" size={size} color={color} />;
+            icon = (
+              <FontAwesomeIcon name="exchange-alt" size={size} color={color} />
+            );
           } else {
             icon = <MaterialIcon name="person" size={size} color={color} />;
           }
