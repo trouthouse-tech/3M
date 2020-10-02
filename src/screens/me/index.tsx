@@ -7,10 +7,13 @@ import Header from '../../components/Header';
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import {ROUTES} from '../../util/routes';
+import {UserState} from '../../store/user/types';
 
-const MeBase = (props: MeStackProps) => {
-  console.log('user: ', props.user);
+type Props = MeStackProps & {
+  userReducer: UserState;
+};
 
+const MeBase = (props: Props) => {
   async function handleSignOut() {
     await AsyncStorage.setItem('isInvestorLoggedIn', 'false');
     auth().signOut();
@@ -29,7 +32,7 @@ const MeBase = (props: MeStackProps) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.user,
+  user: state.userReducer,
 });
 
 const mapDispatchToProps = () => ({});
