@@ -23,6 +23,7 @@
     "@types/react-native-base64": "^0.1.0",
     "@types/react-redux": "^7.1.9",
     "axios": "^0.20.0",
+    "golfpro-rn-components": "^1.2.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-base64": "^0.1.0",
