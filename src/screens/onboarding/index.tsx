@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 
   titleContainer: {
     flex: 1,
-    ...Fonts.large,
+    fontSize: Fonts.large,
     // backgroundColor: 'blue',
     marginTop: 20,
     alignItems: 'center',
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 
   subTitle: {
     flex: 1,
-    ...Fonts.large,
+    fontSize: Fonts.large,
     textAlign: 'center',
   },
 

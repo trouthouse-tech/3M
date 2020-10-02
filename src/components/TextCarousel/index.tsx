@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   inactiveDot: {},
 
   text: {
-    ...Fonts.large,
+    fontSize: Fonts.large,
     alignSelf: 'center',
   },
 });

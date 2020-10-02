@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    ...Fonts.normal,
+    fontSize: Fonts.normal,
     fontWeight: 'bold',
   },
 

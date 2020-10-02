@@ -92,6 +92,6 @@ export const Home = connect(mapStateToProps, mapDispatchToProps)(HomeBase);
 
 const styles = StyleSheet.create({
   chatText: {
-    ...Fonts.large,
+    fontSize: Fonts.large,
   },
 });

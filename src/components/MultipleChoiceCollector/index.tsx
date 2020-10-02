@@ -101,6 +101,6 @@ const styles = StyleSheet.create({
   },
 
   answer: {
-    ...Fonts.large,
+    fontSize: Fonts.large,
   },
 });

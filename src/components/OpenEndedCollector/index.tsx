@@ -84,6 +84,6 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT / 5,
     padding: 10,
     margin: 10,
-    ...Fonts.large,
+    fontSize: Fonts.large,
   },
 });

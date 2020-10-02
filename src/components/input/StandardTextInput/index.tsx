@@ -45,7 +45,7 @@ export function StandardTextInput(props: InputProps) {
 
 const styles = StyleSheet.create({
   textInput: {
-    ...Fonts.normal,
+    fontSize: Fonts.normal,
     borderWidth: 1,
     borderColor: 'gray',
     marginVertical: 10,
