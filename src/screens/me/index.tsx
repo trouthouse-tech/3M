@@ -2,13 +2,13 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
-import {SettingsStackProps} from '../../navigation/Settings/types';
+import {MeStackProps} from '../../navigation/me/types';
 import Header from '../../components/Header';
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import {ROUTES} from '../../util/routes';
 
-const SettingsBase = (props: SettingsStackProps) => {
+const MeBase = (props: MeStackProps) => {
   console.log('user: ', props.user);
 
   async function handleSignOut() {
@@ -23,7 +23,7 @@ const SettingsBase = (props: SettingsStackProps) => {
   return (
     <View>
       <Header showLogo bottomBorder rightButton={() => handleSignOut()} />
-      <Text>Settings</Text>
+      <Text>Me</Text>
     </View>
   );
 };
@@ -34,7 +34,4 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = () => ({});
 
-export const Settings = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SettingsBase);
+export const Me = connect(mapStateToProps, mapDispatchToProps)(MeBase);

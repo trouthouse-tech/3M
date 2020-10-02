@@ -8,7 +8,7 @@ export enum ROUTES {
   InvestorInfoCollector = 'InvestorInfoCollector',
   MultipleChoiceCollector = 'MultipleChoiceCollector',
   Trade = 'Trade',
-  Settings = 'Settings',
+  Me = 'Me',
   Onboarding = 'Onboarding',
   TradingExperience = 'TradingExperience',
   MoneyManagement = 'MoneyManagement',

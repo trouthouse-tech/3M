@@ -5,7 +5,7 @@ import {RouteProp} from '@react-navigation/native';
 export type TabParamList = {
   Home: undefined;
   Trade: undefined;
-  Settings: undefined;
+  Me: undefined;
 };
 
 /*
