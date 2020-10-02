@@ -11,3 +11,5 @@ export const BackButton = (
 export const LogoutButton = <Icon name="log-out" size={25} color="black" />;
 
 export const ChatButton = <Text>Chat</Text>;
+
+export const ClearButton = <Text>Clear</Text>;
