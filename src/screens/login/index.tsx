@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {View, StyleSheet, Image, Alert} from 'react-native';
 import {Colors, Utils} from '../../styles';
 import {LargeSquareOnPress} from '../../components/buttons';
 import {AuthenticationStackProps} from '../../navigation/authentication/types';

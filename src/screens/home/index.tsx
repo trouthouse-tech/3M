@@ -56,8 +56,6 @@ const HomeBase = (props: Props) => {
     });
   }
 
-  const rightHeaderIcon = <Text style={styles.chatText}>Chat</Text>;
-
   async function handleChatPressed() {
     const url = 'https://discord.gg/SKbm6tN';
     // Checking if the link is supported for links with custom URL scheme.

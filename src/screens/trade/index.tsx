@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
-import {TradeStackProps} from '../../navigation/trade/types';
 import Header from '../../components/Header';
 import {ClearButton} from '../../components/Header/HeaderItems';
 import {Colors} from '../../styles';
 import {DEVICE_WIDTH} from '../../styles/util';
 
-const TradeBase = (props: TradeStackProps) => {
+const TradeBase = () => {
   const [filterText, setFilterText] = useState<string>('');
 
   function clearSearch() {

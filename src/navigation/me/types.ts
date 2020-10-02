@@ -18,10 +18,7 @@ export type MeStackNavigationProp = StackNavigationProp<
 /*
  * Configure route prop for the application's Me screens
  */
-export type MeStackRouteProp = RouteProp<
-  MeStackParamList,
-  ROUTES.Me
->;
+export type MeStackRouteProp = RouteProp<MeStackParamList, ROUTES.Me>;
 
 export type MeStackProps = {
   navigation: MeStackNavigationProp;
