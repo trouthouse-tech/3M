@@ -34,7 +34,7 @@ const OnboardingLandingBase = (props: Props) => {
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('../../../assets/images/logo/default-logo.png')}
+            source={require('../../../assets/images/logo/newLogo.png')}
           />
         </View>
         <Text style={styles.titleContainer}>
@@ -55,7 +55,7 @@ const OnboardingLandingBase = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.userReducer,
+  user: state.user,
 });
 
 const mapDispatchToProps = () => ({});
