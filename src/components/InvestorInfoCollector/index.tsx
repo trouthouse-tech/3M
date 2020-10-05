@@ -110,7 +110,7 @@ function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.userReducer,
+  user: state.user,
 });
 
 const mapDispatchToProps = () => ({});

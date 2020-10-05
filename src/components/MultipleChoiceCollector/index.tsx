@@ -42,7 +42,7 @@ export default function MultipleChoiceCollector({
       <LargeHallowButton
         onPress={() => handleSelectedAnswer(index)}
         primaryColor={Colors.white}
-        secondaryColor={Colors.main_green}
+        secondaryColor={Colors.blue_green}
         selected={selectedAnswer === index}
         text={value}
         key={index}
