@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {Colors, Fonts, Utils} from '../../styles';
-import {LargeHallowSquareOnPress} from '../../components/buttons/';
-import {LargeSquareOnPress} from '../../components/buttons/';
 import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
 import {AuthenticationStackProps} from '../../navigation/authentication/types';
