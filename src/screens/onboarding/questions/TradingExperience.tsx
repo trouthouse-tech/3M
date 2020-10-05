@@ -38,7 +38,7 @@ function TradingExperienceBase(props: OnboardingStackProps) {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.userReducer,
+  user: state.user,
   onboarding: state.onboarding,
 });
 
