@@ -15,4 +15,6 @@ export enum ROUTES {
   TradingHorizon = 'TradingHorizon',
   ThreeMPurpose = 'ThreeMPurpose',
   Tradier = 'Tradier',
+  SearchResults = 'SearchResults',
+  TradeForm = 'TradeForm',
 }
