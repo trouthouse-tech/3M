@@ -11,7 +11,7 @@ import {UserState} from '../../store/user/types';
 import {LogoutButton} from '../../components/Header/HeaderItems';
 
 type Props = MeStackProps & {
-  userReducer: UserState;
+  user: UserState;
 };
 
 const MeBase = (props: Props) => {
@@ -37,7 +37,7 @@ const MeBase = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.userReducer,
+  user: state.user,
 });
 
 const mapDispatchToProps = () => ({});
