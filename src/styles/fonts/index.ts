@@ -6,7 +6,8 @@ export const MAIN_REGULAR =
   Platform.OS === 'ios' ? 'OpenSans-Regular' : 'OpenSans-Regular.ttf';
 export const MAIN_ITALIC =
   Platform.OS === 'ios' ? 'OpenSans-Italic' : 'OpenSans-Italic.ttf';
-export const MAIN_BOLD = Platform.OS === 'ios' ? 'OpenSans-Bold' : 'OpenSans-Bold.ttf';
+export const MAIN_BOLD =
+  Platform.OS === 'ios' ? 'OpenSans-Bold' : 'OpenSans-Bold.ttf';
 
 export const smallest = 12;
 export const smaller = 14;
