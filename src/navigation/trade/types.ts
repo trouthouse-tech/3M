@@ -1,10 +1,11 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
-import {Investor} from '../../model';
+import {Option, Quote} from '../../model';
 
 export type TradeStackParamList = {
   Trade: undefined;
+  TradeForm: {quote: Quote};
 };
 
 /*
@@ -23,5 +24,4 @@ export type TradeStackRouteProp = RouteProp<TradeStackParamList, ROUTES.Trade>;
 export type TradeStackProps = {
   navigation: TradeStackNavigationProp;
   route: TradeStackRouteProp;
-  user?: Investor;
 };
