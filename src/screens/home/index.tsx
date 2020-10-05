@@ -1,11 +1,10 @@
 import React, {useEffect} from 'react';
-import {Alert, StyleSheet, Text, View, Linking} from 'react-native';
+import {Alert, Text, View, Linking} from 'react-native';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
 import {HomeStackProps} from '../../navigation/home/types';
 import Header from '../../components/Header';
 import {UserState} from '../../store/user/types';
-import {Fonts} from '../../styles';
 import {ROUTES} from '../../util/routes';
 import {updateInvestorDocument} from '../../services/investor';
 import {ChatButton} from '../../components/Header/HeaderItems';
@@ -32,7 +31,6 @@ const HomeBase = (props: Props) => {
     const expiration = props.user.tradierAccessTokenExpiration!;
     const isExpired = expiration < Date.now() / 1000 - 86399;
     if (isExpired) {
-      console.log('true');
       Alert.alert(
         "Let's setup your Tradier account.",
         'The 3M Club has partnered with Tradier to enable trading.',
@@ -83,15 +81,9 @@ const HomeBase = (props: Props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  user: state.userReducer,
+  user: state.user,
 });
 
 const mapDispatchToProps = () => ({});
 
 export const Home = connect(mapStateToProps, mapDispatchToProps)(HomeBase);
-
-const styles = StyleSheet.create({
-  chatText: {
-    fontSize: Fonts.large,
-  },
-});
