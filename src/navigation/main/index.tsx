@@ -23,7 +23,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export default function MainTabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName={ROUTES.Trade}
+      initialRouteName={ROUTES.Home}
       screenOptions={({route}) => ({
         tabBarIcon: ({color, size}) => {
           let icon;
@@ -41,8 +41,9 @@ export default function MainTabNavigator() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: Colors.main_green,
-        inactiveTintColor: 'gray',
+        activeTintColor: Colors.dark_blue_green,
+        inactiveTintColor: Colors.light_gray,
+        showLabel: false,
       }}>
       <Tab.Screen name={ROUTES.Home} component={HomeStack} />
       <Tab.Screen name={ROUTES.Trade} component={TradeStack} />
