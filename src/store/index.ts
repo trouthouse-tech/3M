@@ -1,11 +1,13 @@
 import {createStore, combineReducers} from 'redux';
 import {AppState} from './types';
-import {userReducer} from './user/reducer';
+import {user} from './user/reducer';
 import {onboarding} from './onboarding/reducer';
+import {tradeReducer} from './trade/reducer';
 
 const rootReducer = combineReducers<AppState>({
-  userReducer,
+  user,
   onboarding,
+  tradeReducer,
 });
 
 const store = createStore(rootReducer);

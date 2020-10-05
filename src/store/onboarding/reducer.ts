@@ -1,7 +1,7 @@
 import {OnboardingQuestionAction, OnboardingQuestionState} from './types';
 import {ONBOARDING_QUESTION_ACTION_TYPES} from './actions';
 
-export const InitialState: OnboardingQuestionState = {};
+const InitialState: OnboardingQuestionState = {};
 
 export const onboarding = (
   state: OnboardingQuestionState = InitialState,
