@@ -1,10 +1,15 @@
-import {EditProfileAction, LoginAction} from './types';
-import {Investor} from '../../model';
+import {
+  EditProfileAction,
+  LoginAction,
+  UpdateRecentlyViewedSymbolsAction,
+} from './types';
+import {Investor, RecentlyViewedCompany} from '../../model';
 
 export enum USER_ACTION_TYPES {
   LOGIN = 'LOGIN',
   LOGOUT = 'LOGOUT',
   EDIT_PROFILE = 'EDIT_PROFILE',
+  UPDATE_RECENTLY_VIEWED_COMPANIES = 'UPDATE_RECENTLY_VIEWED_COMPANIES',
 }
 
 // login
@@ -17,4 +22,11 @@ export const loginInvestor = (email: string, user: Investor): LoginAction => ({
 export const updateInvestor = (user: Investor): EditProfileAction => ({
   type: USER_ACTION_TYPES.EDIT_PROFILE,
   user,
+});
+
+export const updateRecentlyViewedSymbols = (
+  company: RecentlyViewedCompany,
+): UpdateRecentlyViewedSymbolsAction => ({
+  type: USER_ACTION_TYPES.UPDATE_RECENTLY_VIEWED_COMPANIES,
+  company,
 });

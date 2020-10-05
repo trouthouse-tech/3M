@@ -1,4 +1,4 @@
-import {Investor} from '../../model';
+import {Investor, RecentlyViewedCompany} from '../../model';
 
 export type UserState = Investor;
 
@@ -15,4 +15,11 @@ export type EditProfileAction = Action & {
   user: Investor;
 };
 
-export type UserAction = LoginAction | EditProfileAction;
+export type UpdateRecentlyViewedSymbolsAction = Action & {
+  company: RecentlyViewedCompany;
+};
+
+export type UserAction =
+  | LoginAction
+  | EditProfileAction
+  | UpdateRecentlyViewedSymbolsAction;
