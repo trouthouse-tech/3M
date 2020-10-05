@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
-import {Option, Quote} from '../../model';
+import {Quote} from '../../model';
 
 export type TradeStackParamList = {
   Trade: undefined;
