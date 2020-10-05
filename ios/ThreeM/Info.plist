@@ -33,7 +33,7 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 				<key>NSIncludesSubdomains</key>
-                <true/>
+				<true/>
 			</dict>
 			<key>localhost</key>
 			<dict>
