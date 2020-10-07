@@ -119,6 +119,7 @@ const TradeBase = (props: Props) => {
           placeholderTextColor="grey"
           value={filterText}
           onChangeText={(textToFilter) => setFilterText(textToFilter)}
+          onSubmitEditing={() => searchForSymbol()}
         />
         <Buttons.TextButton
           text="Search"
