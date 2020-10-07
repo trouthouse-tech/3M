@@ -37,39 +37,50 @@ const TradeBase = (props: Props) => {
   );
 
   const recentlyViewedComponents = recentlyViewedSymbols.map((company) => (
-    <SymbolRow company={company} key={company.symbol} />
+    <SymbolRow
+      company={company}
+      key={company.symbol}
+      onPress={() => searchForRecentlyViewed(company.symbol)}
+    />
   ));
 
   function clearSearch() {
     setFilterText('');
   }
 
-  async function searchForSymbol() {
+  async function searchForRecentlyViewed(symbol: string) {
+    console.log('symbol: ', symbol);
+    await getOptions(symbol, props.user.tradierAccessToken!);
+  }
+
+  async function searchForFilterText() {
     if (!filterText) {
       notifyUserToAddCompanyToSearch();
       return;
     }
 
+    await getOptions(filterText, props.user.tradierAccessToken!);
+  }
+
+  async function getOptions(symbol: string, token: string) {
     // Retrieve option chain for the provided value - if possible
-    await getOptionChain(filterText, props.user.tradierAccessToken!).then(
+    await getOptionChain(symbol, token).then(
       async (response: FindOptionChainResponse) => {
         const {options} = response;
         // Options found
         if (options !== null) {
           store.dispatch(addOptions(options.option));
           // Retrieve company information for a given symbol
-          await getQuotes(filterText, props.user.tradierAccessToken!).then(
-            (quotes: GetQuoteResponse) => {
-              const {quote} = quotes.quotes;
-              store.dispatch(addQuote(quote));
-              // Update store
-              updateRecentlyViewed({
-                symbol: quote.symbol,
-                name: quote.description,
-              });
-              props.navigation.push(ROUTES.TradeForm, {quote: quote});
-            },
-          );
+          await getQuotes(symbol, token).then((quotes: GetQuoteResponse) => {
+            const {quote} = quotes.quotes;
+            store.dispatch(addQuote(quote));
+            // Update store
+            updateRecentlyViewed({
+              symbol: quote.symbol,
+              name: quote.description,
+            });
+            props.navigation.push(ROUTES.TradeForm, {quote: quote});
+          });
         } else {
           notifyUserThatOptionsWereNotFound();
         }
@@ -119,13 +130,13 @@ const TradeBase = (props: Props) => {
           placeholderTextColor="grey"
           value={filterText}
           onChangeText={(textToFilter) => setFilterText(textToFilter)}
-          onSubmitEditing={() => searchForSymbol()}
+          onSubmitEditing={() => searchForFilterText()}
         />
         <Buttons.TextButton
           text="Search"
           textStyle={styles.searchText}
           buttonStyle={styles.searchButton}
-          onPress={() => searchForSymbol()}
+          onPress={() => searchForFilterText()}
         />
       </View>
       <View style={styles.main}>
@@ -146,6 +157,7 @@ export const Trade = connect(mapStateToProps, mapDispatchToProps)(TradeBase);
 
 type SymbolRowProps = {
   company: RecentlyViewedCompany;
+  onPress(): void;
 };
 
 export function SymbolRow(props: SymbolRowProps) {
@@ -153,7 +165,7 @@ export function SymbolRow(props: SymbolRowProps) {
     <TouchableOpacity
       style={styles.row}
       key={props.company.symbol}
-      onPress={() => console.log(`symbol ${props.company.symbol} was pressed`)}>
+      onPress={() => props.onPress()}>
       <View style={styles.symbolContainer}>
         <Text style={styles.symbol}>{props.company.symbol}</Text>
         <Text style={styles.name} numberOfLines={1}>
