@@ -12,6 +12,7 @@ import {HOLDING_PERIOD} from '../../../model';
 import {FormTextInput} from './components/FormTextInput';
 import {DoubleTextInput} from './components/DoubleTextInput';
 import {Buttons} from 'golfpro-rn-components';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 type Props = TradeStackProps & {
   tradeReducer: TradeState;
@@ -49,6 +50,10 @@ export function TradeFormBase(props: Props) {
   const [maxLossPercentage, setMaxLossPercentage] = useState('0');
   const [maxLossDollars, setMaxLossDollars] = useState('0');
 
+  const contentContainerStyle = {
+    contentContainerStyle: styles.container,
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -70,119 +75,121 @@ export function TradeFormBase(props: Props) {
           <Text style={styles.priceValue}>${quote?.last}</Text>
         </View>
       </View>
-      <View style={styles.main}>
-        <Text style={styles.title}>
-          Please answer a few questions to determine potential trades
-        </Text>
-        <InlineFormPicker
-          label="Holding Period"
-          onChange={(text) => {
-            console.log('text: ', text);
-            // eslint-disable-next-line radix
-            setHoldingPeriod(text !== null ? parseInt(text.toString()) : -1);
-          }}
-          helpText={{
-            title:
-              'Holding Period answers how long you would like to hold a position for',
-            subtitle:
-              "Choosing the Daily value indicates that you're looking to exit a position quickly",
-          }}
-          items={holdingPeriodItems}
-        />
-        <FormTextInput
-          label="Trend"
-          onChange={() => {}}
-          isMutable={false}
-          value={calculatedTrend}
-          helpText={{
-            title: `Based on {INSERT FORMULA}, this position is currently in a ${calculatedTrend} trend`,
-            subtitle: '',
-          }}
-        />
-        <InlineFormPicker
-          label="Assumed Trend"
-          onChange={(text) => {
-            console.log('text: ', text);
-            // eslint-disable-next-line radix
-            setHoldingPeriod(text !== null ? parseInt(text.toString()) : -1);
-          }}
-          helpText={{
-            title: 'Where do you think this stock is headed?',
-            subtitle: '',
-          }}
-          items={[
-            {
-              label: 'Bullish',
-              value: 'Bullish',
-            },
-            {
-              label: 'Bearish',
-              value: 'Bearish',
-            },
-          ]}
-        />
-        <FormTextInput
-          label="What is your max risk?"
-          onChange={(number) => setMaxRisk(number)}
-          isMutable
-          value={maxRisk}
-          isNumber
-        />
-        <DoubleTextInput
-          label="What is your profit target?"
-          inputs={[
-            {
-              value: profitTargetPercentage,
-              label: 'custom %',
-              onChange(text: string) {
-                setProfitTargetPercentage(text);
-              },
-              isMutable: true,
-              isNumber: true,
-            },
-            {
-              value: profitTargetDollars,
-              label: 'custom $',
-              onChange(text: string) {
-                setProfitTargetDollars(text);
-              },
-              isMutable: true,
-              isNumber: true,
-            },
-          ]}
-        />
-        <DoubleTextInput
-          label="What is your max loss?"
-          inputs={[
-            {
-              value: maxLossPercentage,
-              label: 'custom %',
-              onChange(text: string) {
-                setMaxLossPercentage(text);
-              },
-              isMutable: true,
-              isNumber: true,
-            },
-            {
-              value: maxLossDollars,
-              label: 'custom $',
-              onChange(text: string) {
-                setMaxLossDollars(text);
-              },
-              isMutable: true,
-              isNumber: true,
-            },
-          ]}
-        />
-        <View style={styles.buttonContainer}>
-          <Buttons.LargeHallowSquareOnPress
-            onPress={() => {}}
-            text="Submit"
-            borderColor={Colors.blue_green}
-            textColor={Colors.blue_green}
+      <KeyboardAwareScrollView {...contentContainerStyle}>
+        <View style={styles.main}>
+          <Text style={styles.title}>
+            Please answer a few questions to determine potential trades
+          </Text>
+          <InlineFormPicker
+            label="Holding Period"
+            onChange={(text) => {
+              console.log('text: ', text);
+              // eslint-disable-next-line radix
+              setHoldingPeriod(text !== null ? parseInt(text.toString()) : -1);
+            }}
+            helpText={{
+              title:
+                'Holding Period answers how long you would like to hold a position for',
+              subtitle:
+                "Choosing the Daily value indicates that you're looking to exit a position quickly",
+            }}
+            items={holdingPeriodItems}
           />
+          <FormTextInput
+            label="Trend"
+            onChange={() => {}}
+            isMutable={false}
+            value={calculatedTrend}
+            helpText={{
+              title: `Based on {INSERT FORMULA}, this position is currently in a ${calculatedTrend} trend`,
+              subtitle: '',
+            }}
+          />
+          <InlineFormPicker
+            label="Assumed Trend"
+            onChange={(text) => {
+              console.log('text: ', text);
+              // eslint-disable-next-line radix
+              setHoldingPeriod(text !== null ? parseInt(text.toString()) : -1);
+            }}
+            helpText={{
+              title: 'Where do you think this stock is headed?',
+              subtitle: '',
+            }}
+            items={[
+              {
+                label: 'Bullish',
+                value: 'Bullish',
+              },
+              {
+                label: 'Bearish',
+                value: 'Bearish',
+              },
+            ]}
+          />
+          <FormTextInput
+            label="What is your max risk?"
+            onChange={(number) => setMaxRisk(number)}
+            isMutable
+            value={maxRisk}
+            isNumber
+          />
+          <DoubleTextInput
+            label="What is your profit target?"
+            inputs={[
+              {
+                value: profitTargetPercentage,
+                label: 'custom %',
+                onChange(text: string) {
+                  setProfitTargetPercentage(text);
+                },
+                isMutable: true,
+                isNumber: true,
+              },
+              {
+                value: profitTargetDollars,
+                label: 'custom $',
+                onChange(text: string) {
+                  setProfitTargetDollars(text);
+                },
+                isMutable: true,
+                isNumber: true,
+              },
+            ]}
+          />
+          <DoubleTextInput
+            label="What is your max loss?"
+            inputs={[
+              {
+                value: maxLossPercentage,
+                label: 'custom %',
+                onChange(text: string) {
+                  setMaxLossPercentage(text);
+                },
+                isMutable: true,
+                isNumber: true,
+              },
+              {
+                value: maxLossDollars,
+                label: 'custom $',
+                onChange(text: string) {
+                  setMaxLossDollars(text);
+                },
+                isMutable: true,
+                isNumber: true,
+              },
+            ]}
+          />
+          <View style={styles.buttonContainer}>
+            <Buttons.LargeHallowSquareOnPress
+              onPress={() => {}}
+              text="Submit"
+              borderColor={Colors.blue_green}
+              textColor={Colors.blue_green}
+            />
+          </View>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
@@ -199,6 +206,7 @@ export const TradeForm = connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
   },
 
   companyInfo: {
