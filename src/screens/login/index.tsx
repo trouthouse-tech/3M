@@ -13,12 +13,15 @@ import {BackButton} from '../../components/Header/HeaderItems';
 // @ts-ignore
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {Buttons} from 'golfpro-rn-components';
+import {LoadingScreen} from '../../components/ActivityIndicator';
 
 export const Login = (props: AuthenticationStackProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
   function handleSignIn() {
+    setShowActivityIndicator(true);
     login(email, password).then(async (loginAttempt) => {
       // User was found
       if (loginAttempt.user) {
@@ -36,6 +39,7 @@ export const Login = (props: AuthenticationStackProps) => {
       const user = retrievalAttempt.data.data() as Investor;
       store.dispatch(loginInvestor(email, user));
       if (!user.hasAnsweredOnboardingQuestions) {
+        setShowActivityIndicator(false);
         props.navigation.navigate(ROUTES.Onboarding);
       } else {
         enterMainApplication();
@@ -49,11 +53,13 @@ export const Login = (props: AuthenticationStackProps) => {
       case 'auth/user-not-found':
       case 'auth/wrong-password':
         Alert.alert('Email or password is invalid.');
+        setShowActivityIndicator(false);
         break;
     }
   }
 
   function enterMainApplication() {
+    setShowActivityIndicator(false);
     props.navigation.navigate(ROUTES.Main);
   }
 
@@ -100,6 +106,7 @@ export const Login = (props: AuthenticationStackProps) => {
             buttonColor={Colors.blue_green}
           />
         </View>
+      {showActivityIndicator && <LoadingScreen />}
       </KeyboardAwareScrollView>
     </View>
   );

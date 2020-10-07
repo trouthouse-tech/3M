@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {Colors, Fonts, Utils} from '../../styles';
 import TextCarousel from '../../components/TextCarousel';
@@ -11,18 +11,21 @@ import store from '../../store';
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import {Buttons} from 'golfpro-rn-components';
+import {LoadingScreen} from '../../components/ActivityIndicator';
 
 export const Splash = (props: AuthenticationStackProps) => {
-  console.log(
-    'Splash isInstructorLoggedIn: ',
-    AsyncStorage.getItem('isInvestorLoggedIn'),
-  );
+  // console.log(
+  //   'Splash isInstructorLoggedIn: ',
+  //   AsyncStorage.getItem('isInvestorLoggedIn'),
+  // );
+  const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
   useEffect(() => {
     getLoggedInUser().then((loggedInUser) => {
       console.log('loggedInUser: ', loggedInUser);
       // User did not log out during last session
       if (loggedInUser !== -1) {
+        setShowActivityIndicator(true);
         loginUser();
       } else {
         console.log('nobody');
@@ -102,6 +105,7 @@ export const Splash = (props: AuthenticationStackProps) => {
    * The User has completed registering their profile
    */
   const enterMainApplication = () => {
+    setShowActivityIndicator(false);
     setLoggedInUser();
     props.navigation.navigate(ROUTES.Main);
   };
@@ -132,6 +136,7 @@ export const Splash = (props: AuthenticationStackProps) => {
           buttonColor={Colors.blue_green}
         />
       </View>
+      {showActivityIndicator && <LoadingScreen />}
     </View>
   );
 };
