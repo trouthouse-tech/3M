@@ -5,6 +5,7 @@ import {TradeStackParamList} from './types';
 import {Trade} from '../../screens/trade';
 import {TradeForm} from '../../screens/trade/form';
 import {FormResults} from '../../screens/trade/results';
+import {OpenTrade} from '../../screens/trade/OpenTrade';
 
 const TradeStackNavigator = createStackNavigator<TradeStackParamList>();
 
@@ -19,6 +20,10 @@ export const TradeStack = () => {
       <TradeStackNavigator.Screen
         name={ROUTES.FormResults}
         component={FormResults}
+      />
+      <TradeStackNavigator.Screen
+        name={ROUTES.OpenTrade}
+        component={OpenTrade}
       />
     </TradeStackNavigator.Navigator>
   );
