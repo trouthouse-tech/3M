@@ -175,15 +175,6 @@ const styles = StyleSheet.create({
 
   buttonText: {},
 
-  radioButtonSection: {
-    flexDirection: 'row',
-  },
-
-  radioButtonText: {
-    marginLeft: 5,
-    fontSize: Fonts.large,
-  },
-
   carouselContainer: {
     flex: 4,
     width: Utils.DEVICE_WIDTH / 1.2,
