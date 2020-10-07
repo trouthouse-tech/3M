@@ -12,7 +12,10 @@ import {HOLDING_PERIOD} from '../../../model';
 import {FormTextInput} from './components/FormTextInput';
 import {DoubleTextInput} from './components/DoubleTextInput';
 import {Buttons} from 'golfpro-rn-components';
+// @ts-ignore
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {ROUTES} from '../../../util/routes';
+import {SimpleTicker} from '../../../components/tickers/simple';
 
 type Props = TradeStackProps & {
   tradeReducer: TradeState;
@@ -64,17 +67,10 @@ export function TradeFormBase(props: Props) {
         showBottomBorder
         showLogo
       />
-      <View style={styles.companyInfo}>
-        <View style={styles.symbolContainer}>
-          <View style={styles.symbolBorder}>
-            <Text style={styles.symbol}>{quote?.symbol}</Text>
-          </View>
-        </View>
-        <View style={styles.priceContainer}>
-          <Text style={styles.priceLabel}>Price: </Text>
-          <Text style={styles.priceValue}>${quote?.last}</Text>
-        </View>
-      </View>
+      <SimpleTicker
+        symbol={quote?.symbol as string}
+        last={quote?.last as number}
+      />
       <KeyboardAwareScrollView {...contentContainerStyle}>
         <View style={styles.main}>
           <Text style={styles.title}>
@@ -182,7 +178,7 @@ export function TradeFormBase(props: Props) {
           />
           <View style={styles.buttonContainer}>
             <Buttons.LargeHallowSquareOnPress
-              onPress={() => {}}
+              onPress={() => props.navigation.push(ROUTES.FormResults)}
               text="Submit"
               borderColor={Colors.blue_green}
               textColor={Colors.blue_green}
@@ -207,48 +203,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-  },
-
-  companyInfo: {
-    height: 75,
-    flexDirection: 'row',
-    borderBottomWidth: 0.5,
-  },
-
-  symbolContainer: {
-    flex: 1,
-    // backgroundColor: 'blue',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  symbolBorder: {
-    borderWidth: 1.5,
-    borderRadius: 10,
-    // backgroundColor: 'green',
-  },
-
-  symbol: {
-    fontSize: Fonts.large,
-    textAlign: 'center',
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-  },
-
-  priceContainer: {
-    flex: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  priceLabel: {
-    fontSize: Fonts.larger,
-  },
-
-  priceValue: {
-    fontSize: Fonts.larger,
-    fontWeight: 'bold',
   },
 
   main: {},

@@ -17,4 +17,5 @@ export enum ROUTES {
   Tradier = 'Tradier',
   SearchResults = 'SearchResults',
   TradeForm = 'TradeForm',
+  FormResults = 'FormResults',
 }

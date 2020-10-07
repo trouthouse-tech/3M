@@ -6,6 +6,7 @@ import {Quote} from '../../model';
 export type TradeStackParamList = {
   Trade: undefined;
   TradeForm: {quote: Quote};
+  FormResults: undefined;
 };
 
 /*
