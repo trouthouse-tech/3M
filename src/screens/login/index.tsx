@@ -106,7 +106,7 @@ export const Login = (props: AuthenticationStackProps) => {
             buttonColor={Colors.blue_green}
           />
         </View>
-      {showActivityIndicator && <LoadingScreen />}
+        {showActivityIndicator && <LoadingScreen />}
       </KeyboardAwareScrollView>
     </View>
   );
@@ -141,8 +141,4 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {},
-
-  radioButtonSection: {
-    flexDirection: 'row',
-  },
 });
