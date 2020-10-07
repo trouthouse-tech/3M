@@ -67,7 +67,7 @@ export default function Header(props: HeaderProps) {
   );
 }
 
-const headerImageSize = Utils.DEVICE_HEIGHT / 15;
+const headerImageSize = Utils.DEVICE_HEIGHT / 18;
 const height =
   Utils.DEVICE_HEIGHT === 896
     ? Utils.DEVICE_HEIGHT / 20
