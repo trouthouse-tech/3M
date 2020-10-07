@@ -1,6 +1,6 @@
-import {PotentialTrade} from './types';
+import {Trade} from './types';
 
-export const POTENTIAL_TRADES: PotentialTrade[] = [
+export const POTENTIAL_TRADES: Trade[] = [
   {
     legOne: {
       strike: 53.5,

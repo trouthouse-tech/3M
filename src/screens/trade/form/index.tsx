@@ -57,6 +57,10 @@ export function TradeFormBase(props: Props) {
     contentContainerStyle: styles.container,
   };
 
+  function handleOnSubmit() {
+    props.navigation.push(ROUTES.FormResults);
+  }
+
   return (
     <View style={styles.container}>
       <Header
@@ -178,7 +182,7 @@ export function TradeFormBase(props: Props) {
           />
           <View style={styles.buttonContainer}>
             <Buttons.LargeHallowSquareOnPress
-              onPress={() => props.navigation.push(ROUTES.FormResults)}
+              onPress={() => handleOnSubmit()}
               text="Submit"
               borderColor={Colors.blue_green}
               textColor={Colors.blue_green}

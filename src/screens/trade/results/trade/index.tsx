@@ -1,12 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {PotentialTrade as potentialTrade} from '../types';
+import {Trade} from '../types';
 import {Colors, Fonts} from '../../../../styles';
 import {DEVICE_WIDTH} from '../../../../styles/util';
 import {Buttons} from 'golfpro-rn-components';
 
 type Props = {
-  trade: potentialTrade;
+  trade: Trade;
+  onPress(): void;
 };
 
 const HEADER = ['', 'Strike', 'Cost'];
@@ -48,6 +49,10 @@ export function PotentialTrade(props: Props) {
     <Row values={['Leg 2', trade.legTwo.strike + '', trade.legTwo.cost + '']} />
   );
 
+  function handleOnPurchase() {
+    props.onPress();
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.table}>
@@ -84,7 +89,7 @@ export function PotentialTrade(props: Props) {
         </View>
         <View style={styles.buttonContainer}>
           <Buttons.LargeSquareOnPress
-            onPress={() => {}}
+            onPress={() => handleOnPurchase()}
             text="Purchase"
             buttonColor={Colors.blue_green}
             textColor={Colors.white}

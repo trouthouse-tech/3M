@@ -25,6 +25,7 @@ import {FindOptionChainResponse, GetQuoteResponse} from '../../model';
 import {ROUTES} from '../../util/routes';
 import {addOptions, addQuote} from '../../store/trade/actions';
 import {updateInvestorDocument} from '../../services/investor';
+import {LoadingScreen} from '../../components/ActivityIndicator';
 
 type Props = TradeStackProps & {
   user: UserState;
@@ -35,6 +36,7 @@ const TradeBase = (props: Props) => {
   const [recentlyViewedSymbols] = useState<RecentlyViewedCompany[]>(
     props.user.recentlyViewed!,
   );
+  const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
   const recentlyViewedComponents = recentlyViewedSymbols.map((company) => (
     <SymbolRow
@@ -49,7 +51,6 @@ const TradeBase = (props: Props) => {
   }
 
   async function searchForRecentlyViewed(symbol: string) {
-    console.log('symbol: ', symbol);
     await getOptions(symbol, props.user.tradierAccessToken!);
   }
 
@@ -63,6 +64,7 @@ const TradeBase = (props: Props) => {
   }
 
   async function getOptions(symbol: string, token: string) {
+    setShowActivityIndicator(true);
     // Retrieve option chain for the provided value - if possible
     await getOptionChain(symbol, token).then(
       async (response: FindOptionChainResponse) => {
@@ -79,6 +81,7 @@ const TradeBase = (props: Props) => {
               symbol: quote.symbol,
               name: quote.description,
             });
+            setShowActivityIndicator(false);
             props.navigation.push(ROUTES.TradeForm, {quote: quote});
           });
         } else {
@@ -111,6 +114,7 @@ const TradeBase = (props: Props) => {
   }
 
   function notifyUserThatOptionsWereNotFound() {
+    setShowActivityIndicator(false);
     Alert.alert('No options found for given symbol', '', [
       {text: 'OK', onPress: () => {}},
     ]);
@@ -145,6 +149,7 @@ const TradeBase = (props: Props) => {
         </View>
         <ScrollView style={styles.rows}>{recentlyViewedComponents}</ScrollView>
       </View>
+      {showActivityIndicator && <LoadingScreen />}
     </View>
   );
 };

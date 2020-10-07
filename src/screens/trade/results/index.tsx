@@ -10,16 +10,29 @@ import {AppState} from '../../../store/types';
 import {connect} from 'react-redux';
 import {TradeState} from '../../../store/trade/types';
 import {DEVICE_WIDTH} from '../../../styles/util';
+import {Trade} from './types';
+import {ROUTES} from '../../../util/routes';
 
 type Props = TradeStackProps & {
   tradeReducer: TradeState;
 };
 
 function FormResultsBase(props: Props) {
+  console.log('props: ', props);
   const {quote} = props.tradeReducer;
   const tradeComponents = POTENTIAL_TRADES.map((trade, index) => {
-    return <PotentialTrade key={index} trade={trade} />;
+    return (
+      <PotentialTrade
+        key={index}
+        trade={trade}
+        onPress={() => handleOnPurchase(trade)}
+      />
+    );
   });
+
+  function handleOnPurchase(trade: Trade) {
+    props.navigation.push(ROUTES.OpenTrade, {trade});
+  }
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,4 @@
-export interface PotentialTrade {
+export interface Trade {
   legOne: Leg;
   legTwo: Leg;
   probability: number;
