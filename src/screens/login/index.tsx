@@ -58,7 +58,7 @@ export const Login = (props: AuthenticationStackProps) => {
   }
 
   const contentContainerStyle = {
-    contentContainerStyle: styles.container,
+    contentContainerStyle: styles.scrollView,
   };
 
   return (
@@ -69,7 +69,9 @@ export const Login = (props: AuthenticationStackProps) => {
           onclick: () => props.navigation.goBack(),
         }}
       />
-      <KeyboardAwareScrollView {...contentContainerStyle}>
+      <KeyboardAwareScrollView
+        {...contentContainerStyle}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
@@ -108,6 +110,7 @@ const imageSize = Utils.DEVICE_WIDTH / 2;
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
+    alignItems: 'center',
   },
 
   container: {
