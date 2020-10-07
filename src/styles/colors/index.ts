@@ -6,6 +6,7 @@ const white = '#FFFFFF';
 const black = '#000000';
 const light_gray = '#bfbebe';
 const gray = '#858585';
+const red = '#d90d0d';
 
 export {
   main_green,
@@ -16,4 +17,5 @@ export {
   black,
   light_gray,
   gray,
+  red,
 };
