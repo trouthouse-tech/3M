@@ -1,7 +1,7 @@
 import {Option, Quote} from '../../model';
 
 export type TradeState = {
-  options: Option[];
+  options: {[key: string]: Option[]};
   quote: Quote | null;
 };
 
