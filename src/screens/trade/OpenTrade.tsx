@@ -10,7 +10,7 @@ import {MeStackProps} from '../../navigation/me/types';
 import {TradeState} from '../../store/trade/types';
 import {Colors, Fonts} from '../../styles';
 import {Buttons} from 'golfpro-rn-components';
-import {Trade} from './results/types';
+import {Trade} from '../../model';
 
 type RowProps = {
   values: string[];

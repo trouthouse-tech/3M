@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Trade} from '../types';
+import {Trade} from '../../../../model';
 import {Colors, Fonts} from '../../../../styles';
 import {DEVICE_WIDTH} from '../../../../styles/util';
 import {Buttons} from 'golfpro-rn-components';

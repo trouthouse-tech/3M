@@ -20,7 +20,7 @@ import {UserState} from '../../../store/user/types';
 import store from '../../../store';
 import {addPotentialTrades} from '../../../store/trade/actions';
 import {LoadingScreen} from '../../../components/ActivityIndicator';
-import {Leg, Trade} from '../results/types';
+import {Leg, Trade} from '../../../model';
 
 type Props = TradeStackProps & {
   tradeReducer: TradeState;

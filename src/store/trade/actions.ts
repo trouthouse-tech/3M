@@ -8,7 +8,7 @@ import {
   ResetOptionsAction,
 } from './types';
 import {Option, Quote} from '../../model';
-import {Order, Trade} from '../../screens/trade/results/types';
+import {Order, Trade} from '../../model';
 
 export enum TRADE_ACTION_TYPES {
   ADD_OPTIONS = 'ADD_OPTIONS',

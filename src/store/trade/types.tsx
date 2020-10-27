@@ -1,5 +1,5 @@
 import {Option, Quote} from '../../model';
-import {Order, Trade} from '../../screens/trade/results/types';
+import {Order, Trade} from '../../model';
 
 export type TradeState = {
   options: {

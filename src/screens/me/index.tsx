@@ -10,7 +10,7 @@ import {ROUTES} from '../../util/routes';
 import {UserState} from '../../store/user/types';
 import {LogoutButton} from '../../components/Header/HeaderItems';
 import {TradeState} from '../../store/trade/types';
-import {Order} from '../trade/results/types';
+import {Order} from '../../model';
 import {DEVICE_WIDTH, White_Shadowed} from '../../styles/util';
 import {Colors, Fonts} from '../../styles';
 
