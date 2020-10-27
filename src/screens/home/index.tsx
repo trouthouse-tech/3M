@@ -6,7 +6,6 @@ import {HomeStackProps} from '../../navigation/home/types';
 import Header from '../../components/Header';
 import {UserState} from '../../store/user/types';
 import {ROUTES} from '../../util/routes';
-import {updateInvestorDocument} from '../../services/investor';
 import {ChatButton} from '../../components/Header/HeaderItems';
 
 type Props = HomeStackProps & {
@@ -14,6 +13,7 @@ type Props = HomeStackProps & {
 };
 
 const HomeBase = (props: Props) => {
+  console.log('home props: ', props);
   useEffect(() => {
     if (props.user.tradierIsWaitingForApproval) {
       Alert.alert(
@@ -40,23 +40,8 @@ const HomeBase = (props: Props) => {
           // {text: 'Tradier', onPress: () => goToTradier()},
         ],
       );
-    } else {
-      handleTradierAuthenticated();
     }
   });
-
-  function handleTradierAuthenticated() {
-    console.log(
-      'handleTradierAuthenticated access_token',
-      props.user.tradierAccessToken,
-    );
-    updateInvestorDocument(props.user.email!, {
-      tradierAccessToken: props.user.tradierAccessToken,
-      tradierAccessTokenExpiration: props.user.tradierAccessTokenExpiration,
-      hasAuthenticatedTradier: true,
-      tradierIsWaitingForApproval: false,
-    });
-  }
 
   async function handleChatPressed() {
     const url = 'https://discord.gg/SKbm6tN';
