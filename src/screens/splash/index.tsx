@@ -81,7 +81,7 @@ export const Splash = (props: AuthenticationStackProps) => {
         // console.log('investor data: ', investorData);
         store.dispatch(loginInvestor(email, investorData));
         await getTradierAccountDetails(investorData.tradierAccessToken);
-        if (investorData.hasAnsweredOnboardingQuestions) {
+        if (!investorData.hasAnsweredOnboardingQuestions) {
           // Finish onboarding
           props.navigation.navigate(ROUTES.Onboarding);
         } else {
