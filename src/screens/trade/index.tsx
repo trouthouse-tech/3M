@@ -17,7 +17,7 @@ import {DEVICE_WIDTH} from '../../styles/util';
 import {Buttons} from 'golfpro-rn-components';
 import {TradeStackProps} from '../../navigation/trade/types';
 import {UserState} from '../../store/user/types';
-import {Option, RecentlyViewedCompany} from '../../model';
+import {RecentlyViewedCompany} from '../../model';
 import store from '../../store';
 import {updateRecentlyViewedSymbols} from '../../store/user/actions';
 import {
@@ -60,7 +60,7 @@ const TradeBase = (props: Props) => {
   }
 
   async function searchForRecentlyViewed(symbol: string) {
-    await getOptions(symbol, props.user.tradierAccessToken!);
+    await getOptions(symbol);
   }
 
   async function searchForFilterText() {
@@ -69,15 +69,22 @@ const TradeBase = (props: Props) => {
       return;
     }
 
-    await getOptions(filterText, props.user.tradierAccessToken!);
+    await getOptions(filterText);
   }
 
-  async function getOptions(symbol: string, token: string) {
-    console.log('token ', token);
+  /**
+   * Find options for the given symbol
+   * @param symbol Used to search for options
+   */
+  async function getOptions(symbol: string) {
     store.dispatch(resetOptions());
     setShowActivityIndicator(true);
 
+    const token = props.user.tradierAccessToken!;
     const dates = await getExpirationDates(symbol, token);
+    if (!dates) {
+      notifyUserThatOptionsWereNotFound();
+    }
     store.dispatch(addExpirationDates(dates));
 
     dates.map((expirationDate: string) => {
@@ -92,6 +99,9 @@ const TradeBase = (props: Props) => {
       );
     });
 
+    /**
+     * Retrieve information about a given symbol's stock
+     */
     await getQuotes(symbol, token).then((quotes: GetQuoteResponse) => {
       const {quote} = quotes.quotes;
       store.dispatch(addQuote(quote));
