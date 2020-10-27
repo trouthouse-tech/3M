@@ -148,7 +148,7 @@ export async function getPositions(token: string) {
       },
     })
     .then((resp) => {
-      console.log('positions: ', resp.data);
+      // console.log('positions: ', resp.data);
       return resp.data.positions.position;
     })
     .catch((err) => console.log('err: ', err));
@@ -167,7 +167,7 @@ export async function getHistory(token: string) {
       },
     })
     .then((resp) => {
-      console.log('history: ', resp.data);
+      // console.log('history: ', resp.data);
       return resp.data.history.event;
     })
     .catch((err) => console.log('err: ', err));
