@@ -10,7 +10,7 @@ import {ROUTES} from '../../util/routes';
 import {registerInvestor, setLoggedInUser} from '../../services/investor';
 import {updateInvestor} from '../../store/user/actions';
 import store from '../../store';
-import {BackArrow, BackButton} from '../Header/HeaderItems';
+import {BackArrow} from '../Header/HeaderItems';
 
 export default function CredentialCollector(props: AuthenticationStackProps) {
   console.log('propsss: ', props);
