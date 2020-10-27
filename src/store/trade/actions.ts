@@ -1,7 +1,8 @@
 import {
   AddAccountIdAction,
   AddExpirationDatesAction,
-  AddOptionsAction, AddOrdersAction,
+  AddOptionsAction,
+  AddOrdersAction,
   AddPotentialTrades,
   AddQuoteAction,
   ResetOptionsAction,
