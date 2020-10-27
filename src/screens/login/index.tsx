@@ -9,7 +9,7 @@ import Header from '../../components/Header';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {Investor} from '../../model';
-import {BackArrow, BackButton} from '../../components/Header/HeaderItems';
+import {BackArrow} from '../../components/Header/HeaderItems';
 // @ts-ignore
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {Buttons} from 'golfpro-rn-components';
