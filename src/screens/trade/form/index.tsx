@@ -50,7 +50,7 @@ export function TradeFormBase(props: Props) {
       return;
     }
     setShowActivityIndicator(true);
-    let filteredOptions: Option[] = [];
+    let filteredOptions: Option[];
     if (assumedTrend === 'Bullish') {
       filteredOptions = props.tradeReducer.options.calls;
     } else {

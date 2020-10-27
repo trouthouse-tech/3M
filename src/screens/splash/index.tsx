@@ -98,16 +98,17 @@ export const Splash = (props: AuthenticationStackProps) => {
    */
   async function getTradierAccountDetails(token: string) {
     await getAccount(token).then(async (tradierAccount) => {
-      store.dispatch(addAccountId(tradierAccount.account_number));
-      getOrders('').then((orders) => {
+      const accountId = tradierAccount.account_number;
+      store.dispatch(addAccountId(accountId));
+      getOrders(accountId, '').then((orders) => {
         if (orders) {
           store.dispatch(addOrders(orders));
         }
       });
-      getPositions('').then((positions) => {
+      getPositions(accountId, '').then((positions) => {
         console.log('positions: ', positions);
       });
-      getHistory('').then((history) => {
+      getHistory(accountId, '').then((history) => {
         console.log('history: ', history);
       });
     });

@@ -20,12 +20,12 @@ export async function getAccount(token: string) {
     .catch((err) => console.log('err: ', err));
 }
 
-export async function getOrders(token: string) {
-  const url = `https://sandbox.tradier.com/v1/accounts/${SANDBOX.account_id}/orders`;
+export async function getOrders(accountId: string, token: string) {
+  const url = `https://sandbox.tradier.com/v1/accounts/${accountId}/orders`;
   return await axios
     .get(url, {
       params: {
-        account_id: SANDBOX.account_id,
+        account_id: accountId,
       },
       headers: {
         Authorization: `Bearer ${SANDBOX.access_token}`,
@@ -39,12 +39,12 @@ export async function getOrders(token: string) {
     .catch((err) => console.log('err: ', err));
 }
 
-export async function getPositions(token: string) {
-  const url = `https://sandbox.tradier.com/v1/accounts/${SANDBOX.account_id}/positions`;
+export async function getPositions(accountId: string, token: string) {
+  const url = `https://sandbox.tradier.com/v1/accounts/${accountId}/positions`;
   return await axios
     .get(url, {
       params: {
-        account_id: SANDBOX.account_id,
+        account_id: accountId,
       },
       headers: {
         Authorization: `Bearer ${SANDBOX.access_token}`,
@@ -58,12 +58,12 @@ export async function getPositions(token: string) {
     .catch((err) => console.log('err: ', err));
 }
 
-export async function getHistory(token: string) {
-  const url = `https://sandbox.tradier.com/v1/accounts/${SANDBOX.account_id}/history`;
+export async function getHistory(accountId: string, token: string) {
+  const url = `https://sandbox.tradier.com/v1/accounts/${accountId}/history`;
   return await axios
     .get(url, {
       params: {
-        account_id: SANDBOX.account_id,
+        account_id: accountId,
       },
       headers: {
         Authorization: `Bearer ${SANDBOX.access_token}`,

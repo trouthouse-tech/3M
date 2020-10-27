@@ -52,11 +52,13 @@ function FormResultsBase(props: Props) {
       // preview: 'true',
     };
 
-    await multiLegOrder(multiLeg).then((order) => {
-      // console.log('legOne: ', option);
-      // console.log('legTwo: ', legTwo);
-      console.log('order: ', order);
-    });
+    await multiLegOrder(props.tradeReducer.accountId, multiLeg).then(
+      (order) => {
+        // console.log('legOne: ', option);
+        // console.log('legTwo: ', legTwo);
+        console.log('order: ', order);
+      },
+    );
     props.navigation.push(ROUTES.OpenTrade, {trade: trade});
   }
 
