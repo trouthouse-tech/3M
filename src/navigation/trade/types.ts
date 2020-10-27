@@ -6,8 +6,8 @@ import {Trade} from '../../screens/trade/results/types';
 
 export type TradeStackParamList = {
   Trade: undefined;
-  TradeForm: {quote: Quote};
-  FormResults: undefined;
+  TradeForm: undefined;
+  FormResults: {type: string};
   OpenTrade: {trade: Trade};
 };
 

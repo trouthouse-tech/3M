@@ -10,6 +10,7 @@ import {MeStackProps} from '../../navigation/me/types';
 import {TradeState} from '../../store/trade/types';
 import {Colors, Fonts} from '../../styles';
 import {Buttons} from 'golfpro-rn-components';
+import {Trade} from './results/types';
 
 type RowProps = {
   values: string[];
@@ -49,9 +50,10 @@ const HEADER = ['', 'Strike', 'Cost'];
 
 export function OpenTradeBase(props: Props) {
   // @ts-ignore
-  const {trade} = props.route.params;
+  const {trade} = props.route.params as Trade;
+  console.log('trade: ', trade);
   const {quote} = props.tradeReducer;
-  const cost = (trade.legOne.cost + trade.legTwo.cost) * 100;
+  const cost = Math.ceil((trade.legOne.cost - trade.legTwo.cost) * 100);
 
   const headerRow = <Row values={HEADER} />;
   const legOne = (
@@ -117,19 +119,30 @@ export function OpenTradeBase(props: Props) {
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Change: </Text>
           <Text style={styles.label}>
-            <Text>$90.39 </Text>
-            <Text style={styles.boldedValue}>(15.39%) </Text>
+            <Text>$0.00 </Text>
+            <Text style={styles.boldedValue}>(0%) </Text>
           </Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Probability: </Text>
           <Text style={styles.label}>
-            <Text style={styles.boldedValue}>15.39% </Text>
+            <Text style={styles.boldedValue}>{trade.probability}% </Text>
           </Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Probability: </Text>
-          <Text style={styles.label}>15.39%</Text>
+          <Text style={styles.label}>Max Profit: </Text>
+          <Text style={styles.label}>
+            <Text>${trade.maxProfitDollars} </Text>
+            <Text style={styles.boldedValue}>
+              ({trade.maxProfitPercentage}%){' '}
+            </Text>
+          </Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Break Even: </Text>
+          <Text style={styles.label}>
+            <Text>${trade.breakEven} </Text>
+          </Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Expiration Date: </Text>

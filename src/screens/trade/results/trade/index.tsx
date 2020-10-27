@@ -4,6 +4,7 @@ import {Trade} from '../types';
 import {Colors, Fonts} from '../../../../styles';
 import {DEVICE_WIDTH} from '../../../../styles/util';
 import {Buttons} from 'golfpro-rn-components';
+import moment from 'moment';
 
 type Props = {
   trade: Trade;
@@ -36,7 +37,7 @@ const Row = (props: RowProps) => {
 
 export function PotentialTrade(props: Props) {
   const {trade} = props;
-  const cost = (trade.legOne.cost + trade.legTwo.cost) * 100;
+  const cost = ((trade.legOne.cost - trade.legTwo.cost) * 100).toFixed(2);
 
   const headerRow = <Row values={HEADER} showBottomBorder />;
   const legOne = (
@@ -63,27 +64,33 @@ export function PotentialTrade(props: Props) {
       <View style={styles.main}>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Probability: </Text>
-          <Text style={[styles.label, styles.boldedValue]}>30.40%</Text>
+          <Text style={[styles.label, styles.boldedValue]}>
+            {trade.probability}%
+          </Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Max Profit: </Text>
           <Text style={styles.label}>
-            <Text>$90.39 </Text>
-            <Text style={styles.boldedValue}>(15.39%) </Text>
+            <Text>${trade.maxProfitDollars} </Text>
+            <Text style={styles.boldedValue}>
+              ({trade.maxProfitPercentage}%){' '}
+            </Text>
           </Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Break Even: </Text>
-          <Text style={styles.label}>53.11 </Text>
+          <Text style={styles.label}>{trade.breakEven} </Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Expiration Date: </Text>
-          <Text style={styles.label}>10/20/2020 </Text>
+          <Text style={styles.label}>
+            {moment(trade.expirationDate).format('L')}{' '}
+          </Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Total Price: </Text>
           <Text style={styles.label}>
-            <Text>{trade.legOne.cost + trade.legTwo.cost} x 100 = </Text>
+            <Text>{trade.totalPrice} x 100 = </Text>
             <Text style={styles.boldedValue}>${cost}</Text>
           </Text>
         </View>
@@ -91,7 +98,7 @@ export function PotentialTrade(props: Props) {
           <Buttons.LargeSquareOnPress
             onPress={() => handleOnPurchase()}
             text="Purchase"
-            buttonColor={Colors.blue_green}
+            buttonColor={Colors.main_green}
             textColor={Colors.white}
           />
         </View>
@@ -103,7 +110,7 @@ export function PotentialTrade(props: Props) {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 2,
-    borderColor: Colors.dark_blue_green,
+    borderColor: Colors.main_green,
     borderRadius: 10,
     marginTop: 20,
   },

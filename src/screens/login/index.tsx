@@ -9,7 +9,7 @@ import Header from '../../components/Header';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
 import {Investor} from '../../model';
-import {BackButton} from '../../components/Header/HeaderItems';
+import {BackArrow, BackButton} from '../../components/Header/HeaderItems';
 // @ts-ignore
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {Buttons} from 'golfpro-rn-components';
@@ -71,7 +71,7 @@ export const Login = (props: AuthenticationStackProps) => {
     <View style={styles.container}>
       <Header
         leftButton={{
-          child: BackButton,
+          child: BackArrow,
           onclick: () => props.navigation.goBack(),
         }}
       />
@@ -80,8 +80,12 @@ export const Login = (props: AuthenticationStackProps) => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.logoContainer}>
           <Image
+            style={styles.logoIcon}
+            source={require('../../../assets/images/logo/finalLogoIcon.png')}
+          />
+          <Image
             style={styles.logo}
-            source={require('../../../assets/images/logo/newLogo.png')}
+            source={require('../../../assets/images/logo/finalLogo.png')}
           />
         </View>
         <View style={styles.form}>
@@ -103,7 +107,7 @@ export const Login = (props: AuthenticationStackProps) => {
             onPress={() => handleSignIn()}
             text="Sign In"
             textColor={Colors.white}
-            buttonColor={Colors.blue_green}
+            buttonColor={Colors.main_green}
           />
         </View>
         {showActivityIndicator && <LoadingScreen />}
@@ -127,11 +131,20 @@ const styles = StyleSheet.create({
   logoContainer: {
     flex: 2,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  logoIcon: {
+    height: imageSize / 2,
+    width: imageSize / 2,
+    // backgroundColor: 'red',
   },
 
   logo: {
-    height: imageSize,
+    height: imageSize / 2,
     width: imageSize,
+    resizeMode: 'contain',
+    // backgroundColor: 'blue',
   },
 
   form: {

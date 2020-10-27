@@ -46,6 +46,7 @@ const HomeBase = (props: Props) => {
   });
 
   function handleTradierAuthenticated() {
+    console.log('handleTradierAuthenticated access_token', props.user.tradierAccessToken);
     updateInvestorDocument(props.user.email!, {
       tradierAccessToken: props.user.tradierAccessToken,
       tradierAccessTokenExpiration: props.user.tradierAccessTokenExpiration,

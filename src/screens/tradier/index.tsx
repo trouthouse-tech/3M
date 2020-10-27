@@ -24,6 +24,7 @@ export default function TradierView(props: HomeStackProps) {
       code = code.substring(0, 8);
 
       await getAccessToken(code).then((data) => {
+        console.log('data access_token', data.access_token);
         store.dispatch(
           updateInvestor({
             tradierAccessToken: data.access_token,

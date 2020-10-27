@@ -17,13 +17,22 @@ import {DEVICE_WIDTH} from '../../styles/util';
 import {Buttons} from 'golfpro-rn-components';
 import {TradeStackProps} from '../../navigation/trade/types';
 import {UserState} from '../../store/user/types';
-import {RecentlyViewedCompany} from '../../model';
+import {Option, RecentlyViewedCompany} from '../../model';
 import store from '../../store';
 import {updateRecentlyViewedSymbols} from '../../store/user/actions';
-import {getOptionChain, getQuotes} from '../../services/tradier';
+import {
+  getExpirationDates,
+  getOptionChain,
+  getQuotes,
+} from '../../services/tradier';
 import {FindOptionChainResponse, GetQuoteResponse} from '../../model';
 import {ROUTES} from '../../util/routes';
-import {addOptions, addQuote} from '../../store/trade/actions';
+import {
+  addExpirationDates,
+  addOptions,
+  addQuote,
+  resetOptions,
+} from '../../store/trade/actions';
 import {updateInvestorDocument} from '../../services/investor';
 import {LoadingScreen} from '../../components/ActivityIndicator';
 
@@ -64,31 +73,41 @@ const TradeBase = (props: Props) => {
   }
 
   async function getOptions(symbol: string, token: string) {
+    console.log('token ', token);
+    store.dispatch(resetOptions());
     setShowActivityIndicator(true);
-    // Retrieve option chain for the provided value - if possible
-    await getOptionChain(symbol, token).then(
-      async (response: FindOptionChainResponse) => {
-        const {options} = response;
-        // Options found
-        if (options !== null) {
-          store.dispatch(addOptions(options.option));
-          // Retrieve company information for a given symbol
-          await getQuotes(symbol, token).then((quotes: GetQuoteResponse) => {
-            const {quote} = quotes.quotes;
-            store.dispatch(addQuote(quote));
-            // Update store
-            updateRecentlyViewed({
-              symbol: quote.symbol,
-              name: quote.description,
-            });
-            setShowActivityIndicator(false);
-            props.navigation.push(ROUTES.TradeForm, {quote: quote});
-          });
-        } else {
-          notifyUserThatOptionsWereNotFound();
-        }
-      },
-    );
+
+    const dates = await getExpirationDates(symbol, token);
+    store.dispatch(addExpirationDates(dates));
+
+    dates.map((expirationDate: string) => {
+      getOptionChain(symbol, expirationDate, token).then(
+        (response: FindOptionChainResponse) => {
+          const {options} = response;
+          if (options !== null) {
+            // Options found
+            store.dispatch(addOptions(options.option));
+          }
+        },
+      );
+    });
+
+    await getQuotes(symbol, token).then((quotes: GetQuoteResponse) => {
+      const {quote} = quotes.quotes;
+      store.dispatch(addQuote(quote));
+      // Update store
+      updateRecentlyViewed({
+        symbol: quote.symbol,
+        name: quote.description,
+      });
+      setShowActivityIndicator(false);
+    });
+
+    // if (optionsFound) {
+    props.navigation.push(ROUTES.TradeForm);
+    // } else {
+    //   notifyUserThatOptionsWereNotFound();
+    // }
   }
 
   /**
@@ -206,7 +225,7 @@ const styles = StyleSheet.create({
   },
 
   searchButton: {
-    backgroundColor: Colors.dark_blue_green,
+    backgroundColor: Colors.main_green,
     width: 75,
     height: 40,
     alignSelf: 'center',
