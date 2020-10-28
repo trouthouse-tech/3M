@@ -2,14 +2,17 @@ import {
   AddAccountIdAction,
   AddExpirationDatesAction,
   AddOptionsAction,
+  AddOrderAction,
   AddOrdersAction,
   AddPotentialTrades,
   AddQuoteAction,
+  AddTradeAction,
+  AddTradesAction,
   TradeAction,
   TradeState,
 } from './types';
 import {TRADE_ACTION_TYPES} from './actions';
-import {Option, Quote} from '../../model';
+import {Option, Order, Quote} from '../../model';
 
 const InitialState: TradeState = {
   options: {
@@ -17,10 +20,11 @@ const InitialState: TradeState = {
     puts: [],
     expirationDates: [],
   },
-  quote: null,
+  quotes: {},
   potentialTrades: [],
   accountId: '',
   orders: [],
+  trades: [],
 };
 
 export const tradeReducer = (
@@ -56,9 +60,18 @@ export const tradeReducer = (
     case TRADE_ACTION_TYPES.ADD_ACCOUNT_ID:
       const {accountId} = <AddAccountIdAction>action;
       return Object.assign({}, state, {accountId});
+    case TRADE_ACTION_TYPES.ADD_ORDER:
+      const {order} = <AddOrderAction>action;
+      return handleOrderAdded(state, order);
     case TRADE_ACTION_TYPES.ADD_ORDERS:
       const {orders} = <AddOrdersAction>action;
       return Object.assign({}, state, {orders});
+    case TRADE_ACTION_TYPES.ADD_TRADE:
+      const {trade} = <AddTradeAction>action;
+      return handleTradeAdded(state, trade);
+    case TRADE_ACTION_TYPES.ADD_TRADES:
+      const {trades} = <AddTradesAction>action;
+      return Object.assign({}, state, {trades});
     default:
       return state;
   }
@@ -107,8 +120,13 @@ function handleAddQuote(oldState: TradeState, quote: Quote) {
     expirationDates: oldState.options.expirationDates,
   };
 
+  const quotes = Object.assign({}, oldState.quotes);
+  if (!quotes[quote.symbol]) {
+    quotes[quote.symbol] = quote;
+  }
+
   return {
-    quote,
+    quotes,
     options,
   };
 }
@@ -118,4 +136,16 @@ function handleAddExpirationDates(
   expirationDates: string[],
 ) {
   return Object.assign({}, oldState.options, {expirationDates});
+}
+
+function handleTradeAdded(oldState: TradeState, trade: string) {
+  const trades = [...oldState.trades];
+  trades.push(trade);
+  return Object.assign({}, oldState, {trades});
+}
+
+function handleOrderAdded(oldState: TradeState, order: Order) {
+  const orders = [...oldState.orders];
+  orders.push(order);
+  return Object.assign({}, oldState, {orders});
 }

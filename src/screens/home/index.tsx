@@ -7,13 +7,15 @@ import Header from '../../components/Header';
 import {UserState} from '../../store/user/types';
 import {ROUTES} from '../../util/routes';
 import {ChatButton} from '../../components/Header/HeaderItems';
+import {TradeState} from '../../store/trade/types';
 
 type Props = HomeStackProps & {
   user: UserState;
+  trade: TradeState;
 };
 
 const HomeBase = (props: Props) => {
-  console.log('home props: ', props);
+  // console.log('home props: ', props);
   useEffect(() => {
     if (props.user.tradierIsWaitingForApproval) {
       Alert.alert(
@@ -29,7 +31,7 @@ const HomeBase = (props: Props) => {
       );
     }
     const expiration = props.user.tradierAccessTokenExpiration!;
-    const isExpired = expiration < Date.now() / 1000 - 86399;
+    const isExpired = expiration * 1000 < (Date.now() / 1000 - 86399) * 1000;
     if (isExpired) {
       Alert.alert(
         "Let's setup your Tradier account.",
@@ -41,7 +43,11 @@ const HomeBase = (props: Props) => {
         ],
       );
     }
-  });
+  }, [
+    props.navigation,
+    props.user.tradierAccessTokenExpiration,
+    props.user.tradierIsWaitingForApproval,
+  ]);
 
   async function handleChatPressed() {
     const url = 'https://discord.gg/SKbm6tN';
@@ -71,6 +77,7 @@ const HomeBase = (props: Props) => {
 
 const mapStateToProps = (state: AppState) => ({
   user: state.user,
+  trade: state.tradeReducer,
 });
 
 const mapDispatchToProps = () => ({});

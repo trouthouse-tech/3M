@@ -6,7 +6,7 @@ import store from '../../store';
 import {getAccessToken} from '../../services/tradier';
 import {updateInvestor} from '../../store/user/actions';
 import Header from '../../components/Header';
-import {BackButton} from '../../components/Header/HeaderItems';
+import {BackArrow} from '../../components/Header/HeaderItems';
 import {updateInvestorDocument} from '../../services/investor';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
@@ -62,7 +62,7 @@ function TradierViewBase(props: Props) {
     <SafeAreaView style={styles.container}>
       <Header
         leftButton={{
-          child: BackButton,
+          child: BackArrow,
           onclick: () => props.navigation.goBack(),
         }}
         showLogo

@@ -2,12 +2,15 @@ import {
   AddAccountIdAction,
   AddExpirationDatesAction,
   AddOptionsAction,
+  AddOrderAction,
   AddOrdersAction,
   AddPotentialTrades,
   AddQuoteAction,
+  AddTradeAction,
+  AddTradesAction,
   ResetOptionsAction,
 } from './types';
-import {Option, Quote} from '../../model';
+import {Option, Quote, Spread} from '../../model';
 import {Order, Trade} from '../../model';
 
 export enum TRADE_ACTION_TYPES {
@@ -17,7 +20,10 @@ export enum TRADE_ACTION_TYPES {
   RESET_OPTIONS = 'RESET_OPTIONS',
   ADD_EXP_DATES = 'ADD_EXP_DATES',
   ADD_ACCOUNT_ID = 'ADD_ACCOUNT_ID',
+  ADD_ORDER = 'ADD_ORDER',
   ADD_ORDERS = 'ADD_ORDERS',
+  ADD_TRADE = 'ADD_TRADE',
+  ADD_TRADES = 'ADD_TRADES',
 }
 
 export const addOptions = (options: Option[]): AddOptionsAction => ({
@@ -53,7 +59,22 @@ export const addAccountId = (accountId: string): AddAccountIdAction => ({
   accountId,
 });
 
-export const addOrders = (orders: Order[]): AddOrdersAction => ({
+export const addOrder = (order: Order | Spread): AddOrderAction => ({
+  type: TRADE_ACTION_TYPES.ADD_ORDER,
+  order,
+});
+
+export const addOrders = (orders: Order[] | Spread[]): AddOrdersAction => ({
   type: TRADE_ACTION_TYPES.ADD_ORDERS,
   orders,
+});
+
+export const addTrade = (trade: string): AddTradeAction => ({
+  type: TRADE_ACTION_TYPES.ADD_TRADE,
+  trade,
+});
+
+export const addTrades = (trades: string[]): AddTradesAction => ({
+  type: TRADE_ACTION_TYPES.ADD_TRADES,
+  trades,
 });

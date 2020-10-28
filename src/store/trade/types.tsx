@@ -1,4 +1,4 @@
-import {Option, Quote} from '../../model';
+import {Option, Quote, Spread} from '../../model';
 import {Order, Trade} from '../../model';
 
 export type TradeState = {
@@ -7,10 +7,13 @@ export type TradeState = {
     puts: Option[];
     expirationDates: string[];
   };
-  quote: Quote | null;
+  quotes: {
+    [key: string]: Quote;
+  };
   potentialTrades: Trade[];
   accountId: string;
-  orders: Order[];
+  orders: Order[] | Spread[];
+  trades: string[];
 };
 
 type Action = {
@@ -39,12 +42,24 @@ export type AddAccountIdAction = Action & {
   accountId: string;
 };
 
+export type AddOrderAction = Action & {
+  order: Order | Spread;
+};
+
 export type AddOrdersAction = Action & {
-  orders: Order[];
+  orders: Order[] | Spread[];
 };
 
 export type AddPositionsAction = Action & {
-  positions: Order[];
+  positions: Order[] | Spread[];
+};
+
+export type AddTradeAction = Action & {
+  trade: string;
+};
+
+export type AddTradesAction = Action & {
+  trades: string[];
 };
 
 export type TradeAction =
@@ -54,4 +69,6 @@ export type TradeAction =
   | ResetOptionsAction
   | AddExpirationDatesAction
   | AddAccountIdAction
-  | AddOrdersAction;
+  | AddOrdersAction
+  | AddTradeAction
+  | AddTradesAction;

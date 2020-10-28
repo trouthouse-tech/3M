@@ -7,7 +7,7 @@ import Header from '../Header';
 import LargeHallowButton from '../buttons/LargeHallow';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {DEVICE_WIDTH} from '../../styles/util';
-import {BackButton} from '../Header/HeaderItems';
+import {BackArrow} from '../Header/HeaderItems';
 
 type Props = {
   onSelect(answer: number): void;
@@ -54,7 +54,7 @@ export default function MultipleChoiceCollector({
     <SafeAreaView style={styles.container}>
       <Header
         leftButton={{
-          child: BackButton,
+          child: BackArrow,
           onclick: () => navigation.goBack(),
         }}
       />

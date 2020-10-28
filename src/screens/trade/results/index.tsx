@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {TradeStackProps} from '../../../navigation/trade/types';
 import {PotentialTrade} from './trade';
 import Header from '../../../components/Header';
-import {BackButton} from '../../../components/Header/HeaderItems';
+import {BackArrow} from '../../../components/Header/HeaderItems';
 import {SimpleTicker} from '../../../components/tickers/simple';
 import {AppState} from '../../../store/types';
 import {connect} from 'react-redux';
@@ -13,16 +13,22 @@ import {MultiLegOrder, Trade} from '../../../model';
 import {ROUTES} from '../../../util/routes';
 import {multiLegOrder} from '../../../services/tradier';
 import {Fonts} from '../../../styles';
+import {addTradeToFirebase} from '../../../services/trades';
+import {UserState} from '../../../store/user/types';
+import store from '../../../store';
+import {addTrade} from '../../../store/trade/actions';
 
 type Props = TradeStackProps & {
   tradeReducer: TradeState;
+  user: UserState;
 };
 
 function FormResultsBase(props: Props) {
-  console.log('props: ', props);
+  // console.log('props: ', props);
   // @ts-ignore
   const typeOfTrades = props.route.params.type;
-  const {quote} = props.tradeReducer;
+  const symbol = props.tradeReducer.potentialTrades[0].root_symbol;
+  const quote = props.tradeReducer.quotes[symbol];
   const tradeComponents = props.tradeReducer.potentialTrades.map(
     (trade, index) => {
       return (
@@ -57,6 +63,10 @@ function FormResultsBase(props: Props) {
         // console.log('legOne: ', option);
         // console.log('legTwo: ', legTwo);
         console.log('order: ', order);
+        const trades = [...props.tradeReducer.trades];
+        trades.push(order.id);
+        addTradeToFirebase(props.user.email!, trades);
+        store.dispatch(addTrade(order.id));
       },
     );
     props.navigation.push(ROUTES.OpenTrade, {trade: trade});
@@ -66,7 +76,7 @@ function FormResultsBase(props: Props) {
     <View style={styles.container}>
       <Header
         leftButton={{
-          child: BackButton,
+          child: BackArrow,
           onclick: () => props.navigation.goBack(),
         }}
         showBottomBorder
@@ -94,6 +104,7 @@ function FormResultsBase(props: Props) {
 
 const mapStateToProps = (state: AppState) => ({
   tradeReducer: state.tradeReducer,
+  user: state.user,
 });
 const mapDispatchToProps = () => ({});
 export const FormResults = connect(

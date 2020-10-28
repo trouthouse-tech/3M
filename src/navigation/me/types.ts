@@ -1,10 +1,12 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
-import {Investor} from '../../model';
+import {Investor, Spread} from '../../model';
 
 export type MeStackParamList = {
   Me: undefined;
+  Orders: undefined;
+  Spread: {spread: Spread};
 };
 
 /*

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
 import {MeStackProps} from '../../navigation/me/types';
@@ -10,9 +10,11 @@ import {ROUTES} from '../../util/routes';
 import {UserState} from '../../store/user/types';
 import {LogoutButton} from '../../components/Header/HeaderItems';
 import {TradeState} from '../../store/trade/types';
-import {Order} from '../../model';
 import {DEVICE_WIDTH, White_Shadowed} from '../../styles/util';
 import {Colors, Fonts} from '../../styles';
+import ActionList from '../../components/ActionList';
+import {ActionListProps} from '../../components/ActionList/types';
+import {sanFranciscoWeights} from 'react-native-typography';
 
 type Props = MeStackProps & {
   user: UserState;
@@ -29,44 +31,70 @@ const MeBase = (props: Props) => {
     });
   }
 
-  const trades = props.trade.orders ? (
-    props.trade.orders.map((order) => {
-      return TradierOrder(order);
-    })
-  ) : (
-    <Text>No trades</Text>
-  );
+  const PROFILE_ACTIONS: ActionListProps = {
+    items: [
+      {
+        title: '3M Account',
+        route: ROUTES.Edit3MAccount,
+        onPress() {
+          console.log('Edit 3m account');
+        },
+      },
+      {
+        title: 'Edit Tradier Account',
+        route: ROUTES.EditTradierAccount,
+        async onPress() {
+          console.log('Edit Tradier account');
+        },
+      },
+      {
+        title: 'Orders',
+        route: ROUTES.Orders,
+        onPress() {
+          props.navigation.navigate(ROUTES.Orders);
+          return;
+        },
+      },
+      {
+        title: 'Notifications',
+        route: ROUTES.Notifications,
+        onPress() {
+          console.log('Notifications');
+          return;
+        },
+      },
+      {
+        title: 'Feedback',
+        route: ROUTES.Feedback,
+        onPress() {
+          console.log('Feedback');
+          return;
+        },
+      },
+      {
+        title: 'Support',
+        route: ROUTES.Support,
+        onPress() {
+          console.log('Support');
+          return;
+        },
+      },
+    ],
+  };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Header
         showLogo
         showBottomBorder
         rightButton={{child: LogoutButton, onclick: () => handleSignOut()}}
       />
       <Text style={styles.title}>Trades</Text>
-      {trades}
-    </View>
-  );
-};
-
-const TradierOrder = (order: Order) => {
-  return (
-    <TouchableHighlight
-      onPress={() => console.log('order: ', order.id)}
-      style={styles.order}
-      key={order.id}>
-      <View style={styles.orderInfoContainer}>
-        <View style={styles.left}>
-          <Text style={styles.symbol}>{order.symbol}</Text>
-          <Text style={styles.label}>Cost: 123</Text>
-        </View>
-        <View style={styles.right}>
-          <Text style={styles.label}>Status: {order.status}</Text>
-          {/*<Text style={styles.label}>Type: {order.side === ''}</Text>*/}
-        </View>
+      <View style={styles.settingsContainer}>
+        <Text style={styles.settingsTitle}>Settings</Text>
+        <ActionList items={PROFILE_ACTIONS.items} />
       </View>
-    </TouchableHighlight>
+    </View>
   );
 };
 
@@ -80,6 +108,10 @@ const mapDispatchToProps = () => ({});
 export const Me = connect(mapStateToProps, mapDispatchToProps)(MeBase);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
   title: {
     ...Fonts.h1,
     alignSelf: 'center',
@@ -117,5 +149,16 @@ const styles = StyleSheet.create({
 
   label: {
     fontSize: Fonts.normal,
+  },
+
+  settingsContainer: {
+    flex: 1,
+    padding: 15,
+  },
+
+  settingsTitle: {
+    fontSize: Fonts.normal,
+    paddingVertical: 15,
+    ...sanFranciscoWeights.medium,
   },
 });

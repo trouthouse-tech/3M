@@ -1,8 +1,11 @@
 import {MultiLegOrder, OptionOrder} from '../../model';
 import axios from 'axios';
-import {SANDBOX} from './index';
+import {SANDBOX} from './utils';
 
-export async function previewOptionOrder(accountId: string, order: OptionOrder) {
+export async function previewOptionOrder(
+  accountId: string,
+  order: OptionOrder,
+) {
   // console.log('accountId: ', order.account_id);
   const url = `https://api.tradier.com/v1/accounts/${accountId}/orders`;
   // console.log('order: ', order);

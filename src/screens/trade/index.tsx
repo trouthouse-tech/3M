@@ -104,6 +104,7 @@ const TradeBase = (props: Props) => {
      */
     await getQuotes(symbol, token).then((quotes: GetQuoteResponse) => {
       const {quote} = quotes.quotes;
+      // console.log('quote: ', quote);
       store.dispatch(addQuote(quote));
       // Update store
       updateRecentlyViewed({
@@ -111,10 +112,10 @@ const TradeBase = (props: Props) => {
         name: quote.description,
       });
       setShowActivityIndicator(false);
+      props.navigation.push(ROUTES.TradeForm, {symbol: quote.symbol});
     });
 
     // if (optionsFound) {
-    props.navigation.push(ROUTES.TradeForm);
     // } else {
     //   notifyUserThatOptionsWereNotFound();
     // }

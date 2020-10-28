@@ -5,8 +5,9 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 EntypoIcon.loadFont();
 // @ts-ignore
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import {Colors} from '../../styles';
 IonIcon.loadFont();
+
+import {Colors} from '../../styles';
 
 export const BackButton = (
   <EntypoIcon name="chevron-thin-left" size={25} color={Colors.gray} />

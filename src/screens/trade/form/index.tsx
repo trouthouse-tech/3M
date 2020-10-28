@@ -29,8 +29,10 @@ type Props = TradeStackProps & {
 
 export function TradeFormBase(props: Props) {
   // console.log('props.route.params.quote: ', props.tradeReducer.quote);
-  console.log('props: ', props);
-  const {quote} = props.tradeReducer;
+  // console.log('props: ', props);
+  // @ts-ignore
+  const symbol = props.route.params.symbol;
+  const quote = props.tradeReducer.quotes[symbol];
   const [expirationDate, setExpirationDate] = useState('');
   const [assumedTrend, setAssumedTrend] = useState('');
   const [calculatedTrend] = useState('Bullish');

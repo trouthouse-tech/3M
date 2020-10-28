@@ -18,7 +18,9 @@ import {
   getOrders,
   getPositions,
 } from '../../services/tradier';
-import {addAccountId, addOrders} from '../../store/trade/actions';
+import {addAccountId, addOrder, addOrders, addTrades} from '../../store/trade/actions';
+import {getOrder} from '../../services/tradier/account';
+import {getTrades} from '../../services/trades';
 
 export const Splash = (props: AuthenticationStackProps) => {
   // console.log(
@@ -80,6 +82,12 @@ export const Splash = (props: AuthenticationStackProps) => {
         const investorData = investor.data!.data()!;
         // console.log('investor data: ', investorData);
         store.dispatch(loginInvestor(email, investorData));
+        const tradeRetrieval = await getTrades(email);
+        console.log('trades: ', tradeRetrieval);
+        if (tradeRetrieval.wasSuccessful) {
+          const trades = tradeRetrieval.data!.data()!.trades;
+          store.dispatch(addTrades(trades));
+        }
         await getTradierAccountDetails(investorData.tradierAccessToken);
         if (!investorData.hasAnsweredOnboardingQuestions) {
           // Finish onboarding
@@ -100,11 +108,11 @@ export const Splash = (props: AuthenticationStackProps) => {
     await getAccount(token).then(async (tradierAccount) => {
       const accountId = tradierAccount.account_number;
       store.dispatch(addAccountId(accountId));
-      getOrders(accountId, '').then((orders) => {
-        if (orders) {
-          store.dispatch(addOrders(orders));
-        }
-      });
+      // getOrders(accountId, '').then((orders) => {
+      //   if (orders) {
+      //     store.dispatch(addOrders(orders));
+      //   }
+      // });
       getPositions(accountId, '').then((positions) => {
         console.log('positions: ', positions);
       });

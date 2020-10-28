@@ -5,7 +5,7 @@ import {Trade} from '../../model';
 
 export type TradeStackParamList = {
   Trade: undefined;
-  TradeForm: undefined;
+  TradeForm: {symbol: string};
   FormResults: {type: string};
   OpenTrade: {trade: Trade};
 };

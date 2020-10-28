@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {SANDBOX} from './index';
+import {SANDBOX} from './utils';
 import {Order} from '../../model';
 
 export async function getAccount(token: string) {
@@ -16,6 +16,31 @@ export async function getAccount(token: string) {
     .then((resp) => {
       console.log('Tradier Account: ', resp.data.profile.account);
       return resp.data.profile.account;
+    })
+    .catch((err) => console.log('err: ', err));
+}
+
+export async function getOrder(
+  accountId: string,
+  orderId: string,
+  token: string,
+) {
+  const url = `https://sandbox.tradier.com/v1/accounts/${accountId}/orders/${orderId}`;
+  return await axios
+    .get(url, {
+      params: {
+        account_id: accountId,
+        id: orderId,
+        includeTags: 'true',
+      },
+      headers: {
+        Authorization: `Bearer ${SANDBOX.access_token}`,
+        Accept: 'application/json',
+      },
+    })
+    .then((resp) => {
+      // console.log('order: ', resp.data);
+      return resp.data.order;
     })
     .catch((err) => console.log('err: ', err));
 }
@@ -64,6 +89,7 @@ export async function getHistory(accountId: string, token: string) {
     .get(url, {
       params: {
         account_id: accountId,
+        type: 'option',
       },
       headers: {
         Authorization: `Bearer ${SANDBOX.access_token}`,
@@ -71,7 +97,7 @@ export async function getHistory(accountId: string, token: string) {
       },
     })
     .then((resp) => {
-      // console.log('history: ', resp.data);
+      console.log('history: ', resp.data);
       return resp.data.history.event;
     })
     .catch((err) => console.log('err: ', err));

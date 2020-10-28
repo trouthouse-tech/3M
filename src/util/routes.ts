@@ -9,6 +9,12 @@ export enum ROUTES {
   MultipleChoiceCollector = 'MultipleChoiceCollector',
   Trade = 'Trade',
   Me = 'Me',
+  Edit3MAccount = 'Edit3MAccount',
+  EditTradierAccount = 'EditTradierAccount',
+  Orders = 'Orders',
+  Notifications = 'Notifications',
+  Feedback = 'Feedback',
+  Support = 'Support',
   Onboarding = 'Onboarding',
   TradingExperience = 'TradingExperience',
   MoneyManagement = 'MoneyManagement',
@@ -19,4 +25,5 @@ export enum ROUTES {
   TradeForm = 'TradeForm',
   FormResults = 'FormResults',
   OpenTrade = 'OpenTrade',
+  Spread = 'Spread',
 }

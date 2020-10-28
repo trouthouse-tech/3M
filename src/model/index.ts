@@ -217,3 +217,42 @@ export interface Position {
   symbol: string;
 }
 
+export interface Spread {
+  avg_fill_price: number;
+  class: string;
+  create_date: string;
+  duration: string;
+  exec_quantity: number;
+  id: number;
+  last_fill_price: number;
+  last_fill_quantity: number;
+  leg: SpreadLeg[];
+  num_legs: number;
+  quantity: number;
+  remaining_quantity: number;
+  side: string;
+  status: string;
+  strategy: string;
+  symbol: string;
+  transaction_date: string;
+  type: string;
+}
+
+export interface SpreadLeg {
+  avg_fill_price: number;
+  class: string;
+  create_date: string;
+  duration: string;
+  exec_quantity: number;
+  id: number;
+  last_fill_price: number;
+  last_fill_quantity: number;
+  option_symbol: string;
+  quantity: number;
+  remaining_quantity: number;
+  side: string;
+  status: string;
+  symbol: string;
+  transaction_date: string;
+  type: string;
+}
