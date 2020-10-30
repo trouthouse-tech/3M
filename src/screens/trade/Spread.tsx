@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {MeStackProps} from '../../navigation/me/types';
 import {TradeStackProps} from '../../navigation/trade/types';
-import {StyleSheet, Text, View} from 'react-native';
-import {GetQuoteResponse, MultiLegOrder, Quote, Spread} from '../../model';
+import {Alert, StyleSheet, Text, View} from 'react-native';
+import {
+  GetQuoteResponse,
+  MultiLegOrder,
+  Quote,
+  Spread,
+  Trade,
+} from '../../model';
 import Header from '../../components/Header';
 import {BackArrow} from '../../components/Header/HeaderItems';
 import {getQuotes, multiLegOrder} from '../../services/tradier';
@@ -24,6 +30,7 @@ import {Buttons} from 'golfpro-rn-components';
 import {getOrder} from '../../services/tradier/account';
 import moment from 'moment';
 import {addOrderIdToFirebase} from '../../services/orders';
+import {LoadingScreen} from '../../components/ActivityIndicator';
 
 type Props = (MeStackProps | TradeStackProps) & {
   user: UserState;
@@ -55,6 +62,7 @@ export const SpreadViewBase = (props: Props) => {
     : 0;
   const differenceInTime = new Date().getTime() - daysHeld;
   const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+  const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
   // console.log('currentLegOne: ', currentLegOne);
   // console.log('currentLegTwo: ', currentLegTwo);
@@ -122,6 +130,25 @@ export const SpreadViewBase = (props: Props) => {
     return parseInt(parsedStrike) / 1000;
   }
 
+  function confirmSellIntent() {
+    setShowActivityIndicator(true);
+    Alert.alert(
+      'Are you sure you want to sell this spread?',
+      `Sell for: $${currentCost.toFixed(2)}`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => setShowActivityIndicator(false),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => handleOnSell(),
+        },
+      ],
+    );
+  }
+
   async function handleOnSell() {
     const longPosition = props.trade.positions[trade.legOne.option_symbol];
     const shortPosition = props.trade.positions[trade.legTwo.option_symbol];
@@ -166,6 +193,7 @@ export const SpreadViewBase = (props: Props) => {
     store.dispatch(removePosition(spreadToRemove.leg[0].option_symbol));
     store.dispatch(removePosition(spreadToRemove.leg[1].option_symbol));
     // props.navigation.goBack();
+    setShowActivityIndicator(false);
     props.navigation.popToTop();
   }
 
@@ -245,13 +273,14 @@ export const SpreadViewBase = (props: Props) => {
         </View>
         <View style={styles.buttonContainer}>
           <Buttons.LargeSquareOnPress
-            onPress={() => handleOnSell()}
+            onPress={() => confirmSellIntent()}
             text="Sell"
             buttonColor={Colors.red}
             textColor={Colors.white}
           />
         </View>
       </View>
+      {showActivityIndicator && <LoadingScreen />}
     </View>
   );
 };

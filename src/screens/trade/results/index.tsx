@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {TradeStackProps} from '../../../navigation/trade/types';
 import {PotentialTrade} from './trade';
@@ -29,6 +29,7 @@ import {
 } from '../../../store/trade/actions';
 import {getOrder} from '../../../services/tradier/account';
 import {addOrderIdToFirebase} from '../../../services/orders';
+import {LoadingScreen} from '../../../components/ActivityIndicator';
 
 type Props = TradeStackProps & {
   tradeReducer: TradeState;
@@ -41,6 +42,7 @@ function FormResultsBase(props: Props) {
   const typeOfTrades = props.route.params.type;
   const symbol = props.tradeReducer.potentialTrades[0].root_symbol;
   const quote = props.tradeReducer.quotes[symbol];
+  const [showActivityIndicator, setShowActivityIndicator] = useState(false);
   const tradeComponents = props.tradeReducer.potentialTrades.map(
     (trade, index) => {
       return (
@@ -54,13 +56,14 @@ function FormResultsBase(props: Props) {
   );
 
   function confirmPurchaseIntent(trade: Trade) {
+    setShowActivityIndicator(true);
     Alert.alert(
       'Are you sure you want to purchase this spread?',
       `Total Cost: $${trade.totalPrice * 100}`,
       [
         {
           text: 'Cancel',
-          onPress: () => {},
+          onPress: () => setShowActivityIndicator(false),
           style: 'cancel',
         },
         {
@@ -72,7 +75,6 @@ function FormResultsBase(props: Props) {
   }
 
   async function handleOnPurchase(trade: Trade) {
-    console.log('purchase trade: ', trade);
     const multiLeg: MultiLegOrder = {
       account_id: props.tradeReducer.accountId,
       class: 'multileg',
@@ -134,6 +136,7 @@ function FormResultsBase(props: Props) {
             await addNewOptionQuote(position.symbol);
           }
         });
+        setShowActivityIndicator(false);
         props.navigation.push(ROUTES.Spread, {
           spread,
         });
@@ -177,6 +180,7 @@ function FormResultsBase(props: Props) {
           {tradeComponents}
         </ScrollView>
       </View>
+      {showActivityIndicator && <LoadingScreen />}
     </View>
   );
 }
