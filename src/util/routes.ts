@@ -24,6 +24,5 @@ export enum ROUTES {
   SearchResults = 'SearchResults',
   TradeForm = 'TradeForm',
   FormResults = 'FormResults',
-  OpenTrade = 'OpenTrade',
   Spread = 'Spread',
 }
