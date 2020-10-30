@@ -1,4 +1,4 @@
-import {Option, Quote, Spread} from '../../model';
+import {Option, Position, Quote, Spread} from '../../model';
 import {Order, Trade} from '../../model';
 
 export type TradeState = {
@@ -13,7 +13,13 @@ export type TradeState = {
   potentialTrades: Trade[];
   accountId: string;
   orders: Order[] | Spread[];
-  trades: string[];
+  trades: {
+    [key: string]: Trade;
+  };
+  positions: {
+    [key: string]: Position,
+  };
+  orderIds: string[];
 };
 
 type Action = {
@@ -50,16 +56,36 @@ export type AddOrdersAction = Action & {
   orders: Order[] | Spread[];
 };
 
+export type AddPositionAction = Action & {
+  position: Position;
+};
+
 export type AddPositionsAction = Action & {
-  positions: Order[] | Spread[];
+  positions: Position[];
+};
+
+export type RemovePositionAction = Action & {
+  position: string;
+};
+
+export type RemovePositionsAction = Action & {
+  positions: string[];
 };
 
 export type AddTradeAction = Action & {
-  trade: string;
+  trade: Trade;
 };
 
 export type AddTradesAction = Action & {
-  trades: string[];
+  trades: Trade[];
+};
+
+export type AddOrderIdAction = Action & {
+  orderId: string;
+};
+
+export type AddOrderIdsAction = Action & {
+  orderIds: string[];
 };
 
 export type TradeAction =
@@ -71,4 +97,10 @@ export type TradeAction =
   | AddAccountIdAction
   | AddOrdersAction
   | AddTradeAction
-  | AddTradesAction;
+  | AddTradesAction
+  | AddPositionAction
+  | AddPositionsAction
+  | AddOrderIdAction
+  | AddOrderIdsAction
+  | RemovePositionAction
+  | RemovePositionsAction;

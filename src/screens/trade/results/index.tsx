@@ -9,14 +9,26 @@ import {AppState} from '../../../store/types';
 import {connect} from 'react-redux';
 import {TradeState} from '../../../store/trade/types';
 import {DEVICE_WIDTH} from '../../../styles/util';
-import {MultiLegOrder, Trade} from '../../../model';
+import {MultiLegOrder, Position, Spread, Trade} from '../../../model';
 import {ROUTES} from '../../../util/routes';
-import {multiLegOrder} from '../../../services/tradier';
+import {
+  getPositions,
+  getQuotes,
+  multiLegOrder,
+} from '../../../services/tradier';
 import {Fonts} from '../../../styles';
 import {addTradeToFirebase} from '../../../services/trades';
 import {UserState} from '../../../store/user/types';
 import store from '../../../store';
-import {addTrade} from '../../../store/trade/actions';
+import {
+  addOrder,
+  addOrderId,
+  addPositions,
+  addQuote,
+  addTrade,
+} from '../../../store/trade/actions';
+import {getOrder} from '../../../services/tradier/account';
+import {addOrderIdToFirebase} from '../../../services/orders';
 
 type Props = TradeStackProps & {
   tradeReducer: TradeState;
@@ -59,17 +71,66 @@ function FormResultsBase(props: Props) {
     };
 
     await multiLegOrder(props.tradeReducer.accountId, multiLeg).then(
-      (order) => {
-        // console.log('legOne: ', option);
-        // console.log('legTwo: ', legTwo);
-        console.log('order: ', order);
-        const trades = [...props.tradeReducer.trades];
-        trades.push(order.id);
-        addTradeToFirebase(props.user.email!, trades);
-        store.dispatch(addTrade(order.id));
+      async (order) => {
+        await addOrderIdToFirebaseDocument(props.user.email!, order.id);
+        trade.orderId = order.id;
+        await addTradeToFirebaseDocument(props.user.email!, trade);
+        await getOrder(props.tradeReducer.accountId, order.id, '').then(
+          async (tradierOrder) => {
+            if (tradierOrder) {
+              if (tradierOrder.strategy === 'spread') {
+                store.dispatch(addOrder(tradierOrder as Spread));
+                await updatePositions(tradierOrder as Spread);
+              }
+            }
+          },
+        );
       },
     );
-    props.navigation.push(ROUTES.OpenTrade, {trade: trade});
+  }
+
+  async function addOrderIdToFirebaseDocument(email: string, orderId: string) {
+    const orderIds = [...props.tradeReducer.orderIds];
+    orderIds.push(orderId);
+    await addOrderIdToFirebase(props.user.email!, orderIds);
+    store.dispatch(addOrderId(orderId));
+  }
+
+  async function addTradeToFirebaseDocument(email: string, trade: Trade) {
+    const tradeIds = Object.keys(props.tradeReducer.trades);
+    const trades = tradeIds.map(
+      (tradeId) => props.tradeReducer.trades[tradeId],
+    );
+
+    trades.push(trade);
+    await addTradeToFirebase(props.user.email!, trades);
+    store.dispatch(addTrade(trade));
+  }
+
+  async function updatePositions(spread: Spread) {
+    await getPositions(props.tradeReducer.accountId, '').then((positions) => {
+      if (positions) {
+        store.dispatch(addPositions(positions));
+        positions.map(async (position: Position) => {
+          if (!props.tradeReducer.quotes[position.symbol]) {
+            await addNewOptionQuote(position.symbol);
+          }
+        });
+        props.navigation.push(ROUTES.Spread, {
+          spread,
+        });
+      }
+    });
+  }
+
+  async function addNewOptionQuote(newSymbol: string) {
+    await getQuotes(newSymbol, props.user.tradierAccessToken!).then(
+      (newQuote) => {
+        if (newQuote) {
+          store.dispatch(addQuote(newQuote.quotes.quote));
+        }
+      },
+    );
   }
 
   return (

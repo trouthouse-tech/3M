@@ -17,6 +17,23 @@ export async function lookupSymbol(query: string, token: string) {
     .catch((err) => console.log('errr: ', err));
 }
 
+export async function lookupOptionSymbol(query: string, token: string) {
+  return await axios
+    .get('https://api.tradier.com/v1/markets/lookup', {
+      params: {
+        q: query,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    })
+    .then((resp) => {
+      return resp.data;
+    })
+    .catch((err) => console.log('errr: ', err));
+}
+
 export async function getOptionChain(
   query: string,
   expirationDate: string,
@@ -57,7 +74,7 @@ export async function getQuotes(query: string, token: string) {
       // console.log('options: ', resp.data);
       return resp.data;
     })
-    .catch((err) => console.log('errr: ', err));
+    .catch((err) => console.log(err));
 }
 
 export async function getExpirationDates(symbol: string, token: string) {

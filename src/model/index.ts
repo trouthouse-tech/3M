@@ -106,33 +106,39 @@ export interface GetQuoteResponse {
 }
 
 export interface Quote {
-  symbol: string;
+  ask: number;
+  ask_date: number;
+  askexch: string;
+  asksize: number;
+  average_volume: string;
+  bid: string;
+  bid_date: number;
+  bidexch: string;
+  bidsize: number;
+  change: number;
+  change_percentage: number;
+  close: string;
+  contract_size?: number;
   description: string;
   exch: string;
-  type: string;
-  last: number;
-  change: number;
-  volume: number;
-  open: number;
+  expiration_date?: string;
+  expiration_type?: string;
   high: number;
-  low: number;
-  close: string;
-  bid: string;
-  ask: number;
-  change_percentage: number;
-  average_volume: string;
+  last: number;
   last_volume: number;
-  trade_date: number;
+  low: number;
+  open: number;
+  open_interest?: number;
+  option_type?: number;
   prevclose: number;
+  root_symbols: string;
+  strike?: number;
+  symbol: string;
+  trade_date: number;
+  type: string;
+  volume: number;
   week_52_high: number;
   week_52_low: number;
-  bidsize: number;
-  bidexch: string;
-  bid_date: number;
-  asksize: number;
-  askexch: string;
-  ask_date: number;
-  root_symbols: string;
 }
 
 export enum HOLDING_PERIOD {
@@ -152,6 +158,7 @@ export interface Trade {
   expirationDate: string;
   totalPrice: number;
   root_symbol: string;
+  orderId: string;
 }
 
 export interface Leg {
@@ -210,7 +217,7 @@ export interface Order {
 }
 
 export interface Position {
-  cost_basis: string;
+  cost_basis: number;
   date_acquired: string;
   id: number;
   quantity: number;
@@ -254,5 +261,26 @@ export interface SpreadLeg {
   status: string;
   symbol: string;
   transaction_date: string;
+  type: string;
+}
+
+export interface OptionPreview {
+  class: string;
+  commission: number;
+  cost: number;
+  day_trades: number;
+  duration: string;
+  extended_hours: boolean;
+  fees: number;
+  margin_change: number;
+  option_symbol: string;
+  order_cost: number;
+  quantity: number;
+  request_date: string;
+  result: boolean;
+  side: string;
+  status: string;
+  strategy: string
+  symbol: string;
   type: string;
 }

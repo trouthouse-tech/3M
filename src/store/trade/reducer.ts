@@ -2,17 +2,19 @@ import {
   AddAccountIdAction,
   AddExpirationDatesAction,
   AddOptionsAction,
-  AddOrderAction,
+  AddOrderAction, AddOrderIdAction, AddOrderIdsAction,
   AddOrdersAction,
+  AddPositionAction,
+  AddPositionsAction,
   AddPotentialTrades,
   AddQuoteAction,
   AddTradeAction,
-  AddTradesAction,
+  AddTradesAction, RemovePositionAction, RemovePositionsAction,
   TradeAction,
   TradeState,
 } from './types';
 import {TRADE_ACTION_TYPES} from './actions';
-import {Option, Order, Quote} from '../../model';
+import {Option, Order, Position, Quote, Trade} from '../../model';
 
 const InitialState: TradeState = {
   options: {
@@ -24,7 +26,9 @@ const InitialState: TradeState = {
   potentialTrades: [],
   accountId: '',
   orders: [],
-  trades: [],
+  trades: {},
+  positions: {},
+  orderIds: [],
 };
 
 export const tradeReducer = (
@@ -71,7 +75,25 @@ export const tradeReducer = (
       return handleTradeAdded(state, trade);
     case TRADE_ACTION_TYPES.ADD_TRADES:
       const {trades} = <AddTradesAction>action;
-      return Object.assign({}, state, {trades});
+      return handleTradesAdded(state, trades);
+    case TRADE_ACTION_TYPES.ADD_POSITION:
+      const {position} = <AddPositionAction>action;
+      return handleAddPosition(state, position);
+    case TRADE_ACTION_TYPES.ADD_POSITIONS:
+      const {positions} = <AddPositionsAction>action;
+      return handleAddPositions(state, positions);
+    case TRADE_ACTION_TYPES.REMOVE_POSITION:
+      const positionToRemove = (<RemovePositionAction>action).position;
+      return handleRemovePosition(state, positionToRemove);
+    case TRADE_ACTION_TYPES.REMOVE_POSITIONS:
+      const positionsToRemove = (<RemovePositionsAction>action).positions;
+      return handleRemovePositions(state, positionsToRemove);
+    case TRADE_ACTION_TYPES.ADD_ORDER_ID:
+      const {orderId} = <AddOrderIdAction>action;
+      return handleAddOrderId(state, orderId);
+    case TRADE_ACTION_TYPES.ADD_ORDER_IDS:
+      const {orderIds} = <AddOrderIdsAction>action;
+      return Object.assign({}, state, {orderIds});
     default:
       return state;
   }
@@ -138,14 +160,67 @@ function handleAddExpirationDates(
   return Object.assign({}, oldState.options, {expirationDates});
 }
 
-function handleTradeAdded(oldState: TradeState, trade: string) {
-  const trades = [...oldState.trades];
-  trades.push(trade);
-  return Object.assign({}, oldState, {trades});
+function handleTradeAdded(oldState: TradeState, trade: Trade) {
+  const newTrades = Object.assign({}, oldState.trades);
+  if (!oldState.positions[trade.orderId]) {
+    newTrades[trade.orderId] = trade;
+  }
+  return Object.assign({}, oldState, {trades: newTrades});
+}
+
+function handleTradesAdded(oldState: TradeState, trades: Trade[]) {
+  const newTrades = Object.assign({}, oldState.trades);
+  trades.map((trade) => {
+    newTrades[trade.orderId] = trade;
+  });
+  console.log('newTrades: ', newTrades);
+  return Object.assign({}, oldState, {trades: newTrades});
 }
 
 function handleOrderAdded(oldState: TradeState, order: Order) {
   const orders = [...oldState.orders];
-  orders.push(order);
+  const index = oldState.orders.findIndex((x) => {
+    // eslint-disable-next-line eqeqeq
+    return x.id.toString() == order.id;
+  });
+  if (index === -1) {
+    orders.push(order);
+  }
   return Object.assign({}, oldState, {orders});
+}
+
+function handleAddPosition(oldState: TradeState, position: Position) {
+  const newPositions = Object.assign({}, oldState.positions);
+  if (!oldState.positions[position.symbol]) {
+    newPositions[position.symbol] = position;
+  }
+  return Object.assign({}, oldState, {positions: newPositions});
+}
+
+function handleAddPositions(oldState: TradeState, positions: Position[]) {
+  const newPositions = Object.assign({}, oldState.positions);
+  positions.map((position) => {
+    if (!oldState.positions[position.symbol]) {
+      newPositions[position.symbol] = position;
+    }
+  });
+  return Object.assign({}, oldState, {positions: newPositions});
+}
+
+function handleAddOrderId(oldState: TradeState, orderId: string) {
+  const orderIds = [...oldState.orderIds];
+  orderIds.push(orderId);
+  return Object.assign({}, oldState, {orderIds});
+}
+
+function handleRemovePosition(oldState: TradeState, position: string) {
+  const newPositions = Object.assign({}, oldState.positions);
+  delete newPositions[position];
+  return Object.assign({}, oldState, {positions: newPositions});
+}
+
+function handleRemovePositions(oldState: TradeState, positions: string[]) {
+  const newPositions = Object.assign({}, oldState.positions);
+  positions.map((position) => delete newPositions[position]);
+  return Object.assign({}, oldState, {positions: newPositions});
 }

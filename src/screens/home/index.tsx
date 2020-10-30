@@ -15,7 +15,7 @@ type Props = HomeStackProps & {
 };
 
 const HomeBase = (props: Props) => {
-  // console.log('home props: ', props);
+  // console.log('home props: ', props.trade.quotes);
   useEffect(() => {
     if (props.user.tradierIsWaitingForApproval) {
       Alert.alert(
@@ -31,7 +31,7 @@ const HomeBase = (props: Props) => {
       );
     }
     const expiration = props.user.tradierAccessTokenExpiration!;
-    const isExpired = expiration * 1000 < (Date.now() / 1000 - 86399) * 1000;
+    const isExpired = expiration * 1000 < Date.now();
     if (isExpired) {
       Alert.alert(
         "Let's setup your Tradier account.",

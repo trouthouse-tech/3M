@@ -241,6 +241,7 @@ export function TradeFormBase(props: Props) {
       totalPrice,
       breakEven: 0,
       root_symbol: '',
+      orderId: '',
     };
 
     return trade;

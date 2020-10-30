@@ -12,15 +12,15 @@ import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import {Buttons} from 'golfpro-rn-components';
 import {LoadingScreen} from '../../components/ActivityIndicator';
+import {getAccount, getPositions, getQuotes} from '../../services/tradier';
 import {
-  getAccount,
-  getHistory,
-  getOrders,
-  getPositions,
-} from '../../services/tradier';
-import {addAccountId, addOrder, addOrders, addTrades} from '../../store/trade/actions';
-import {getOrder} from '../../services/tradier/account';
-import {getTrades} from '../../services/trades';
+  addAccountId,
+  addOrderIds,
+  addPositions,
+  addQuote,
+} from '../../store/trade/actions';
+import {Position} from '../../model';
+import {getOrderIds} from '../../services/orders';
 
 export const Splash = (props: AuthenticationStackProps) => {
   // console.log(
@@ -80,14 +80,8 @@ export const Splash = (props: AuthenticationStackProps) => {
         resumeRegistration();
       } else {
         const investorData = investor.data!.data()!;
-        // console.log('investor data: ', investorData);
         store.dispatch(loginInvestor(email, investorData));
-        const tradeRetrieval = await getTrades(email);
-        console.log('trades: ', tradeRetrieval);
-        if (tradeRetrieval.wasSuccessful) {
-          const trades = tradeRetrieval.data!.data()!.trades;
-          store.dispatch(addTrades(trades));
-        }
+        await retrieveOrderIds(email);
         await getTradierAccountDetails(investorData.tradierAccessToken);
         if (!investorData.hasAnsweredOnboardingQuestions) {
           // Finish onboarding
@@ -100,6 +94,14 @@ export const Splash = (props: AuthenticationStackProps) => {
     [enterMainApplication, props.navigation, resumeRegistration],
   );
 
+  const retrieveOrderIds = async (email: string) => {
+    const orderIdRetrieval = await getOrderIds(email);
+    if (orderIdRetrieval.wasSuccessful) {
+      const orderIds = orderIdRetrieval.data!.data()!.orders;
+      store.dispatch(addOrderIds(orderIds));
+    }
+  };
+
   /**
    * Retrieve accountId and trades
    * @param token AccessToken used to authenticate with Trader APIs
@@ -108,16 +110,17 @@ export const Splash = (props: AuthenticationStackProps) => {
     await getAccount(token).then(async (tradierAccount) => {
       const accountId = tradierAccount.account_number;
       store.dispatch(addAccountId(accountId));
-      // getOrders(accountId, '').then((orders) => {
-      //   if (orders) {
-      //     store.dispatch(addOrders(orders));
-      //   }
-      // });
       getPositions(accountId, '').then((positions) => {
-        console.log('positions: ', positions);
-      });
-      getHistory(accountId, '').then((history) => {
-        console.log('history: ', history);
+        if (positions) {
+          store.dispatch(addPositions(positions));
+          positions.map((position: Position) => {
+            getQuotes(position.symbol, token).then((quote) => {
+              if (quote) {
+                store.dispatch(addQuote(quote.quotes.quote));
+              }
+            });
+          });
+        }
       });
     });
   }

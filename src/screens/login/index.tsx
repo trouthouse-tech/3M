@@ -8,12 +8,15 @@ import {getInvestor, login, setLoggedInUser} from '../../services/investor';
 import Header from '../../components/Header';
 import store from '../../store';
 import {loginInvestor} from '../../store/user/actions';
-import {Investor} from '../../model';
+import {Investor, Position} from '../../model';
 import {BackArrow} from '../../components/Header/HeaderItems';
 // @ts-ignore
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {Buttons} from 'golfpro-rn-components';
 import {LoadingScreen} from '../../components/ActivityIndicator';
+import {getOrderIds} from '../../services/orders';
+import {addAccountId, addOrderIds, addPositions, addQuote} from '../../store/trade/actions';
+import {getAccount, getPositions, getQuotes} from '../../services/tradier';
 
 export const Login = (props: AuthenticationStackProps) => {
   const [email, setEmail] = useState('');
@@ -34,7 +37,7 @@ export const Login = (props: AuthenticationStackProps) => {
 
   function handleInvestorLogin() {
     setLoggedInUser();
-    getInvestor(email).then((retrievalAttempt) => {
+    getInvestor(email).then(async (retrievalAttempt) => {
       // @ts-ignore
       const user = retrievalAttempt.data.data() as Investor;
       store.dispatch(loginInvestor(email, user));
@@ -42,8 +45,41 @@ export const Login = (props: AuthenticationStackProps) => {
         setShowActivityIndicator(false);
         props.navigation.navigate(ROUTES.Onboarding);
       } else {
+        await retrieveOrderIds();
+        await getTradierAccountDetails(user.tradierAccessToken!);
         enterMainApplication();
       }
+    });
+  }
+
+  const retrieveOrderIds = async () => {
+    const orderIdRetrieval = await getOrderIds(email);
+    if (orderIdRetrieval.wasSuccessful) {
+      const orderIds = orderIdRetrieval.data!.data()!.orders;
+      store.dispatch(addOrderIds(orderIds));
+    }
+  };
+
+  /**
+   * Retrieve accountId and trades
+   * @param token AccessToken used to authenticate with Trader APIs
+   */
+  async function getTradierAccountDetails(token: string) {
+    await getAccount(token).then(async (tradierAccount) => {
+      const accountId = tradierAccount.account_number;
+      store.dispatch(addAccountId(accountId));
+      getPositions(accountId, '').then((positions) => {
+        if (positions) {
+          store.dispatch(addPositions(positions));
+          positions.map((position: Position) => {
+            getQuotes(position.symbol, token).then((quote) => {
+              if (quote) {
+                store.dispatch(addQuote(quote.quotes.quote));
+              }
+            });
+          });
+        }
+      });
     });
   }
 
