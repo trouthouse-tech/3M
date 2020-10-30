@@ -165,7 +165,8 @@ export const SpreadViewBase = (props: Props) => {
   async function updatePositions(spreadToRemove: Spread) {
     store.dispatch(removePosition(spreadToRemove.leg[0].option_symbol));
     store.dispatch(removePosition(spreadToRemove.leg[1].option_symbol));
-    props.navigation.goBack();
+    // props.navigation.goBack();
+    props.navigation.popToTop();
   }
 
   return (

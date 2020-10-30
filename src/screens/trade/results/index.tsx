@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {TradeStackProps} from '../../../navigation/trade/types';
 import {PotentialTrade} from './trade';
 import Header from '../../../components/Header';
@@ -47,11 +47,29 @@ function FormResultsBase(props: Props) {
         <PotentialTrade
           key={index}
           trade={trade}
-          onPress={() => handleOnPurchase(trade)}
+          onPress={() => confirmPurchaseIntent(trade)}
         />
       );
     },
   );
+
+  function confirmPurchaseIntent(trade: Trade) {
+    Alert.alert(
+      'Are you sure you want to purchase this spread?',
+      `Total Cost: $${trade.totalPrice * 100}`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => handleOnPurchase(trade),
+        },
+      ],
+    );
+  }
 
   async function handleOnPurchase(trade: Trade) {
     console.log('purchase trade: ', trade);
