@@ -141,22 +141,6 @@ export function TradeFormBase(props: Props) {
         const legOne = generateLeg(options[i]);
         const legTwo = generateLeg(options[j]);
 
-        // console.log('legOne: ', legOne);
-        // console.log('legTwo: ', legTwo);
-        // const strikeWidth = legTwo.strike - legOne.strike;
-        // const probability = parseFloat(
-        //   (100 - maxProfitDollars / strikeWidth).toFixed(2),
-        // );
-        // console.log('probability: ', probability);
-        // console.log('trade: ', legOne, legTwo);
-        // const millisecondsToExpiration =
-        //   new Date(tradeExpirationDate).getTime() - Date.now();
-        // const daysToExpiration = millisecondsToExpiration / (1000 * 3600 * 24);
-
-        // if (isNaN(probability) || probability < 1) {
-        //   continue;
-        // }
-
         const breakEven = legOne.strike + (legOne.cost - legTwo.cost);
         const trade = generateTrade(legOne, legTwo);
         trade.breakEven = breakEven;
@@ -188,14 +172,10 @@ export function TradeFormBase(props: Props) {
     options.sort((a, b) => {
       return b.strike - a.strike;
     });
-
     for (let i = 0; i < options.length; i++) {
       for (let j = i + 1; j < options.length - 1; j++) {
         const legOne = generateLeg(options[i]);
         const legTwo = generateLeg(options[j]);
-
-        // console.log('legOne: ', legOne);
-        // console.log('legTwo: ', legTwo);
 
         const breakEven = legOne.strike - (legOne.cost - legTwo.cost);
         const trade = generateTrade(legOne, legTwo);
@@ -205,8 +185,6 @@ export function TradeFormBase(props: Props) {
         trades.push(trade);
       }
     }
-
-    console.log('trades: ', trades);
 
     // Show highest percentage at the top
     return trades.sort((a, b) => (a.totalPrice < b.totalPrice ? 1 : -1));
@@ -221,6 +199,11 @@ export function TradeFormBase(props: Props) {
     };
   }
 
+  /**
+   * Generate local version of trades to maintain trade statistics
+   * @param legOne
+   * @param legTwo
+   */
   function generateTrade(legOne: Leg, legTwo: Leg) {
     const tradeExpirationDate = legOne.expiration;
     const totalPrice = parseFloat((legOne.cost - legTwo.cost).toFixed(2));
@@ -247,6 +230,10 @@ export function TradeFormBase(props: Props) {
     return trade;
   }
 
+  /**
+   * Don't show trades that exceed desired amount spent
+   * @param trades
+   */
   function getTradesBelowMaxRisk(trades: Trade[]) {
     return trades.filter((trade) => {
       // eslint-disable-next-line radix

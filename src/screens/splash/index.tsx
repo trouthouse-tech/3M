@@ -143,6 +143,7 @@ export const Splash = (props: AuthenticationStackProps) => {
     });
   }, [handleLoggedInInvestor]);
 
+  // Check for logged in user - i.e., they did not logout during their last session
   useEffect(() => {
     if (!showActivityIndicator) {
       getLoggedInUser().then((loggedInUser) => {

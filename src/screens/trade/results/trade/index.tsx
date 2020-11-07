@@ -40,12 +40,15 @@ export function PotentialTrade(props: Props) {
   const cost = ((trade.legOne.cost - trade.legTwo.cost) * 100).toFixed(2);
 
   const headerRow = <Row values={HEADER} showBottomBorder />;
+
+  // Second table row
   const legOne = (
     <Row
       values={['Leg 1', trade.legOne.strike + '', trade.legOne.cost + '']}
       showBottomBorder
     />
   );
+  // Third table row
   const legTwo = (
     <Row values={['Leg 2', trade.legTwo.strike + '', trade.legTwo.cost + '']} />
   );

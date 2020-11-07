@@ -3,7 +3,6 @@ import {SANDBOX} from './utils';
 import {Order} from '../../model';
 
 export async function getAccount(token: string) {
-  console.log('getAccount: ');
   const url = 'https://sandbox.tradier.com/v1/user/profile';
   return await axios
     .get(url, {

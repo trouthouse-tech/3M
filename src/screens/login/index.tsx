@@ -52,6 +52,7 @@ export const Login = (props: AuthenticationStackProps) => {
     });
   }
 
+  // Get local history (not Tradier) of order IDs from Firebase
   const retrieveOrderIds = async () => {
     const orderIdRetrieval = await getOrderIds(email);
     if (orderIdRetrieval.wasSuccessful) {
