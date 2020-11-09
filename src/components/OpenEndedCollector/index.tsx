@@ -6,7 +6,7 @@ import {LargeSquareOnPress} from '../buttons';
 import Header from '../Header';
 import {OnboardingStackProps} from '../../navigation/onboarding/types';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../styles/util';
-import {BackButton} from '../Header/HeaderItems';
+import {BackArrow} from '../Header/HeaderItems';
 
 type Props = {
   onFinish(answer: string): void;
@@ -34,7 +34,7 @@ export default function OpenEndedCollector({
     <SafeAreaView style={styles.container}>
       <Header
         leftButton={{
-          child: BackButton,
+          child: BackArrow,
           onclick: () => navigation.goBack(),
         }}
       />

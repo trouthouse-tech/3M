@@ -1,0 +1,11 @@
+Date Created: 11/7/2020
+
+Trading is almost complete. Here are a few things that are needed:
+
+- Trend Calculation
+- OCO Order instead of regular spread
+- Trade Probability (This formula needs to be determined - where do these values come from?)
+
+
+
+

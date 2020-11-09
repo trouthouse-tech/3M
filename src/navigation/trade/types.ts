@@ -1,14 +1,13 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {RouteProp} from '@react-navigation/native';
-import {Quote} from '../../model';
-import {Trade} from '../../screens/trade/results/types';
+import {Spread, Trade} from '../../model';
 
 export type TradeStackParamList = {
   Trade: undefined;
-  TradeForm: {quote: Quote};
-  FormResults: undefined;
-  OpenTrade: {trade: Trade};
+  TradeForm: {symbol: string};
+  FormResults: {type: string};
+  Spread: {spread: Spread};
 };
 
 /*

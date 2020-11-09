@@ -6,9 +6,18 @@ import store from '../../store';
 import {getAccessToken} from '../../services/tradier';
 import {updateInvestor} from '../../store/user/actions';
 import Header from '../../components/Header';
-import {BackButton} from '../../components/Header/HeaderItems';
+import {BackArrow} from '../../components/Header/HeaderItems';
+import {updateInvestorDocument} from '../../services/investor';
+import {AppState} from '../../store/types';
+import {connect} from 'react-redux';
+import {UserState} from '../../store/user/types';
 
-export default function TradierView(props: HomeStackProps) {
+type Props = HomeStackProps & {
+  user: UserState;
+};
+
+function TradierViewBase(props: Props) {
+  console.log('props: ', props);
   const [webView, setWebView] = useState<WebView>();
   const [clientId] = useState('hSPco1otJoZXyfBiR3tFMPg0WPXPaTuI');
   const [scope] = useState('read,write,trade,market');
@@ -24,13 +33,21 @@ export default function TradierView(props: HomeStackProps) {
       code = code.substring(0, 8);
 
       await getAccessToken(code).then((data) => {
+        console.log('data access_token', data.access_token);
+        const expirationDate = Date.now() / 1000 + 82399;
         store.dispatch(
           updateInvestor({
             tradierAccessToken: data.access_token,
-            tradierAccessTokenExpiration: Date.now() / 1000 + 82399,
+            tradierAccessTokenExpiration: expirationDate,
             tradierIsWaitingForApproval: false,
           }),
         );
+        updateInvestorDocument(props.user.email!, {
+          tradierAccessToken: data.access_token,
+          tradierAccessTokenExpiration: expirationDate,
+          hasAuthenticatedTradier: true,
+          tradierIsWaitingForApproval: false,
+        });
       });
       props.navigation.goBack();
     }
@@ -45,7 +62,7 @@ export default function TradierView(props: HomeStackProps) {
     <SafeAreaView style={styles.container}>
       <Header
         leftButton={{
-          child: BackButton,
+          child: BackArrow,
           onclick: () => props.navigation.goBack(),
         }}
         showLogo
@@ -61,6 +78,17 @@ export default function TradierView(props: HomeStackProps) {
     </SafeAreaView>
   );
 }
+
+const mapStateToProps = (state: AppState) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = () => ({});
+
+export const TradierView = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TradierViewBase);
 
 const styles = StyleSheet.create({
   container: {

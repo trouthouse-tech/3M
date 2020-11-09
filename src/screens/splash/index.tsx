@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, StyleSheet, Image} from 'react-native';
 import {Colors, Fonts, Utils} from '../../styles';
 import TextCarousel from '../../components/TextCarousel';
 import {TextCarouselEntries} from '../../util/data';
@@ -12,6 +12,15 @@ import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import {Buttons} from 'golfpro-rn-components';
 import {LoadingScreen} from '../../components/ActivityIndicator';
+import {getAccount, getPositions, getQuotes} from '../../services/tradier';
+import {
+  addAccountId,
+  addOrderIds,
+  addPositions,
+  addQuote,
+} from '../../store/trade/actions';
+import {Position} from '../../model';
+import {getOrderIds} from '../../services/orders';
 
 export const Splash = (props: AuthenticationStackProps) => {
   // console.log(
@@ -20,19 +29,6 @@ export const Splash = (props: AuthenticationStackProps) => {
   // );
   const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
-  useEffect(() => {
-    getLoggedInUser().then((loggedInUser) => {
-      console.log('loggedInUser: ', loggedInUser);
-      // User did not log out during last session
-      if (loggedInUser !== -1) {
-        setShowActivityIndicator(true);
-        loginUser();
-      } else {
-        console.log('nobody');
-      }
-    });
-  });
-
   /**
    * Check if the User did not logout during their last session
    */
@@ -40,7 +36,7 @@ export const Splash = (props: AuthenticationStackProps) => {
     const isInstructorLoggedIn = await AsyncStorage.getItem(
       'isInvestorLoggedIn',
     );
-    console.log('isInvestorLoggedIn: ', isInstructorLoggedIn);
+    // console.log('isInvestorLoggedIn: ', isInstructorLoggedIn);
     if (
       isInstructorLoggedIn !== 'false' &&
       isInstructorLoggedIn !== null &&
@@ -53,9 +49,86 @@ export const Splash = (props: AuthenticationStackProps) => {
   }
 
   /**
+   * Called when the User previously registered their email but did not finish the rest of their information
+   */
+  const resumeRegistration = useCallback(() => {
+    props.navigation.navigate(ROUTES.InvestorInfoCollector, {
+      isSignedIn: true,
+    });
+  }, [props.navigation]);
+
+  /**
+   * The User has completed registering their profile
+   */
+  const enterMainApplication = useCallback(() => {
+    setShowActivityIndicator(false);
+    setLoggedInUser();
+    props.navigation.navigate(ROUTES.Main);
+  }, [props.navigation]);
+
+  /**
+   * Handle when the User is a Instructor and did not explicitly logout of the application during their
+   * last session
+   * @param email Used to retrieve Instructor document
+   */
+  const handleLoggedInInvestor = useCallback(
+    async (email: string) => {
+      store.dispatch(updateInvestor({email}));
+      const investor = await getInvestor(email);
+      // Instructor did not finish registering
+      if (investor.error) {
+        resumeRegistration();
+      } else {
+        const investorData = investor.data!.data()!;
+        store.dispatch(loginInvestor(email, investorData));
+        await retrieveOrderIds(email);
+        await getTradierAccountDetails(investorData.tradierAccessToken);
+        if (!investorData.hasAnsweredOnboardingQuestions) {
+          // Finish onboarding
+          props.navigation.navigate(ROUTES.Onboarding);
+        } else {
+          enterMainApplication();
+        }
+      }
+    },
+    [enterMainApplication, props.navigation, resumeRegistration],
+  );
+
+  const retrieveOrderIds = async (email: string) => {
+    const orderIdRetrieval = await getOrderIds(email);
+    if (orderIdRetrieval.wasSuccessful) {
+      const orderIds = orderIdRetrieval.data!.data()!.orders;
+      store.dispatch(addOrderIds(orderIds));
+    }
+  };
+
+  /**
+   * Retrieve accountId and trades
+   * @param token AccessToken used to authenticate with Trader APIs
+   */
+  async function getTradierAccountDetails(token: string) {
+    await getAccount(token).then(async (tradierAccount) => {
+      const accountId = tradierAccount.account_number;
+      store.dispatch(addAccountId(accountId));
+      getPositions(accountId, '').then((positions) => {
+        if (positions) {
+          store.dispatch(addPositions(positions));
+          positions.map((position: Position) => {
+            getQuotes(position.symbol, token).then((quote) => {
+              if (quote) {
+                store.dispatch(addQuote(quote.quotes.quote));
+              }
+            });
+          });
+        }
+      });
+    });
+  }
+
+  /**
    * The user did not logout during their last session
    */
-  function loginUser() {
+  const loginUser = useCallback(() => {
     let firstAttempt = true;
     auth().onAuthStateChanged(async (user) => {
       if (!firstAttempt) {
@@ -63,62 +136,41 @@ export const Splash = (props: AuthenticationStackProps) => {
           // @ts-ignore
           const {email} = user._user;
           // Instructor is logged in
-          handleLoggedInInvestor(email);
+          await handleLoggedInInvestor(email);
         }
       }
       firstAttempt = false;
     });
-  }
+  }, [handleLoggedInInvestor]);
 
-  /**
-   * Handle when the User is a Instructor and did not explicitly logout of the application during their
-   * last session
-   * @param email Used to retrieve Instructor document
-   */
-  async function handleLoggedInInvestor(email: string) {
-    store.dispatch(updateInvestor({email}));
-    const investor = await getInvestor(email);
-    // Instructor did not finish registering
-    if (investor.error) {
-      resumeRegistration();
-    } else {
-      console.log('investor data: ', investor.data!.data());
-      await store.dispatch(loginInvestor(email, investor.data!.data()!));
-      if (!investor.data!.data()!.hasAnsweredOnboardingQuestions) {
-        props.navigation.navigate(ROUTES.Onboarding);
-      } else {
-        enterMainApplication();
-      }
+  // Check for logged in user - i.e., they did not logout during their last session
+  useEffect(() => {
+    if (!showActivityIndicator) {
+      getLoggedInUser().then((loggedInUser) => {
+        // console.log('loggedInUser: ', loggedInUser);
+        // User did not log out during last session
+        if (loggedInUser !== -1) {
+          setShowActivityIndicator(true);
+          loginUser();
+        } else {
+          console.log('Nobody is currently logged in');
+        }
+      });
     }
-  }
-
-  /**
-   * Called when the User previously registered their email but did not finish the rest of their information
-   */
-  const resumeRegistration = () => {
-    props.navigation.navigate(ROUTES.InvestorInfoCollector, {
-      isSignedIn: true,
-    });
-  };
-
-  /**
-   * The User has completed registering their profile
-   */
-  const enterMainApplication = () => {
-    setShowActivityIndicator(false);
-    setLoggedInUser();
-    props.navigation.navigate(ROUTES.Main);
-  };
+  }, [loginUser, showActivityIndicator]);
 
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
+          style={styles.logoIcon}
+          source={require('../../../assets/images/logo/finalLogoIcon.png')}
+        />
+        <Image
           style={styles.logo}
-          source={require('../../../assets/images/logo/newLogo.png')}
+          source={require('../../../assets/images/logo/finalLogo.png')}
         />
       </View>
-      <Text style={styles.title}>Welcome to The 3M Club</Text>
       <View style={styles.carouselContainer}>
         <TextCarousel entries={TextCarouselEntries} />
       </View>
@@ -126,14 +178,14 @@ export const Splash = (props: AuthenticationStackProps) => {
         <Buttons.LargeHallowSquareOnPress
           onPress={() => props.navigation.push(ROUTES.CredentialCollector)}
           text="Sign Up"
-          textColor={Colors.blue_green}
-          borderColor={Colors.blue_green}
+          textColor={Colors.main_green}
+          borderColor={Colors.main_green}
         />
         <Buttons.LargeSquareOnPress
           onPress={() => props.navigation.push(ROUTES.Login)}
           text="Sign In"
           textColor={Colors.white}
-          buttonColor={Colors.blue_green}
+          buttonColor={Colors.main_green}
         />
       </View>
       {showActivityIndicator && <LoadingScreen />}
@@ -154,13 +206,22 @@ const styles = StyleSheet.create({
   logoContainer: {
     flex: 6,
     justifyContent: 'center',
+    alignItems: 'center',
     // backgroundColor: 'green',
+  },
+
+  logoIcon: {
+    height: imageSize / 2,
+    width: imageSize / 2,
+    // backgroundColor: 'red',
   },
 
   logo: {
     // flex: 2,
-    height: imageSize,
+    height: imageSize / 2,
     width: imageSize,
+    resizeMode: 'contain',
+    // backgroundColor: 'blue',
   },
 
   title: {

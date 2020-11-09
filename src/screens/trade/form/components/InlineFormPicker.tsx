@@ -14,10 +14,11 @@ type InlineFormPickerProps = {
   onChange(text: string): void;
   items: PickerItemProps[];
   helpText?: HelpText;
+  size: number;
 };
 
 export function InlineFormPicker(props: InlineFormPickerProps) {
-  const {label, onChange, helpText, items} = props;
+  const {label, onChange, helpText, items, size} = props;
 
   const pickerItems = items.map((item) => {
     return {label: item.label as string, value: item.value.toString()};
@@ -48,11 +49,21 @@ export function InlineFormPicker(props: InlineFormPickerProps) {
           />
         </TouchableOpacity>
       )}
-      <RNPickerSelect
-        onValueChange={(selectedItem) => onChange(selectedItem)}
-        items={pickerItems}
-        style={pickerSelectStyles}
-      />
+      {size === 0 ? (
+        <RNPickerSelect
+          onValueChange={(selectedItem) => onChange(selectedItem)}
+          items={pickerItems}
+          // @ts-ignore
+          style={smallPickerSelectStyles}
+        />
+      ) : (
+        <RNPickerSelect
+          onValueChange={(selectedItem) => onChange(selectedItem)}
+          items={pickerItems}
+          // @ts-ignore
+          style={largePickerSelectStyles}
+        />
+      )}
     </View>
   );
 }
@@ -87,28 +98,38 @@ const styles = StyleSheet.create({
   helpText: {},
 });
 
-const pickerSelectStyles = StyleSheet.create({
+const pickerStyles = {
+  fontSize: Fonts.large,
+  paddingVertical: 5,
+  // paddingHorizontal: 10,
+  borderWidth: 1,
+  borderColor: 'gray',
+  borderRadius: 5,
+  color: 'black',
+  // paddingRight: 30, // to ensure the text is never behind the icon
+  textAlign: 'center',
+};
+
+const smallPickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: Fonts.large,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    color: 'black',
-    // paddingRight: 30, // to ensure the text is never behind the icon
-    width: DEVICE_WIDTH / 3.5,
-    textAlign: 'center',
+    ...pickerStyles,
+    width: DEVICE_WIDTH / 3,
   },
   inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: 'purple',
-    borderRadius: 15,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
-    width: DEVICE_WIDTH / 3.5,
+    ...pickerStyles,
+    width: DEVICE_WIDTH / 3,
+  },
+});
+
+const largePickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    ...pickerStyles,
+    width: DEVICE_WIDTH / 1.75,
+    marginLeft: 10,
+  },
+  inputAndroid: {
+    ...pickerStyles,
+    width: DEVICE_WIDTH / 1.75,
+    marginLeft: 10,
   },
 });

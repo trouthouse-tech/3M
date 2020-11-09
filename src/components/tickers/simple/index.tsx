@@ -17,7 +17,9 @@ export function SimpleTicker(props: Props) {
       </View>
       <View style={styles.priceContainer}>
         <Text style={styles.priceLabel}>Price: </Text>
-        <Text style={styles.priceValue}>${props.last}</Text>
+        <Text style={styles.priceValue}>
+          ${(props.last && props.last.toFixed(2)) || 0}
+        </Text>
       </View>
     </View>
   );

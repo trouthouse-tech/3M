@@ -1,6 +1,6 @@
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Utils} from '../../styles';
+import {Colors, Utils} from '../../styles';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/Entypo';
 Icon.loadFont();
@@ -51,7 +51,7 @@ export default function Header(props: HeaderProps) {
         <View style={[styles.logoContainer, logoStyles]}>
           <Image
             style={[styles.headerIcon, styles.logo]}
-            source={require('../../../assets/images/logo/newLogo.png')}
+            source={require('../../../assets/images/logo/finalLogoIcon.png')}
           />
         </View>
       )}
@@ -67,7 +67,7 @@ export default function Header(props: HeaderProps) {
   );
 }
 
-const headerImageSize = Utils.DEVICE_HEIGHT / 18;
+const headerImageSize = Utils.DEVICE_HEIGHT / 25;
 const height =
   Utils.DEVICE_HEIGHT === 896
     ? Utils.DEVICE_HEIGHT / 20
@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
 
   bottomBorder: {
     borderBottomWidth: 0.5,
+    borderBottomColor: Colors.LightGrey,
   },
 
   rightButton: {

@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {ROUTES} from '../../util/routes';
 import {HomeStackParamList} from './types';
 import {Home} from '../../screens/home';
-import TradierView from '../../screens/tradier';
+import {TradierView} from '../../screens/tradier';
 
 const HomeStackNavigator = createStackNavigator<HomeStackParamList>();
 

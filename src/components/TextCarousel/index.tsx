@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     marginHorizontal: 8,
-    backgroundColor: Colors.blue_green,
+    backgroundColor: Colors.main_green,
   },
 
   inactiveDot: {},

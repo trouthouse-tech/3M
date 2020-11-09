@@ -32,17 +32,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: Colors.blue_green,
+    borderColor: Colors.main_green,
   },
 
   step: {
     flex: 1,
     borderRightWidth: 1,
-    borderRightColor: Colors.blue_green,
+    borderRightColor: Colors.main_green,
   },
 
   filledStep: {
-    backgroundColor: Colors.blue_green,
+    backgroundColor: Colors.main_green,
   },
 
   lastStep: {

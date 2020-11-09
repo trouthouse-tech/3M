@@ -9,13 +9,6 @@ export async function getDocumentWithPathAndId(
     .get()
     .then((doc) => {
       if (doc.exists) {
-        // console.log(
-        //   `Document(${documentId}) successfully retrieved at path(${path}). Document Data: ${JSON.stringify(
-        //     doc,
-        //     null,
-        //     2,
-        //   )}`,
-        // );
         return {
           path: path,
           id: documentId,

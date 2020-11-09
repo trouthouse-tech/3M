@@ -34,7 +34,7 @@ const OnboardingLandingBase = (props: Props) => {
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('../../../assets/images/logo/newLogo.png')}
+            source={require('../../../assets/images/logo/finalLogoIcon.png')}
           />
         </View>
         <Text style={styles.titleContainer}>
@@ -65,7 +65,7 @@ export const OnboardingLanding = connect(
   mapDispatchToProps,
 )(OnboardingLandingBase);
 
-const imageSize = Utils.DEVICE_WIDTH / 2;
+const imageSize = Utils.DEVICE_WIDTH / 3;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -20,10 +20,19 @@ import {UserState} from '../../store/user/types';
 import {RecentlyViewedCompany} from '../../model';
 import store from '../../store';
 import {updateRecentlyViewedSymbols} from '../../store/user/actions';
-import {getOptionChain, getQuotes} from '../../services/tradier';
+import {
+  getExpirationDates,
+  getOptionChain,
+  getQuotes,
+} from '../../services/tradier';
 import {FindOptionChainResponse, GetQuoteResponse} from '../../model';
 import {ROUTES} from '../../util/routes';
-import {addOptions, addQuote} from '../../store/trade/actions';
+import {
+  addExpirationDates,
+  addOptions,
+  addQuote,
+  resetOptions,
+} from '../../store/trade/actions';
 import {updateInvestorDocument} from '../../services/investor';
 import {LoadingScreen} from '../../components/ActivityIndicator';
 
@@ -51,7 +60,7 @@ const TradeBase = (props: Props) => {
   }
 
   async function searchForRecentlyViewed(symbol: string) {
-    await getOptions(symbol, props.user.tradierAccessToken!);
+    await getOptions(symbol);
   }
 
   async function searchForFilterText() {
@@ -60,35 +69,56 @@ const TradeBase = (props: Props) => {
       return;
     }
 
-    await getOptions(filterText, props.user.tradierAccessToken!);
+    await getOptions(filterText);
   }
 
-  async function getOptions(symbol: string, token: string) {
+  /**
+   * Find options for the given symbol
+   * @param symbol Used to search for options
+   */
+  async function getOptions(symbol: string) {
+    store.dispatch(resetOptions());
     setShowActivityIndicator(true);
-    // Retrieve option chain for the provided value - if possible
-    await getOptionChain(symbol, token).then(
-      async (response: FindOptionChainResponse) => {
-        const {options} = response;
-        // Options found
-        if (options !== null) {
-          store.dispatch(addOptions(options.option));
-          // Retrieve company information for a given symbol
-          await getQuotes(symbol, token).then((quotes: GetQuoteResponse) => {
-            const {quote} = quotes.quotes;
-            store.dispatch(addQuote(quote));
-            // Update store
-            updateRecentlyViewed({
-              symbol: quote.symbol,
-              name: quote.description,
-            });
-            setShowActivityIndicator(false);
-            props.navigation.push(ROUTES.TradeForm, {quote: quote});
-          });
-        } else {
-          notifyUserThatOptionsWereNotFound();
-        }
-      },
-    );
+
+    const token = props.user.tradierAccessToken!;
+    const dates = await getExpirationDates(symbol, token);
+    if (!dates) {
+      notifyUserThatOptionsWereNotFound();
+    }
+    store.dispatch(addExpirationDates(dates));
+
+    dates.map((expirationDate: string) => {
+      getOptionChain(symbol, expirationDate, token).then(
+        (response: FindOptionChainResponse) => {
+          const {options} = response;
+          if (options !== null) {
+            // Options found
+            store.dispatch(addOptions(options.option));
+          }
+        },
+      );
+    });
+
+    /**
+     * Retrieve information about a given symbol's stock
+     */
+    await getQuotes(symbol, token).then((quotes: GetQuoteResponse) => {
+      const {quote} = quotes.quotes;
+      // console.log('quote: ', quote);
+      store.dispatch(addQuote(quote));
+      // Update store
+      updateRecentlyViewed({
+        symbol: quote.symbol,
+        name: quote.description,
+      });
+      setShowActivityIndicator(false);
+      props.navigation.push(ROUTES.TradeForm, {symbol: quote.symbol});
+    });
+
+    // if (optionsFound) {
+    // } else {
+    //   notifyUserThatOptionsWereNotFound();
+    // }
   }
 
   /**
@@ -206,7 +236,7 @@ const styles = StyleSheet.create({
   },
 
   searchButton: {
-    backgroundColor: Colors.dark_blue_green,
+    backgroundColor: Colors.main_green,
     width: 75,
     height: 40,
     alignSelf: 'center',
