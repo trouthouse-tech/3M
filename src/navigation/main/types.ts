@@ -1,11 +1,12 @@
-import {StackNavigationProp} from '@react-navigation/stack';
-import {ROUTES} from '../../util/routes';
-import {RouteProp} from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ROUTES } from '../../util/routes';
+import { RouteProp } from '@react-navigation/native';
 
 export type TabParamList = {
   Home: undefined;
   Trade: undefined;
   Me: undefined;
+  ThinkTank: undefined
 };
 
 /*

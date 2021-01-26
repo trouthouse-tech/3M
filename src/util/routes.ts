@@ -25,4 +25,9 @@ export enum ROUTES {
   TradeForm = 'TradeForm',
   FormResults = 'FormResults',
   Spread = 'Spread',
+  SignUpIntro = 'SignUpIntro',
+  Portfolio = 'Portfolio',
+  PortfoliSummary = 'PortfolioSummary',
+  ThinkThank = 'ThinkThank',
+  SimpleTrade = 'SimpleTrade'
 }

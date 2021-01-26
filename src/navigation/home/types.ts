@@ -1,10 +1,12 @@
-import {StackNavigationProp} from '@react-navigation/stack';
-import {ROUTES} from '../../util/routes';
-import {RouteProp} from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ROUTES } from '../../util/routes';
+import { RouteProp } from '@react-navigation/native';
 
 export type HomeStackParamList = {
   Home: undefined;
   Tradier: undefined;
+  Portfolio: undefined;
+  PortfolioSummary: undefined
 };
 
 /*
@@ -13,6 +15,7 @@ export type HomeStackParamList = {
 export type HomeStackNavigationProp = StackNavigationProp<
   HomeStackParamList,
   ROUTES.Home
+
 >;
 
 /*

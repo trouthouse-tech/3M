@@ -4,6 +4,7 @@ export interface Investor {
   lastName?: string;
   username?: string;
   email?: string;
+  password?: string;
   hasAnsweredOnboardingQuestions?: boolean;
   tradierAccessToken?: string;
   tradierAccessTokenExpiration?: number;

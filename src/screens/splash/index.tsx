@@ -176,7 +176,7 @@ export const Splash = (props: AuthenticationStackProps) => {
       </View>
       <View style={styles.form}>
         <Buttons.LargeHallowSquareOnPress
-          onPress={() => props.navigation.push(ROUTES.CredentialCollector)}
+          onPress={() => props.navigation.push(ROUTES.SignUpIntro)}
           text="Sign Up"
           textColor={Colors.main_green}
           borderColor={Colors.main_green}

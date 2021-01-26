@@ -2,8 +2,8 @@ import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {Colors, Utils} from '../../styles';
 // @ts-ignore
-import Icon from 'react-native-vector-icons/Entypo';
-Icon.loadFont();
+//import Icon from 'react-native-vector-icons/Ionicons';
+//Icon.loadFont();
 
 export type HeaderButton = {
   text?: string;

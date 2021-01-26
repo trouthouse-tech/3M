@@ -21,6 +21,7 @@ import {createInvestor, setLoggedInUser} from '../../services/investor';
 import {Investor} from '../../model';
 import {AppState} from '../../store/types';
 import {connect} from 'react-redux';
+import {LoadingScreen} from '../../components/ActivityIndicator';
 
 function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
   const [email] = useState(props.user?.email);
@@ -29,6 +30,7 @@ function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [firstAttempt, setFirstAttempt] = useState(true);
+  const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
   useEffect(() => {
     // We need to update AsyncStorage to indicate if a Instructor has logged in.
@@ -68,7 +70,7 @@ function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
   }
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <Header showLogo />
       <ProgressBar steps={2} currentStep={1} />
       <KeyboardAvoidingView
@@ -105,6 +107,7 @@ function InvestorInfoCollectorBase(props: AuthenticationStackProps) {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      <LoadingScreen show={showActivityIndicator} />
     </View>
   );
 }

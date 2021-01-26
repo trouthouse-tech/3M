@@ -6,6 +6,7 @@ import {UserState} from '../../store/user/types';
 export type AuthenticationStackParamList = {
   Splash: undefined;
   Login: undefined;
+  SignUpIntro: undefined;
   CredentialCollector: undefined;
   InvestorInfoCollector: {isSignedIn?: boolean};
   Main: undefined;

@@ -1,27 +1,35 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, Alert} from 'react-native';
-import ProgressBar from '../ProgressBar';
+import {StyleSheet, View, Text, Alert, ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
 import {Colors, Fonts} from '../../styles';
 import {StandardTextInput} from '../input/StandardTextInput';
 import {LargeSquareOnPress} from '../buttons';
 import {AuthenticationStackProps} from '../../navigation/authentication/types';
 import Header from '../Header';
 import {ROUTES} from '../../util/routes';
-import {registerInvestor, setLoggedInUser} from '../../services/investor';
+import {registerInvestorAllInfo, setLoggedInUser} from '../../services/investor';
 import {updateInvestor} from '../../store/user/actions';
 import store from '../../store';
 import {BackArrow} from '../Header/HeaderItems';
+import {LoadingScreen} from '../../components/ActivityIndicator';
+
+import {Investor} from '../../model';
+import {loginInvestor} from '../../store/user/actions';
+
 
 export default function CredentialCollector(props: AuthenticationStackProps) {
-  console.log('propsss: ', props);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
-  const handleContinue = async () => {
+  /*const handleContinue = async () => {
     if (!validateFields()) {
       return;
     }
+    setShowActivityIndicator(true);
     await registerInvestor(email, password).then((insertionAttempt) => {
       // user was successfully created
       if (insertionAttempt.user) {
@@ -34,15 +42,61 @@ export default function CredentialCollector(props: AuthenticationStackProps) {
         handleRegistrationError(insertionAttempt.error);
       }
     });
-  };
+    setShowActivityIndicator(false);
+  };*/
+  
+  const handleSignUp = async () => {
+    if (!validateFields()) {
+      return;
+    }
+    setShowActivityIndicator(true);
+    const investor: Investor = {
+      firstName,
+      middleName,
+      lastName,
+      username,
+      email,
+      password,
+      hasAnsweredOnboardingQuestions: false,
+      tradierAccessTokenExpiration: -1,
+      tradierAccessToken: '',
+      tradierIsWaitingForApproval: false,
+    };
+    await registerInvestorAllInfo(investor).then((insertionAttempt:any) => {
+      // user was successfully created
+      if (insertionAttempt.user) {
+        setLoggedInUser();
+        store.dispatch(updateInvestor({email}));
+        console.log('investor handleSignUp: ', investor);
+        store.dispatch(loginInvestor(investor.email!, investor));
+        // Pass Instructor document to main stack
+        props.navigation.navigate(ROUTES.Onboarding);
+      } else {
+        handleRegistrationError(insertionAttempt.error);
+      }
+    });
+    setShowActivityIndicator(false);
+  }
 
   const validateFields = (): boolean => {
+    if (validateField(firstName)) {
+      Alert.alert('Please enter first name.');
+      return false;
+    }
+    if (validateField(lastName)) {
+      Alert.alert('Please enter last name.');
+      return false;
+    }
+    if (validateField(username)) {
+      Alert.alert('Please enter username.');
+      return false;
+    }
     if (validateEmail()) {
       Alert.alert('Please enter a valid email address.');
       return false;
     }
-    if (validatePassword()) {
-      Alert.alert('Passwords not entered or do not match.');
+    if (validateField(password)) {
+      Alert.alert('Please enter password at least 6 digits.');
       return false;
     }
 
@@ -56,73 +110,113 @@ export default function CredentialCollector(props: AuthenticationStackProps) {
 
   const validatePassword = () => {
     return (
-      password === '' || confirmPassword === '' || password !== confirmPassword
+      password === ''
+    );
+  };
+
+  const validateField = (fieldName: string) => {
+    return (
+      fieldName === ''
     );
   };
 
   const handleRegistrationError = (error: any) => {
     console.log('error: ', error);
-    switch (error.code) {
-      case 'auth/email-already-in-use':
-        Alert.alert('Email already in use');
-        break;
-      case 'auth/operation-not-allowed':
-        console.log('Error during sign up.');
-        break;
+    if(error.code){
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          Alert.alert('Email already in use');
+          break;
+        case 'auth/operation-not-allowed':
+          Alert.alert('Error during sign up.');
+          break;
+        case 'auth/invalid-email':
+          Alert.alert('That email address is invalid!');
+          break;
+        case 'auth/weak-password':
+          Alert.alert('Password should be at least 6 characters');
+          break;
+        default:
+          Alert.alert(error.message);
+          break;
+      }
+    } else {
+      Alert.alert(error);
     }
   };
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <Header
         leftButton={{
           child: BackArrow,
           onclick: () => props.navigation.goBack(),
         }}
+        showLogo
       />
-      <ProgressBar steps={2} currentStep={0} />
-      <Text style={styles.title}>Login Information</Text>
-      <View style={styles.form}>
-        <StandardTextInput
-          placeholder="Email"
-          onChangeText={(text: string) => setEmail(text)}
-          value={email}
-          autoFocus={true}
-          secureTextEntry={false}
-        />
-        <StandardTextInput
-          placeholder="Password"
-          onChangeText={(text: string) => setPassword(text)}
-          value={password}
-          autoFocus={false}
-          secureTextEntry={true}
-        />
-        <StandardTextInput
-          placeholder="Confirm Password"
-          onChangeText={(text: string) => setConfirmPassword(text)}
-          value={confirmPassword}
-          autoFocus={false}
-          secureTextEntry={true}
-        />
-        <LargeSquareOnPress
-          onPress={() => handleContinue()}
-          text="Continue"
-          textColor={Colors.white}
-        />
+      <View>
+        <Text style={styles.title}>Investor Information</Text>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <ScrollView>
+            <View style={styles.form}>
+              <StandardTextInput
+                placeholder="First Name"
+                onChangeText={(text: string) => setFirstName(text)}
+                value={firstName}
+                autoFocus={true}
+              />
+              <StandardTextInput
+                placeholder="Middle Name / Initial"
+                onChangeText={(text: string) => setMiddleName(text)}
+                value={middleName}
+              />
+              <StandardTextInput
+                placeholder="Last Name"
+                onChangeText={(text: string) => setLastName(text)}
+                value={lastName}
+              />
+              <StandardTextInput
+                placeholder="Username"
+                onChangeText={(text: string) => setUsername(text)}
+                value={username}
+              />
+              <StandardTextInput
+                placeholder="Email"
+                onChangeText={(text: string) => setEmail(text)}
+                value={email}
+                autoFocus={false}
+                secureTextEntry={false}
+              />
+            <StandardTextInput
+                placeholder="Password"
+                onChangeText={(text: string) => setPassword(text)}
+                value={password}
+                autoFocus={false}
+                secureTextEntry={true}
+              />
+              <LargeSquareOnPress
+                onPress={() => handleSignUp()}
+                text="Sign Up"
+                textColor={Colors.white}
+              />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
+      <LoadingScreen show={showActivityIndicator} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  form: {
+    flex: 1,
+    alignItems: 'center',
+  },
   title: {
     ...Fonts.h1,
     alignSelf: 'center',
     marginTop: 20,
-  },
-
-  form: {
-    flex: 1,
-    alignItems: 'center',
   },
 });

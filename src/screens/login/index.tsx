@@ -24,6 +24,9 @@ export const Login = (props: AuthenticationStackProps) => {
   const [showActivityIndicator, setShowActivityIndicator] = useState(false);
 
   function handleSignIn() {
+    if (!validateFields()) {
+      return;
+    }
     setShowActivityIndicator(true);
     login(email, password).then(async (loginAttempt) => {
       // User was found
@@ -34,6 +37,30 @@ export const Login = (props: AuthenticationStackProps) => {
       }
     });
   }
+
+  const validateFields = (): boolean => {
+    if (validateEmail()) {
+      Alert.alert('Please enter a valid email address.');
+      return false;
+    }
+    if (validateField(password)) {
+      Alert.alert('Please enter password.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateEmail = () => {
+    let emailReg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    return !emailReg.test(email);
+  };
+
+  const validateField = (fieldName: string) => {
+    return (
+      fieldName === ''
+    );
+  };
 
   function handleInvestorLogin() {
     setLoggedInUser();
@@ -85,14 +112,22 @@ export const Login = (props: AuthenticationStackProps) => {
   }
 
   function handleLoginError(error: any) {
-    switch (error.code) {
-      case 'auth/invalid-email':
-      case 'auth/user-not-found':
-      case 'auth/wrong-password':
-        Alert.alert('Email or password is invalid.');
-        setShowActivityIndicator(false);
-        break;
+    console.log('error: ', error);
+    if(error.code){
+      switch (error.code) {
+        case 'auth/invalid-email':
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+          Alert.alert('Email or password is invalid.');
+          break;
+        default:
+          Alert.alert(error.message);
+          break;
+      }
+    } else {
+      Alert.alert(error);
     }
+    setShowActivityIndicator(false);
   }
 
   function enterMainApplication() {
@@ -147,8 +182,8 @@ export const Login = (props: AuthenticationStackProps) => {
             buttonColor={Colors.main_green}
           />
         </View>
-        {showActivityIndicator && <LoadingScreen />}
       </KeyboardAwareScrollView>
+      {showActivityIndicator && <LoadingScreen />}
     </View>
   );
 };
@@ -163,6 +198,7 @@ const styles = StyleSheet.create({
 
   container: {
     alignItems: 'center',
+    flex:1,
   },
 
   logoContainer: {

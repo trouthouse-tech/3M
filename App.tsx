@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 // import 'react-native-gesture-handler';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -9,6 +9,7 @@ import {SafeAreaView, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './src/store';
 import {OnboardingStack} from './src/navigation/onboarding';
+import SplashScreen from 'react-native-splash-screen'
 
 type RootStackParamList = {
   Authentication: undefined;
@@ -28,6 +29,11 @@ const MyTheme = {
 };
 
 const App = () => {
+
+  useEffect(() => {
+    SplashScreen.hide();
+  });
+
   return (
     <Provider store={store}>
       <NavigationContainer theme={MyTheme}>
