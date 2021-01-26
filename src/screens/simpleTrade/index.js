@@ -3,11 +3,14 @@ import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import simpleImage from '../../../assets/images/screens/simpleimage.png';
 import forwardIcon from '../../../assets/images/screens/forwardicon.png';
+import nextButton from '../../../assets/images/screens/nextbutton.png';
+import upArrow from '../../../assets/images/screens/uparrowicon.png';
+import downArrow from '../../../assets/images/screens/downarrowicon.png';
 const simpleTrade = (props) => {
     return (
         <View style={styles.screen}>
             {/* upper  header part */}
-            <View style={[{ flex: .07, flexDirection: 'row', height: 45, backgroundColor: 'white', marginTop: 20, }, styles.boxWithShadow]}
+            <View style={[{ flex: .1, flexDirection: 'row', height: 45, backgroundColor: 'white', marginTop: 20, }, styles.boxWithShadow]}
 
             >
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
@@ -27,37 +30,55 @@ const simpleTrade = (props) => {
                 </View>
             </View>
             {/* lower card part */}
-            <View style={[{ flex: 1, marginBottom: 25, marginHorizontal: 20, marginTop: 25, backgroundColor: 'white', borderRadius: 10 }, styles.boxWithShadow]}>
+            <View style={[{ flex: 1, marginBottom: 15, marginHorizontal: 20, marginTop: 25, backgroundColor: 'white', borderRadius: 10 }, styles.boxWithShadow]}>
                 <View style={{ width: 48, height: 4, backgroundColor: '#CFD0D4', alignSelf: 'center', marginTop: 30, borderRadius: 4 }}>
 
                 </View>
-                <View style={{ alignSelf: 'center', marginTop: 30 }}>
+                <View style={{ alignSelf: 'center', marginTop: 15 }}>
                     <Text style={{ fontSize: 20, alignSelf: 'center' }}>Select Trade</Text>
-                    <Text> will the close price be be over $87.00 or</Text>
-                    <Text style={{ alignSelf: 'center', marginTop: 3 }}>Under $87.50 on Oct 30?</Text>
+                    <Text style={{ color: '#636363' }}> will the close price be be over $87.00 or</Text>
+                    <Text style={{ alignSelf: 'center', marginTop: 3, color: '#636363' }}>Under $87.50 on Oct 30?</Text>
 
                 </View>
-                <View style={{ flex: 1, alignSelf: 'center', marginTop: 20 }}>
+                <View style={{ flex: 1, alignSelf: 'center', marginTop: 15 }}>
                     <FlatList
-                        data={[1]}
+                        data={[1, 2]}
                         renderItem={({ item, index }) => {
                             return (
-                                <View style={[{ width: 305, height: 141, backgroundColor: 'white' }, styles.cardWithShadow]}>
+                                <View style={[{ width: 305, height: 141, backgroundColor: 'white', padding: 20, justifyContent: 'space-between' }, styles.cardWithShadow]}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Image source={upArrow} />
+                                        <Text style={{ color: '#636363' }}>Over $87.00</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <Text style={{ color: '#636363' }}>Max Return</Text>
+                                        <Text style={{ color: '#636363' }}>52%</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <Text style={{ color: '#636363' }}>Win Probability</Text>
+                                        <Text style={{ color: '#636363' }}>53%</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                        <Text style={{ color: '#636363' }}>Min Trade</Text>
+                                        <Text style={{ color: '#636363' }}>$33.00</Text>
+                                    </View>
+
+
 
                                 </View>
                             )
                         }}
-
+                        ItemSeparatorComponent={() => <View style={{ margin: 4 }}></View>}
                     />
                 </View>
                 {/* button area */}
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity
-                        style={{ backgroundColor: '#34A371' }}
-                    >
-                        <Text style={{ color: 'white', fontSize: 16 }}>Next</Text>
-                    </TouchableOpacity>
-                </View>
+
+                <TouchableOpacity
+                    style={{ alignSelf: 'center' }}
+                >
+                    <Image source={nextButton} />
+                </TouchableOpacity>
+
             </View>
 
         </View>
