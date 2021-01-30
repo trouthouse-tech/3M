@@ -26,7 +26,7 @@
     "@types/react-native-base64": "^0.1.0",
     "@types/react-native-vector-icons": "^6.4.6",
     "@types/react-redux": "^7.1.9",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "golfpro-rn-components": "^1.2.0",
     "moment": "^2.29.1",
     "react": "16.13.1",
