@@ -7,6 +7,7 @@ export type HomeStackParamList = {
   Tradier: undefined;
   Portfolio: undefined;
   PortfolioSummary: undefined
+  TradeHistory: undefined
 };
 
 /*

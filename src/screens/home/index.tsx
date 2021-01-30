@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, View, Linking, TextInput, FlatList, Image, ListRenderItem, ScrollView, Dimensions } from 'react-native';
+import { Alert, StyleSheet, Text, View, Linking, TextInput, FlatList, Image, ListRenderItem, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { LineChart, Grid } from 'react-native-svg-charts'
 import Pie from 'react-native-pie';
 import { AppState } from '../../store/types';
@@ -10,7 +10,13 @@ import { UserState } from '../../store/user/types';
 import { ROUTES } from '../../util/routes';
 import { ChatButton } from '../../components/Header/HeaderItems';
 import { TradeState } from '../../store/trade/types';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+
 import searchIcon from '../../../assets/images/screens/searchIcon.png';
 import dropDownIcon from '../../../assets/images/screens/dropdownicon.png';
 import dropUpIcon from '../../../assets/images/screens/dropupicon.png';
@@ -30,6 +36,7 @@ const HomeBase = (props: Props) => {
   const [toggleSummary, setToggleSummary] = useState(false);
   const [stockdatatoggle, setStockDataToggle] = useState(false);
   const [holdingSymbolsList, setholdingSymbolsList] = useState(false);
+  const [fUnknownDropDown, setFUnknownDropDown] = useState(false);
 
   useEffect(() => {
     if (props.user.tradierIsWaitingForApproval) {
@@ -131,7 +138,7 @@ const HomeBase = (props: Props) => {
           {/* graph goes here */}
           <LineChart
             style={{ height: 100, width: 50 }}
-            data={[50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]}
+            data={[50, 10, 40, 95, -4, -24, 85, 91, 35, 24, 50, -20, -80]}
             svg={{ stroke: 'rgb(0, 128, 0)' }}
           //contentInset={{ top: 20, bottom: 20 }}
           >
@@ -158,8 +165,10 @@ const HomeBase = (props: Props) => {
     )
   }
   return (
-    <ScrollView>
+    // <ScrollView style={{ flex: 1, }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.screen}>
+
         {/* <Header
         showLogo
         showBottomBorder
@@ -208,26 +217,64 @@ const HomeBase = (props: Props) => {
         <View style={[{ flexDirection: 'row', height: 45, width: '90%', backgroundColor: '#f8f8f8', marginTop: 20, alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10, marginHorizontal: 20 }, styles.boxWithShadow]}
 
         >
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', }}
-            onPress={() => {
-              setStockDataToggle(!stockdatatoggle);
-            }}
-          >
-            {/* <Image source={dropDownIcon} /> */}
-            {
-              !stockdatatoggle ?
-                <Image source={dropDownIcon} /> : <Image source={dropUpIcon} />
-            }
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 5, }}
+              onPress={() => {
+                setStockDataToggle(!stockdatatoggle);
+              }}
+            >
+              {/* <Image source={dropDownIcon} /> */}
+              {
+                !stockdatatoggle ?
+                  <Image source={dropDownIcon} /> : <Image source={dropUpIcon} />
+              }
 
 
 
-          </TouchableOpacity>
+            </TouchableOpacity>
+            <LineChart
+              style={{ height: 30, width: 30 }}
+              data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 24, 23, 22, 21, 18, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 7, 20, 5, 30, 31, 32, 33, 34, 35, 35, 37, 38, 39, 40, 50, 55, 56, 57, 58, 59, 60, 61, 2, 4, 5, 34, 34, 22, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 114, 115, 116, 117]}
+              svg={{ stroke: 'rgb(0, 128, 0)' }}
+            //contentInset={{ top: 20, bottom: 20 }}
+            >
+              {/* <Grid /> */}
+            </LineChart>
+          </View>
           <Text>$1000.01234</Text>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => { props.navigation.push("Portfolio") }}
           >
-            <Image source={dotIcon} />
-          </TouchableOpacity>
+           
+          </TouchableOpacity> */}
+
+
+          <Menu onSelect={value => { }} >
+
+            <MenuTrigger>
+              <View style={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={dotIcon} />
+              </View>
+            </MenuTrigger>
+            <MenuOptions customStyles={optionsStyles} >
+              <MenuOption value={1} onSelect={() => { props.navigation.push(ROUTES.PortfoliSummary) }} >
+                <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                  <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Portfolio Summary</Text>
+                </View>
+              </MenuOption>
+              <MenuOption value={2} onSelect={() => { props.navigation.navigate(ROUTES.TradeHistory) }} >
+                <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                  <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Trade History</Text>
+                </View>
+              </MenuOption>
+              <MenuOption value={3} onSelect={() => { }}>
+                <View>
+                  <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Orders</Text>
+                </View>
+              </MenuOption>
+            </MenuOptions>
+          </Menu>
+
 
         </View>
         {
@@ -308,9 +355,92 @@ const HomeBase = (props: Props) => {
 
         {
           holdingSymbolsList ?
-            <View style={{ marginTop: 20 }}>
+            <View style={{ marginTop: 20, marginHorizontal: 20 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Menu onSelect={value => { }} >
 
-              <View style={{ flexDirection: 'row', marginHorizontal: 20 }}>
+                  <MenuTrigger>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Image source={fUnknownDropDown ? dropUpIcon : dropDownIcon} />
+                      <Text style={{ marginLeft: 4 }}>Short:value high to low</Text>
+                    </View>
+                  </MenuTrigger>
+                  <MenuOptions customStyles={optionsStyles} >
+                    <MenuOption value={1} onSelect={() => { }} >
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Value High to Low / Low to High </Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={2} onSelect={() => { }} >
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Total Gain - High to Low / Low to High </Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={3} onSelect={() => { }}>
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Percentage High to Low / Low to High </Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={4} onSelect={() => { }}>
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Expiration Date - Nearest / Farthest  </Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={4} onSelect={() => { }}>
+                      <View >
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Name - A-Z / Z-A </Text>
+                      </View>
+                    </MenuOption>
+                  </MenuOptions>
+                </Menu>
+
+
+
+                <Menu onSelect={value => { }} >
+
+                  <MenuTrigger>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Image source={fUnknownDropDown ? dropUpIcon : dropDownIcon} />
+                      <Text style={{ marginLeft: 4 }}>Time range</Text>
+                    </View>
+                  </MenuTrigger>
+                  <MenuOptions customStyles={optionsStyles} >
+                    <MenuOption value={1} onSelect={() => { }} >
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>1 Day</Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={2} onSelect={() => { }} >
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>1 Week</Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={3} onSelect={() => { }}
+
+                    >
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>1 Month</Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={3} onSelect={() => { }}>
+                      <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>1 Quarter</Text>
+                      </View>
+                    </MenuOption>
+                    <MenuOption value={3} onSelect={() => { }}>
+                      <View >
+                        <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>1 Year</Text>
+                      </View>
+                    </MenuOption>
+
+                  </MenuOptions>
+                </Menu>
+
+
+              </View>
+
+
+              <View style={{ flexDirection: 'row', marginTop: 20 }}>
                 <View>
                   <Text>Market News</Text>
                   <Text style={{ marginTop: 10 }}>10 shares</Text>
@@ -332,10 +462,56 @@ const HomeBase = (props: Props) => {
   );
 };
 
+const triggerStyles = {
+  triggerText: {
+    color: 'white',
+  },
+  triggerOuterWrapper: {
+    backgroundColor: 'orange',
+    padding: 5,
+    flex: 1,
+  },
+  triggerWrapper: {
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  triggerTouchable: {
+    underlayColor: 'darkblue',
+    activeOpacity: 70,
+    style: {
+      flex: 1,
+    },
+  },
+};
+const optionsStyles = {
+  optionsContainer: {
+    backgroundColor: '#f8f8f8',
+    //padding: 5,
+    borderRadius: 5
+  },
+  // optionsWrapper: {
+  //   backgroundColor: 'purple',
+  // },
+  optionWrapper: {
+    backgroundColor: '#f8f8f8',
+    margin: 5,
+  },
+  // optionTouchable: {
+  //   underlayColor: 'gold',
+  //   activeOpacity: 70,
+  // },
+  // optionText: {
+  //   color: 'brown',
+  // },
+};
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    paddingTop: 20
+    paddingTop: 20,
+    height: '100%',
+    //backgroundColor: 'red'
   },
   txt: {
     textAlign: 'center',
@@ -362,6 +538,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
+const triggerOuterWrapper = {
+  backgroundColor: '#f8f8f8'
+}
 
 const mapStateToProps = (state: AppState) => ({
   user: state.user,

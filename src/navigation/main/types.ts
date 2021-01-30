@@ -6,7 +6,10 @@ export type TabParamList = {
   Home: undefined;
   Trade: undefined;
   Me: undefined;
-  ThinkTank: undefined
+  ThinkTank: undefined;
+  SettingScreen: undefined;
+
+
 };
 
 /*

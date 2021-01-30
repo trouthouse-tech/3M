@@ -7,6 +7,8 @@ import { TradierView } from '../../screens/tradier';
 import Portfolio from '../../screens/portfolio';
 import PortfoliSummary from '../../screens/portfolio/PortfolioSummary';
 import PortfolioSummary from '../../screens/portfolio/PortfolioSummary';
+import TradeHistory from '../../screens/tradeHistory';
+
 const HomeStackNavigator = createStackNavigator<HomeStackParamList>();
 
 export const HomeStack = () => {
@@ -18,6 +20,10 @@ export const HomeStack = () => {
       <HomeStackNavigator.Screen
         name={ROUTES.Tradier}
         component={TradierView}
+      />
+      <HomeStackNavigator.Screen
+        name={ROUTES.TradeHistory}
+        component={TradeHistory}
       />
     </HomeStackNavigator.Navigator>
   );

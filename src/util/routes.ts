@@ -29,5 +29,12 @@ export enum ROUTES {
   Portfolio = 'Portfolio',
   PortfoliSummary = 'PortfolioSummary',
   ThinkThank = 'ThinkThank',
-  SimpleTrade = 'SimpleTrade'
+  SimpleTrade = 'SimpleTrade',
+  TradeHistory = 'TradeHistory',
+  MyAccount = 'MyAccount',
+  SupportAccount = 'SupportAccount',
+  SettingScreen = 'SettingScreen',
+  FollowUs = 'FollowUs',
+  DisclaimerScreen = 'DisclaimerScreen',
+  Account = 'Account'
 }

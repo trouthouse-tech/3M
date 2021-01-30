@@ -6,11 +6,12 @@ import forwardIcon from '../../../assets/images/screens/forwardicon.png';
 import nextButton from '../../../assets/images/screens/nextbutton.png';
 import upArrow from '../../../assets/images/screens/uparrowicon.png';
 import downArrow from '../../../assets/images/screens/downarrowicon.png';
+import { ROUTES } from '../../util/routes';
 const simpleTrade = (props) => {
     return (
         <View style={styles.screen}>
             {/* upper  header part */}
-            <View style={[{ flex: .1, flexDirection: 'row', height: 45, backgroundColor: 'white', marginTop: 20, }, styles.boxWithShadow]}
+            <View style={[{ flex: .1, flexDirection: 'row', height: 45, backgroundColor: '#F8F8F8', }, styles.boxWithShadow]}
 
             >
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20 }}>
@@ -75,6 +76,7 @@ const simpleTrade = (props) => {
 
                 <TouchableOpacity
                     style={{ alignSelf: 'center' }}
+                    onPress={() => { props.navigation.navigate(ROUTES.TradeHistory) }}
                 >
                     <Image source={nextButton} />
                 </TouchableOpacity>

@@ -8,6 +8,7 @@ import { FormResults } from '../../screens/trade/results';
 import { SpreadView } from '../../screens/trade/Spread';
 import ThinkTank from '../../screens/thinkThank';
 import SimpleTrade from '../../screens/simpleTrade';
+import TradeHistory from '../../screens/tradeHistory';
 const TradeStackNavigator = createStackNavigator<TradeStackParamList>();
 
 export const TradeStack = () => {
@@ -34,6 +35,10 @@ export const TradeStack = () => {
       <TradeStackNavigator.Screen
         name={ROUTES.SimpleTrade}
         component={SimpleTrade}
+      />
+      <TradeStackNavigator.Screen
+        name={ROUTES.TradeHistory}
+        component={TradeHistory}
       />
 
     </TradeStackNavigator.Navigator>

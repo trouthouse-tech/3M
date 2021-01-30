@@ -10,6 +10,7 @@ export type TradeStackParamList = {
   Spread: { spread: Spread };
   ThinkThank: undefined
   SimpleTrade: undefined
+  TradeHistory: undefined
 };
 
 /*

@@ -67,7 +67,7 @@ const ThinkTank = (props) => {
                                 </View>
 
                             </View>
-                            <View style={{ justifyContent: 'flex-end'.anchor, marginTop: 10 }}>
+                            <View style={{ justifyContent: 'flex-end', marginTop: 10 }}>
                                 <Text style={{ alignSelf: 'center', }}>sentiment</Text>
                             </View>
                         </View>
@@ -99,7 +99,7 @@ const ThinkTank = (props) => {
                                 </View>
 
                             </View>
-                            <View style={{ justifyContent: 'flex-end'.anchor, marginTop: 10 }}>
+                            <View style={{ justifyContent: 'flex-end', marginTop: 10 }}>
                                 <Text style={{ alignSelf: 'center', }}>put:call</Text>
                             </View>
                         </View>
@@ -134,7 +134,7 @@ const ThinkTank = (props) => {
                                 </View>
 
                             </View>
-                            <View style={{ justifyContent: 'flex-end'.anchor, marginTop: 10 }}>
+                            <View style={{ justifyContent: 'flex-end', marginTop: 10 }}>
                                 <Text style={{ alignSelf: 'center', }}>70359 Puts</Text>
                             </View>
                         </View>
@@ -166,7 +166,7 @@ const ThinkTank = (props) => {
                                 </View>
 
                             </View>
-                            <View style={{ justifyContent: 'flex-end'.anchor, marginTop: 10 }}>
+                            <View style={{ justifyContent: 'flex-end', marginTop: 10 }}>
                                 <Text style={{ alignSelf: 'center', }}>129023 calls</Text>
                             </View>
                         </View>
@@ -316,15 +316,7 @@ const ThinkTank = (props) => {
                         </TouchableOpacity>
 
 
-                        {/* <TouchableOpacity style={[{ alignItems: 'center', width: 127, height: 100, backgroundColor: toggleRetirementStoc == 2 ? '#34A271' : '#FFFFFF', borderRadius: 7, marginLeft: 34 }, styles.boxWithShadow]}
-                            onPress={() => setRetirementStock(2)}
-                        >
-                            <Image source={toggleRetirementStoc == 2 ? safestStockWhite : safestStockGreen} style={{ marginTop: 10 }} />
 
-                            <Text style={{ alignSelf: 'center', marginTop: 10, color: toggleRetirementStoc == 2 ? 'white' : 'black' }}>Safest Stocks</Text>
-
-
-                        </TouchableOpacity> */}
                     </View>
 
                 </View>
