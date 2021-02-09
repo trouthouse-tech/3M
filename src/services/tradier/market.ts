@@ -69,7 +69,8 @@ export async function getQuotes(query: string, token: string) {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
-    })
+    }
+    )
     .then((resp) => {
       // console.log('options: ', resp.data);
       return resp.data;

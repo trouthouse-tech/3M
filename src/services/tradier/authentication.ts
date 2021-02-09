@@ -1,4 +1,4 @@
-import {AccessTokenResponse} from '../../model';
+import { AccessTokenResponse } from '../../model';
 import axios from 'axios';
 import base64 from 'react-native-base64';
 

@@ -16,7 +16,8 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu';
-
+import { getQuotes } from '../../services/tradier';
+import WebApi from '../../services/WebApi';
 import searchIcon from '../../../assets/images/screens/searchIcon.png';
 import dropDownIcon from '../../../assets/images/screens/dropdownicon.png';
 import dropUpIcon from '../../../assets/images/screens/dropupicon.png';
@@ -37,7 +38,7 @@ const HomeBase = (props: Props) => {
   const [stockdatatoggle, setStockDataToggle] = useState(false);
   const [holdingSymbolsList, setholdingSymbolsList] = useState(false);
   const [fUnknownDropDown, setFUnknownDropDown] = useState(false);
-
+  const [quotes, setQuotes] = useState([]);
   useEffect(() => {
     if (props.user.tradierIsWaitingForApproval) {
       Alert.alert(
@@ -70,6 +71,14 @@ const HomeBase = (props: Props) => {
     props.user.tradierAccessTokenExpiration,
     props.user.tradierIsWaitingForApproval,
   ]);
+  useEffect(() => {
+
+    new WebApi().getQuotes('SPY,QQQ,MMM', 'ZCfKTVOXunwkT5WMMeTO0LhwPprJ').then(response => {
+      console.log("i am that fishing response from the api", response.data.quotes.quote);
+      setQuotes(response.data.quotes.quote)
+    })
+
+  }, [])
 
   async function handleChatPressed() {
     const url = 'https://discord.gg/SKbm6tN';
@@ -85,23 +94,8 @@ const HomeBase = (props: Props) => {
     }
   }
   //function that renders summary data...
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-    },
-  ];
-  const renderMarketSummaryView = () => {
 
-  }
+
   const renderMarketSummaryData = () => {
     return (
       // <FlatList
@@ -115,7 +109,7 @@ const HomeBase = (props: Props) => {
       <>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View>
-            <Text>SPY</Text>
+            <Text>{quotes[0].symbol}</Text>
             <Text style={{ marginTop: 5 }}>$287.75</Text>
             <Text style={{ marginTop: 5 }}>0.16%</Text>
           </View>
@@ -131,7 +125,7 @@ const HomeBase = (props: Props) => {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View>
-            <Text>SPY</Text>
+            <Text>{quotes[1].symbol}</Text>
             <Text style={{ marginTop: 5 }}>$287.75</Text>
             <Text style={{ marginTop: 5 }}>0.16%</Text>
           </View>
@@ -147,7 +141,7 @@ const HomeBase = (props: Props) => {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View>
-            <Text>SPY</Text>
+            <Text>{quotes[2].symbol}</Text>
             <Text style={{ marginTop: 5 }}>$287.75</Text>
             <Text style={{ marginTop: 5 }}>0.16%</Text>
           </View>
