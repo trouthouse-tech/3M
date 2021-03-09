@@ -1,5 +1,6 @@
 import axios from 'axios';
 const BASE_URL = "https://api.tradier.com";
+const APP_TOKEN = "Dc6hQbtgHxxs7yTfmNbJMtp1rLAX";
 export default class WebApi {
 
 
@@ -16,26 +17,24 @@ export default class WebApi {
     //     }
     // }
 
-    async getSymbols(apiParameter, query, token) {
-        try {
-            let url = BASE_URL + apiParameter;
-            return await axios.get(url, {
-                params: {
-                    symbols: query.toUpperCase(),
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    Accept: 'application/json',
-                },
-            });
-        } catch (error) {
-            let err = [];
-            err.error = error;
-            err.no_result = true;
-            return err;
+    async getRequest(apiParameter, paramQuery, token) {
+            try {
+                let url = BASE_URL + apiParameter;
+                return await axios.get(url, {
+                    params: paramQuery,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                    },
+                });
+            } catch (error) {
+                let err = [];
+                err.error = error;
+                err.no_result = true;
+                return err;
+            }
         }
-    }
-    // async update(apiParameter, data) {
+        // async update(apiParameter, data) {
 
     //     try {
     //         let url = BASE_URL + apiParameter;
@@ -145,10 +144,13 @@ export default class WebApi {
     //     return this.update(apiParameter, data)
     // }
 
-    getQuotes(symbols, token) {
-        let apiParameter = `/v1/markets/quotes`;
-        return this.getSymbols(apiParameter, symbols, token)
-    }
-    //end of the class
+    getQuotes(query) {
+            let apiParameter = `/v1/markets/quotes`;
+            let paramQ = {
+                symbols: query.toUpperCase(),
+            }
+            return this.getRequest(apiParameter, paramQ, APP_TOKEN)
+        }
+        //end of the class
 
 }

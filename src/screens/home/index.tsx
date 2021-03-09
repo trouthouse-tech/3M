@@ -72,8 +72,12 @@ const HomeBase = (props: Props) => {
     props.user.tradierIsWaitingForApproval,
   ]);
   useEffect(() => {
+    // set default all open tabs
+    setToggleSummary(!toggleSummary);
+    setStockDataToggle(!stockdatatoggle);
+    setholdingSymbolsList(!holdingSymbolsList);
 
-    new WebApi().getQuotes('SPY,QQQ,MMM', 'ZCfKTVOXunwkT5WMMeTO0LhwPprJ').then(response => {
+    new WebApi().getQuotes('SPY,QQQ,IWM').then(response => {
       console.log("i am that fishing response from the api", response.data.quotes.quote);
       setQuotes(response.data.quotes.quote)
     })
@@ -97,21 +101,15 @@ const HomeBase = (props: Props) => {
 
 
   const renderMarketSummaryData = () => {
-    return (
-      // <FlatList
-      //   data={DATA}
-      //  renderItem={({item}:Object)=>{
 
-      //  }}
-
-      //   keyExtractor={item => item.id}
-      // />
-      <>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    let graphArrView = [];
+    for(let i = 0; i < quotes.length; i++){
+      graphArrView.push(
+        <View style={{ flexDirection: 'row', alignItems: 'center', width: '33.3%' }} key ={'MarketSummary_'+i}>
           <View>
-            <Text>{quotes[0].symbol}</Text>
-            <Text style={{ marginTop: 5 }}>$287.75</Text>
-            <Text style={{ marginTop: 5 }}>0.16%</Text>
+            <Text>{quotes[i].symbol}</Text>
+            <Text style={{ marginTop: 5 }}>{quotes[i].last}</Text>
+            <Text style={{ marginTop: 5 }}>{quotes[i].change_percentage}%</Text>
           </View>
           {/* graph goes here */}
           <LineChart
@@ -123,38 +121,20 @@ const HomeBase = (props: Props) => {
             {/* <Grid /> */}
           </LineChart>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View>
-            <Text>{quotes[1].symbol}</Text>
-            <Text style={{ marginTop: 5 }}>$287.75</Text>
-            <Text style={{ marginTop: 5 }}>0.16%</Text>
-          </View>
-          {/* graph goes here */}
-          <LineChart
-            style={{ height: 100, width: 50 }}
-            data={[50, 10, 40, 95, -4, -24, 85, 91, 35, 24, 50, -20, -80]}
-            svg={{ stroke: 'rgb(0, 128, 0)' }}
-          //contentInset={{ top: 20, bottom: 20 }}
-          >
-            {/* <Grid /> */}
-          </LineChart>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View>
-            <Text>{quotes[2].symbol}</Text>
-            <Text style={{ marginTop: 5 }}>$287.75</Text>
-            <Text style={{ marginTop: 5 }}>0.16%</Text>
-          </View>
-          {/* graph goes here */}
-          <LineChart
-            style={{ height: 100, width: 50 }}
-            data={[10, 40, 95, 8, 100, 85, 91, 35, 53, -53, 24, 50, -20, -80]}
-            svg={{ stroke: 'rgb(0, 128, 0)' }}
-          //contentInset={{ top: 20, bottom: 20 }}
-          >
-            {/* <Grid /> */}
-          </LineChart>
-        </View>
+      );
+    }
+
+    return (
+      // <FlatList
+      //   data={DATA}
+      //  renderItem={({item}:Object)=>{
+
+      //  }}
+
+      //   keyExtractor={item => item.id}
+      // />
+      <>
+        {graphArrView}
       </>
     )
   }
