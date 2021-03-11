@@ -39,8 +39,11 @@ const HomeBase = (props: Props) => {
   const [holdingSymbolsList, setholdingSymbolsList] = useState(false);
   const [fUnknownDropDown, setFUnknownDropDown] = useState(false);
   const [quotes, setQuotes] = useState([]);
+  const [tradierLogin, setTradierLogin] = useState(true);
+
   useEffect(() => {
     if (props.user.tradierIsWaitingForApproval) {
+      setTradierLogin(false);
       Alert.alert(
         'Your Tradier account has been created.',
         'The approval process may take up to 1 business day. Please note that certain 3M features will be unavailable until your account is approved.',
@@ -56,6 +59,7 @@ const HomeBase = (props: Props) => {
     const expiration = props.user.tradierAccessTokenExpiration!;
     const isExpired = expiration * 1000 < Date.now();
     if (isExpired) {
+      setTradierLogin(false);
       Alert.alert(
         "Let's setup your Tradier account.",
         'The 3M Club has partnered with Tradier to enable trading.',
@@ -125,19 +129,124 @@ const HomeBase = (props: Props) => {
     }
 
     return (
-      // <FlatList
-      //   data={DATA}
-      //  renderItem={({item}:Object)=>{
-
-      //  }}
-
-      //   keyExtractor={item => item.id}
-      // />
       <>
         {graphArrView}
       </>
     )
   }
+
+  const renderTradierView = () => {
+    return (
+      <>
+        <View style={[{ flexDirection: 'row', height: 45, width: '90%', backgroundColor: '#f8f8f8', marginTop: 20, alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10, marginHorizontal: 20 }, styles.boxWithShadow]}
+              >
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 5, }}
+                onPress={() => {
+                  setStockDataToggle(!stockdatatoggle);
+                }}
+              >
+                {
+                  !stockdatatoggle ?
+                    <Image source={dropDownIcon} /> : <Image source={dropUpIcon} />
+                }
+              </TouchableOpacity>
+              <LineChart
+                style={{ height: 30, width: 30 }}
+                data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 24, 23, 22, 21, 18, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 7, 20, 5, 30, 31, 32, 33, 34, 35, 35, 37, 38, 39, 40, 50, 55, 56, 57, 58, 59, 60, 61, 2, 4, 5, 34, 34, 22, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 114, 115, 116, 117]}
+                svg={{ stroke: 'rgb(0, 128, 0)' }}
+              >
+              </LineChart>
+            </View>
+            <Text>$1000.01234</Text>
+
+            <Menu onSelect={value => { }} >
+              <MenuTrigger>
+                <View style={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}>
+                  <Image source={dotIcon} />
+                </View>
+              </MenuTrigger>
+              <MenuOptions customStyles={optionsStyles} >
+                <MenuOption value={1} onSelect={() => { props.navigation.push(ROUTES.PortfoliSummary) }} >
+                  <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                    <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Portfolio Summary</Text>
+                  </View>
+                </MenuOption>
+                <MenuOption value={2} onSelect={() => { props.navigation.navigate(ROUTES.TradeHistory) }} >
+                  <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
+                    <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Trade History</Text>
+                  </View>
+                </MenuOption>
+                <MenuOption value={3} onSelect={() => { }}>
+                  <View>
+                    <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Orders</Text>
+                  </View>
+                </MenuOption>
+              </MenuOptions>
+            </Menu>
+
+        </View>
+
+        {
+          stockdatatoggle ? (
+            <View style={{ flex: .4, marginHorizontal: 20 }}>
+              <View style={{ width: 200, alignItems: 'center', alignSelf: 'center', marginTop: 20 }}>
+                <Pie
+                  radius={85}
+                  innerRadius={75}
+                  sections={[
+                    {
+                      percentage: 100,
+                      color: 'green',
+                    },
+                  ]}
+                  backgroundColor="#ddd"
+                />
+                <View
+                  style={styles.gauge}
+                >
+                  <Text
+                    style={styles.gaugeText}
+                  >
+                    Trading
+                </Text>
+
+
+                  <Text style={{ paddingLeft: 3 }}>Va232321332</Text>
+                </View>
+
+              </View>
+
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Image source={greenTag} />
+                  <Text style={{ paddingLeft: 10 }}>CASH</Text>
+                </View>
+                <Text>$125.3434343</Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Image source={blueTag} />
+                  <Text style={{ paddingLeft: 10 }}>STOCKS</Text>
+                </View>
+                <Text>$125.3434343</Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Image source={purpleTag} />
+                  <Text style={{ paddingLeft: 10 }}>OPTIONS</Text>
+                </View>
+                <Text>$125.3434343</Text>
+              </View>
+
+            </View>
+
+          ) : null
+        }
+      </>
+    )
+  }
+
   return (
     // <ScrollView style={{ flex: 1, }}>
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -188,128 +297,17 @@ const HomeBase = (props: Props) => {
           ) : null
         }
 
-        <View style={[{ flexDirection: 'row', height: 45, width: '90%', backgroundColor: '#f8f8f8', marginTop: 20, alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10, marginHorizontal: 20 }, styles.boxWithShadow]}
-
-        >
-          <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 5, }}
-              onPress={() => {
-                setStockDataToggle(!stockdatatoggle);
-              }}
-            >
-              {/* <Image source={dropDownIcon} /> */}
-              {
-                !stockdatatoggle ?
-                  <Image source={dropDownIcon} /> : <Image source={dropUpIcon} />
-              }
-
-
-
-            </TouchableOpacity>
-            <LineChart
-              style={{ height: 30, width: 30 }}
-              data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 24, 23, 22, 21, 18, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 7, 20, 5, 30, 31, 32, 33, 34, 35, 35, 37, 38, 39, 40, 50, 55, 56, 57, 58, 59, 60, 61, 2, 4, 5, 34, 34, 22, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 114, 115, 116, 117]}
-              svg={{ stroke: 'rgb(0, 128, 0)' }}
-            //contentInset={{ top: 20, bottom: 20 }}
-            >
-              {/* <Grid /> */}
-            </LineChart>
-          </View>
-          <Text>$1000.01234</Text>
-          {/* <TouchableOpacity
-            onPress={() => { props.navigation.push("Portfolio") }}
-          >
-           
-          </TouchableOpacity> */}
-
-
-          <Menu onSelect={value => { }} >
-
-            <MenuTrigger>
-              <View style={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={dotIcon} />
-              </View>
-            </MenuTrigger>
-            <MenuOptions customStyles={optionsStyles} >
-              <MenuOption value={1} onSelect={() => { props.navigation.push(ROUTES.PortfoliSummary) }} >
-                <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
-                  <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Portfolio Summary</Text>
-                </View>
-              </MenuOption>
-              <MenuOption value={2} onSelect={() => { props.navigation.navigate(ROUTES.TradeHistory) }} >
-                <View style={{ borderColor: '#34A271', borderBottomWidth: 1, paddingBottom: 3 }}>
-                  <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Trade History</Text>
-                </View>
-              </MenuOption>
-              <MenuOption value={3} onSelect={() => { }}>
-                <View>
-                  <Text style={{ fontSize: 15, borderBottomWidth: 1, borderBottomColor: '#34A271' }}>Orders</Text>
-                </View>
-              </MenuOption>
-            </MenuOptions>
-          </Menu>
-
-
-        </View>
         {
-          stockdatatoggle ? (
-            <View style={{ flex: .4, marginHorizontal: 20 }}>
-              {/* <Image source={circleImage} style={{ alignSelf: 'center', marginTop: 10 }} /> */}
-              <View style={{ width: 200, alignItems: 'center', alignSelf: 'center', marginTop: 20 }}>
-                <Pie
-                  radius={85}
-                  innerRadius={75}
-                  sections={[
-                    {
-                      percentage: 100,
-                      color: 'green',
-                    },
-                  ]}
-                  backgroundColor="#ddd"
-                />
-                <View
-                  style={styles.gauge}
-                >
-                  <Text
-                    style={styles.gaugeText}
-                  >
-                    Trading
-                </Text>
-
-
-                  <Text style={{ paddingLeft: 3 }}>Va232321332</Text>
-                </View>
-
-              </View>
-
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image source={greenTag} />
-                  <Text style={{ paddingLeft: 10 }}>CASH</Text>
-                </View>
-                <Text>$125.3434343</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image source={blueTag} />
-                  <Text style={{ paddingLeft: 10 }}>STOCKS</Text>
-                </View>
-                <Text>$125.3434343</Text>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Image source={purpleTag} />
-                  <Text style={{ paddingLeft: 10 }}>OPTIONS</Text>
-                </View>
-                <Text>$125.3434343</Text>
-              </View>
-
-
-            </View>
-
-          ) : null
+          tradierLogin ? ( 
+            {renderTradierView}
+          ) : (
+            <TouchableOpacity style={[{ flexDirection: 'row', height: 45, width: '90%', backgroundColor: '#FFCDD2', marginHorizontal: 20, marginTop: 20, paddingHorizontal: 20, alignItems: 'center' }, styles.boxWithShadow,]}
+            onPress={() => props.navigation.push(ROUTES.Tradier)}
+            >
+              <Text>Click Here To Login To Tradier Account</Text>
+            </TouchableOpacity>
+          )
         }
-        {/* </View> */}
 
         <TouchableOpacity style={[{ flexDirection: 'row', height: 45, width: '90%', backgroundColor: '#f8f8f8', marginHorizontal: 20, marginTop: 20, paddingHorizontal: 20 }, styles.boxWithShadow,]}
           onPress={() => {
