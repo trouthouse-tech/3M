@@ -30,7 +30,7 @@
     "golfpro-rn-components": "^1.2.0",
     "moment": "^2.29.1",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.64.1",
     "react-native-base64": "^0.1.0",
     "react-native-chart-kit": "^6.10.0",
     "react-native-gesture-handler": "^1.7.0",
